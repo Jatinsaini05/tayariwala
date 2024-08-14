@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mybtn-animation {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
+      box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
+    }
+    70% {
+      -moz-box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
+      box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
+    }
+    100% {
+      -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
+      box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
+    }
+  }

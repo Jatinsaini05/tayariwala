@@ -14,9 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <NextUIProvider navigate={router.push}>
-        <DefaultLayout>
           <Component {...pageProps} />
-        </DefaultLayout>
+        {/* <DefaultLayout>
+        </DefaultLayout> */}
       {/* <NextThemesProvider>
       </NextThemesProvider> */}
     </NextUIProvider>
