@@ -189,6 +189,7 @@ export default function Register() {
         setPage(3);
       }
     } catch (error) {
+      console.log("Error",error);
       useStoreSnackbar.getState().showSnackbar({
         description: "Error in Submitting",
         title: error,
