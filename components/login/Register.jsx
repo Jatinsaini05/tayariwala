@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import DatePicker from "react-datepicker";
+import { FaCalendarAlt } from "react-icons/fa"; // Import the calendar icon
 import { Input } from "@nextui-org/react";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,18 +18,24 @@ export default function Register({ changeScreen }) {
     mobile: "",
     email: "",
     dob: null,
-    city: "",
+    gender: "",
+    session: "6427b3f7cee6f934cdbb215a",
     personalImg: null,
+    address: {
+      city: "",
+    },
   };
 
   const [regisData, setRegisData] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [otpId, setOtpId] = useState("");
+  const otpRefs = useRef([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   // const [token, setTokens] = useState("");
   const [token, setTokens] = useState(new Array(4).fill(""));
-
+  const myOtp = useRef(null);
   // const city = [{ name: "DELHI" }, { name: "NOIDA" }];
 
   const handleChange = (e) => {
@@ -36,15 +43,18 @@ export default function Register({ changeScreen }) {
     setRegisData({
       ...regisData,
       [name]: value,
-    });
-    console.log(regisData);
-  };
-  const handleDropdownChange = (e) => {
-    setRegisData({
-      ...regisData,
-      city: e.value,
+      address: {
+        ...regisData.address,
+        [name]: value,
+      },
     });
   };
+  // const handleDropdownChange = (e) => {
+  //   setRegisData({
+  //     ...regisData,
+  //     city: e.value,
+  //   });
+  // };
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     setRegisData({
@@ -102,14 +112,13 @@ export default function Register({ changeScreen }) {
   };
 
   useEffect(() => {
-    // console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      // console.log(regisData);
     }
   }, [formErrors]);
 
   async function getOtpRegis() {
     try {
+      setLoading(true);
       let data = { mobile: regisData.mobile };
       const response = await fetch(
         "https://vijethaiasacademyvja.com/api/public/user/signup-with-otp",
@@ -134,26 +143,33 @@ export default function Register({ changeScreen }) {
           color: "green",
         });
       } else {
-        throw new Error(result.message || "Register failed");
+        useStoreSnackbar.getState().showSnackbar({
+          description: "Error in submitting",
+          title: "Error",
+          color: "red",
+        });
       }
     } catch (error) {
       useStoreSnackbar.getState().showSnackbar({
         description: "Error in Register",
-        title: error,
+        title: "Error",
         color: "red",
       });
+    } finally {
+      setLoading(false);
     }
   }
   async function Submit() {
     let dataOtp = {
       id: otpId,
-      otp: token,
+      otp: myOtp.current,
       password: regisData.password,
       username: regisData.mobile,
     };
     // dataOtp.student = regisData
     dataOtp.student = await getFileUploadUrl(regisData);
     try {
+      setLoading(true);
       const res = await fetch(
         "https://vijethaiasacademyvja.com/api/public/user/register-student-with-otp",
         {
@@ -180,6 +196,8 @@ export default function Register({ changeScreen }) {
         title: error,
         color: "red",
       });
+    } finally {
+      setLoading(false);
     }
   }
   async function backStep() {
@@ -217,6 +235,9 @@ export default function Register({ changeScreen }) {
     if (!values.dob) {
       errors.dob = "Date of birth is required";
     }
+    if (!values.gender) {
+      errors.gender = "Gender is required";
+    }
     return errors;
   };
 
@@ -229,6 +250,16 @@ export default function Register({ changeScreen }) {
     }
   };
 
+  if (token?.length) {
+    myOtp.current = token.join("");
+  }
+  if (loading) {
+    return (
+      <div class="flex justify-center items-center min-h-screen">
+        <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid "></div>
+      </div>
+    );
+  }
   return (
     <section id="register">
       <div className="container">
@@ -325,6 +356,37 @@ export default function Register({ changeScreen }) {
                             {formErrors.email}
                           </p>
                         </div>
+
+                        <div className="mt-[10px]">
+                          <label
+                            htmlFor="email"
+                            className="text-[15px] font-bold flex gap-[2px]"
+                          >
+                            Gender <p className="p-0 m-0 text-red-500">*</p>{" "}
+                          </label>
+                          <select
+                            name="gender"
+                            value={regisData.gender} // Binding the value to regisData.gender
+                            onChange={(e) =>
+                              handleChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.value,
+                                },
+                              })
+                            }
+                            className="w-full border-1 border-[lightgray] border-solid py-[6px] px-[8px] outline-none rounded-[6px]"
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                          </select>
+
+                          <p className="text-[red] text-[15px]">
+                            {formErrors.gender}
+                          </p>
+                        </div>
+
                         <div className="mt-[10px]">
                           <label
                             htmlFor="dob"
@@ -333,7 +395,7 @@ export default function Register({ changeScreen }) {
                             DOB <p className="p-0 m-0 text-red-500">*</p>
                           </label>
 
-                          <DatePicker
+                          {/* <DatePicker
                             selected={regisData.dob}
                             onChange={(date) =>
                               handleChange({
@@ -352,6 +414,50 @@ export default function Register({ changeScreen }) {
                                     : ""
                                 }
                               />
+                            }
+                            dateFormat="dd/MM/yyyy"
+                            showYearDropdown
+                            showMonthDropdown
+                            dropdownMode="select"
+                          /> */}
+                          <DatePicker
+                            selected={regisData.dob}
+                            onChange={(date) =>
+                              handleChange({
+                                target: { name: "dob", value: date },
+                              })
+                            }
+                            customInput={
+                              <div
+                                className="custom-date-input"
+                                style={{ position: "relative" }}
+                              >
+                                <Input
+                                  name="dob"
+                                  className="dob"
+                                  fullWidth
+                                  placeholder="Select your date of birth"
+                                  value={
+                                    regisData.dob
+                                      ? regisData.dob.toLocaleDateString(
+                                          "en-GB"
+                                        )
+                                      : ""
+                                  }
+                                />
+                                <FaCalendarAlt
+                                  style={{
+                                    position: "absolute",
+                                    right: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() =>
+                                    document.querySelector(".dob").focus()
+                                  } // Trigger focus on the input to open calendar
+                                />
+                              </div>
                             }
                             dateFormat="dd/MM/yyyy"
                             showYearDropdown
@@ -382,7 +488,7 @@ export default function Register({ changeScreen }) {
 
                         <div className="mt-[10px]">
                           <label
-                            htmlFor="city"
+                            htmlFor="address.city"
                             className="text-[15px] font-bold flex gap-[2px]"
                           >
                             City <p className="p-0 m-0 text-red-500">*</p>
@@ -393,7 +499,7 @@ export default function Register({ changeScreen }) {
                             type="text"
                             placeholder="Enter City"
                             className="w-full border-1 border-[lightgray] border-solid py-[6px] px-[8px] outline-none rounded-[6px]"
-                            value={regisData.city}
+                            value={regisData.address.city}
                             onChange={handleChange}
                           />
                         </div>
@@ -446,18 +552,20 @@ export default function Register({ changeScreen }) {
                     </div>
                     <div className="px-[10px] sm:px-4 ">
                       <div>
-                        {/* <label
-                          htmlFor="firstName"
-                          className="text-[15px] font-bold flex gap-[2px]"
-                        >
-                          OTP <p className="p-0 m-0 text-red-500">*</p>
-                        </label> */}
-
-                        {/* <InputOtp
-                      value={token}
-                      onChange={(e) => setTokens(e.value)}
-                      integerOnly
-                    /> */}
+                        {/* <div className="otpCard flex gap-[10px] justify-center">
+                          {token.map((value, index) => (
+                            <div key={index} className="w-[60px]">
+                              <Input
+                                className="border-1 border-[lightgray] border-solid rounded-[10px] bg-transparent outline-none"
+                                value={value}
+                                onChange={(e) => handleTokenChange(e, index)}
+                                maxLength={1}
+                                clearable
+                                aria-label={`OTP Digit ${index + 1}`}
+                              />
+                            </div>
+                          ))}
+                        </div> */}
 
                         <div className="otpCard flex gap-[10px] justify-center">
                           {token.map((value, index) => (
@@ -469,6 +577,22 @@ export default function Register({ changeScreen }) {
                                 maxLength={1}
                                 clearable
                                 aria-label={`OTP Digit ${index + 1}`}
+                                ref={(input) =>
+                                  (otpRefs.current[index] = input)
+                                } // Assigning refs for each input
+                                onKeyUp={(e) => {
+                                  if (
+                                    e.target.value.length === 1 &&
+                                    index < token.length - 1
+                                  ) {
+                                    otpRefs.current[index + 1]?.focus(); // Move to next input box
+                                  } else if (
+                                    e.key === "Backspace" &&
+                                    index > 0
+                                  ) {
+                                    otpRefs.current[index - 1]?.focus(); // Move to previous input on backspace
+                                  }
+                                }}
                               />
                             </div>
                           ))}
@@ -511,6 +635,7 @@ export default function Register({ changeScreen }) {
                         <button
                           type="button"
                           className="text-white bg-[#071e63]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2"
+                          onClick={() => changeScreen("LOGIN")}
                         >
                           Login
                         </button>

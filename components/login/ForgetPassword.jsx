@@ -5,14 +5,15 @@ import { FaUser } from "react-icons/fa";
 export default function ForgetPassword({ changeScreen }) {
   const [username, setUsername] = useState("");
   const [page, setPage] = useState(1);
-  // const [otp, setOtp] = useState('');
-  const [otp, setOtp] = useState(new Array(4).fill(""));
+  const [myOtp, setOtp] = useState(new Array(4).fill(""));
+  let otp = "";
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userId, setUserId] = useState("");
-
+  const [loading, setLoading] = useState(false);
   async function resetPasswordOtp() {
     try {
+      setLoading(true)
       let data = { username };
       const response = await fetch(
         "https://vijethaiasacademyvja.com/api/public/user/sent-reset-password-otp",
@@ -27,7 +28,7 @@ export default function ForgetPassword({ changeScreen }) {
       const result = await response.json();
       if (response.ok) {
         setPage(2);
-        setUserId(result.id); 
+        setUserId(result.id);
         console.log(result);
         useStoreSnackbar.getState().showSnackbar({
           description: "Successfully send otp for Reset Password",
@@ -44,16 +45,22 @@ export default function ForgetPassword({ changeScreen }) {
         color: "red",
       });
     }
+    finally {
+      setLoading(false);
+    }
   }
 
   async function resetPassword() {
+    debugger;
     if (newPassword !== confirmPassword) {
       console.log("Passwords do not match!");
       return;
     }
 
     try {
+      setLoading(true);
       let data = { newPassword, id: userId, confirmPassword, otp };
+
       const response = await fetch(
         "https://vijethaiasacademyvja.com/api/public/user/reset-password",
         {
@@ -76,7 +83,7 @@ export default function ForgetPassword({ changeScreen }) {
       } else {
         useStoreSnackbar.getState().showSnackbar({
           description: "Failed in submitting",
-          title:"Failed",
+          title: "Failed",
           color: "yellow",
         });
         throw new Error(result.message || "Failed");
@@ -84,21 +91,34 @@ export default function ForgetPassword({ changeScreen }) {
     } catch (error) {
       useStoreSnackbar.getState().showSnackbar({
         description: "Error in submitting",
-        title:error,
+        title: error,
         color: "red",
       });
+    }
+    finally {
+      setLoading(false);
     }
   }
 
   const handleChange = (e, index) => {
     const value = e.target.value;
     if (/^\d$/.test(value) || value === "") {
-      let newOtp = [...otp];
+      let newOtp = [...myOtp];
       newOtp[index] = value;
       setOtp(newOtp);
     }
   };
 
+  if (myOtp?.length) {
+    otp = myOtp.join("");
+  }
+  if (loading) {
+    return (
+      <div class="flex justify-center items-center min-h-screen">
+        <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid "></div>
+      </div>
+    );
+  }
   return (
     <>
       <section id="loginForgetPwd">
@@ -175,7 +195,7 @@ export default function ForgetPassword({ changeScreen }) {
               /> */}
 
                 <div className="otpCard flex gap-[10px] justify-content">
-                  {otp.map((value, index) => (
+                  {myOtp.map((value, index) => (
                     <div key={index} className="w-[60px]">
                       <Input
                         className="border-1 border-[lightgray] border-solid rounded-[10px] bg-transparent outline-none"

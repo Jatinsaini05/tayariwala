@@ -20,6 +20,11 @@ export default function Enquiry({ enquiryDetail, pageText }) {
     message: "",
     enquiryType: "",
   });
+  // useStoreSnackbar.getState().showSnackbar({
+  //   description: "Enquiry submitted successfully",
+  //   title: "Submitted",
+  //   color: "yellow",
+  // });
   useEffect(() => {
     const fetchCourses = async () => {
       try {

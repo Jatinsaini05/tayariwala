@@ -8,12 +8,13 @@ import { useStoreLoader } from "../../../store/loader";
 // import {Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure} from "@nextui-org/react";
 export const getServerSideProps = async (context) => {
   const { productId } = context.params;
+  // console.log(" productId", productId);
   try {
     const response = await fetch(
       `https://v3.edkt.net/api/s/product/${productId}`,
       {
         headers: {
-          apihost: "https://vijethaiasacademyvja.com/",
+          apihost: "https://vijethaiasacademyvja.com",
         },
       }
     );
@@ -22,6 +23,7 @@ export const getServerSideProps = async (context) => {
     }
     const productResponse = await response.json();
     const ProductId = productResponse.id;
+
     return {
       props: {
         productResponse,
@@ -35,25 +37,22 @@ export const getServerSideProps = async (context) => {
 
 export default function Index({ productResponse, ProductId }) {
   const router = useRouter();
-  // const { isVisible, setVisible } = useStoreDialog();
-  // const [isVisible, setVisible] = useState(false);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false); // Control modal state manually
   const [initialScreen, setInitialScreen] = useState("LOGIN");
   const [emiOptions, setEmiOptions] = useState(null);
-
   const { user, authToken } = useStoreLogin();
   const [page, setPage] = useState("reviewPage");
   const [couponField, setCouponField] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const isloading = useStoreLoader((state) => state.isloading);
+  const [loading, setLoading] = useState(false);
   // const toast = useRef(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   // const totalAmount = useRef(null);
   let discountAmount = 0;
   // const [discountAmount , setDiscountAmount] = useState(0);
   const orderId = useRef(null);
-
   const [discount, setDiscount] = useState({
     discountDetail: {
       discountCode: couponCode,
@@ -74,7 +73,6 @@ export default function Index({ productResponse, ProductId }) {
     order: {
       stream: "",
       customParams: { paymentMethod: "" },
-
       course: "",
       session: "",
       center: "",
@@ -90,6 +88,7 @@ export default function Index({ productResponse, ProductId }) {
   });
 
   const updatePlaceOrderData = async (productResponse) => {
+ 
     if (productResponse) {
       try {
         const [stream, course, session, center, batch] = await Promise.all([
@@ -123,9 +122,10 @@ export default function Index({ productResponse, ProductId }) {
   };
 
   const calculateTotalCost = (productResponse) => {
+  
     const cost = parseFloat(productResponse.cost);
-    const cgst = parseFloat(productResponse.tax.cgst);
-    const sgst = parseFloat(productResponse.tax.sgst);
+    const cgst = parseFloat(productResponse?.tax?.cgst || 0);
+    const sgst = parseFloat(productResponse?.tax?.sgst || 0);
     const totalTax =
       parseFloat(((cost * cgst) / 100).toFixed(2)) +
       parseFloat(((cost * sgst) / 100).toFixed(2));
@@ -135,6 +135,7 @@ export default function Index({ productResponse, ProductId }) {
 
   useEffect(() => {
     if (productResponse) {
+    
       updatePlaceOrderData(productResponse);
     }
   }, [productResponse]);
@@ -177,9 +178,11 @@ export default function Index({ productResponse, ProductId }) {
 
   const initiateOrder = async () => {
     try {
+     
+      setLoading(true);
       if (user && authToken) {
-        onOpenChange(false); // Close modal
-        updatePlaceOrderData();
+        setIsOpen(false);
+        // updatePlaceOrderData();
         placeOrderData.user = user;
 
         orderId.current = await getOrderId(placeOrderData);
@@ -200,10 +203,14 @@ export default function Index({ productResponse, ProductId }) {
           console.error("No payment node found for this order.");
         }
       } else {
-        onOpen(); // Open modal if user or authToken is not available
+        setIsOpen(true);
       }
     } catch (e) {
+      alert("Error in initaitong order");
+      onOpenChange(false); // Close modal in case of error
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -273,6 +280,8 @@ export default function Index({ productResponse, ProductId }) {
     }
   }
   async function getOrderId(placeOrderData) {
+  
+
     try {
       const response = await fetch(`${apiUrl}/api/cmn/order/place-order`, {
         method: "POST",
@@ -297,7 +306,6 @@ export default function Index({ productResponse, ProductId }) {
       const data = await response.json();
       if (data.length > 0) {
         const { id, dueAmount, orderNo, store } = data[0];
-        console.log("Due Amount in payment nodes", dueAmount);
         return { id, dueAmount, orderNo, store };
       } else {
         return null;
@@ -398,6 +406,15 @@ export default function Index({ productResponse, ProductId }) {
       throw error;
     }
   }
+
+  if (loading) {
+    return (
+      <div class="flex justify-center items-center min-h-screen">
+        <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid "></div>
+      </div>
+    );
+  }
+
   return (
     <section id="courseBuy">
       <div className="mx-[6px] px-[1rem] lg:px-[3rem]">
@@ -442,7 +459,9 @@ export default function Index({ productResponse, ProductId }) {
                               className="text-right text-blue-500 cursor-pointer"
                               onClick={() => setCouponField(true)}
                             >
-                             <span className="text-[14px] sm:text-[15px]">HAVE A COUPON CODE?</span> 
+                              <span className="text-[14px] sm:text-[15px]">
+                                HAVE A COUPON CODE?
+                              </span>
                               {couponField && (
                                 <div className="bg-gray-300 border-1 p-1 border-400 flex justify-between">
                                   <input
@@ -529,21 +548,30 @@ export default function Index({ productResponse, ProductId }) {
                 {page === "emiCouponError" && <div>Coupan Error</div>}
                 {page === "orderInitiated" && (
                   <div className="reg-card border-round-lg col-12 sm:col-10 md:col-8 xl:col-5 p-0">
-                    <div className="w-full bg-blue-400 text-white text-lg md:text-xl  px-3 py-3 mb-4 text-center">
+                    <div className="w-full  rounded-[6px] bg-[#2f4285] text-white  text-[14px] sm:text-[16px]  px-3 py-3 mb-4 text-center">
                       Order with this product previously Initiated
                       <br /> Please visit Order list to place your existing
                       orders.
                     </div>
                     <div className="m-0 flex justify-content-center py-5">
-                      <button
+                      {/* <button
                         type="submit"
-                        className="p-0 px-4 py-2 bg-blue-600 text-white border-none border-round-sm cursor-pointer white-space-normal"
+                        className="p-0 px-4 py-2 rounded-[6px] bg-[#2f4285] text-white  text-[14px] sm:text-[16px]  cursor-pointer "
                         onClick={() =>
                           (window.location.href = "${apiUrl}/student/shop")
                         }
                       >
                         Go to Order Section
+                      </button> */}
+
+                      <button
+                        type="submit"
+                        className="p-0 px-4 py-2 rounded-[6px] bg-[#2f4285] text-white text-[14px] sm:text-[16px] cursor-pointer"
+                        onClick={() => window.location.reload()}
+                      >
+                        Go to Order Section
                       </button>
+
                     </div>
                   </div>
                 )}
@@ -567,21 +595,21 @@ export default function Index({ productResponse, ProductId }) {
           </div>
         </div>
 
-        <Modal  className="buy-dialog" isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal
+          className="buy-dialog"
+          isOpen={isOpen}
+          onOpenChange={(open) => setIsOpen(open)}
+        >
           <ModalContent>
             {(onClose) => (
               <div className="card flex justify-center p-0 pb-0">
-                <div
-                  className="top-10 w-full "
-                  position="top"
-                >
+                <div className="top-10 w-full " position="top">
                   <Both initialScreen={initialScreen} />
                 </div>
               </div>
             )}
           </ModalContent>
         </Modal>
-
       </div>
     </section>
   );

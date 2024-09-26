@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import Register from "./Register";
@@ -12,19 +12,57 @@ export default function LoginPassword({ changeScreen }) {
   const [password, setPassword] = useState("");
   const isloading = useStoreLoader((state) => state.isloading);
   const [errorMessage, setErrorMessage] = useState("");
+  // const { user, authToken } = useStoreLogin();
+  const [page, setPage] = useState(1);
+  let user = useStoreLogin.getState().user;
+  let authToken = useStoreLogin.getState().authToken;
+  const [loading, setLoading] = useState(false);
+  // console.log("user",useStoreLogin.getState().user)
+  // const handleLogin = async () => {
+  //   debugger;
+  //   try {
+  //      let data = await useStoreLogin.getState().login({ username, password });
+  //     console.log("data",data)
+  //     if (!data.success) {
+  //       setErrorMessage("Invalid username or passwordddd");
+  //     }
+  //   } catch (error) {
+  //     setErrorMessage("Incorrect Username and Password");
+  //     console.error(error);
+  //   }
+  // };
 
   const handleLogin = async () => {
     try {
-      const data = await useStoreLogin.getState().login({ username, password });
-      if (!data.success) {
-        setErrorMessage("Invalid username or passwordddd");
+      setLoading(true);
+      if (username && password) {
+        let data = await useStoreLogin.getState().login({ username, password });
+      } else {
+        useStoreSnackbar.getState().showSnackbar({
+          description: "Username & Password are required",
+          title: "Required",
+          color: "red",
+        });
       }
-    } catch (error) {
-      setErrorMessage("Incorrect Username and Password");
-      console.error(error);
+    } catch (err) {
+      console.log("Error", err);
+    } finally {
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    if (user && authToken) {
+      setPage(2);
+    }
+  }, [user, authToken]);
 
+  if (loading) {
+    return (
+      <div class="flex justify-center items-center min-h-screen">
+        <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid "></div>
+      </div>
+    );
+  }
   return (
     <>
       <div>
@@ -42,58 +80,67 @@ export default function LoginPassword({ changeScreen }) {
               </span>
             </div>
 
-            <div className="col-12 flex flex-col justify-center px-5">
-              <div className="field py-[8px]  rounded-[6px] px-[6px] items-center border border-[lightgray] border-solid flex w-full mb-3 ">
-                <FaUser className="mr-[6px]" />
-                <input
-                  className=" w-full outline-none "
-                  value={username}
-                  placeholder="Username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="field py-[8px] rounded-[6px] px-[6px] items-center border border-[lightgray] border-solid flex w-full mb-3 ">
-                <FaLock className="mr-[6px]" />
-                <input
-                  className="w-full outline-none"
-                  value={password}
-                  type="password"
-                  placeholder="Password"
-                  pt={{
-                    meter: { className: "w-full" },
-                  }}
-                  onChange={(e) => setPassword(e.target.value)}
-                  toggleMask
-                />
-              </div>
+            {page == 1 && (
+              <div className="col-12 flex flex-col justify-center px-5">
+                <div className="field py-[8px]  rounded-[6px] px-[6px] items-center border border-[lightgray] border-solid flex w-full mb-3 ">
+                  <FaUser className="mr-[6px]" />
+                  <input
+                    className=" w-full outline-none "
+                    value={username}
+                    placeholder="Username"
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <div className="field py-[8px] rounded-[6px] px-[6px] items-center border border-[lightgray] border-solid flex w-full mb-3 ">
+                  <FaLock className="mr-[6px]" />
+                  <input
+                    className="w-full outline-none"
+                    value={password}
+                    type="password"
+                    placeholder="Password"
+                    pt={{
+                      meter: { className: "w-full" },
+                    }}
+                    onChange={(e) => setPassword(e.target.value)}
+                    toggleMask
+                  />
+                </div>
 
-              <div className="w-full flex flex-wrap flex-col px-5 justify-center  border-bottom-1 pb-6 ">
-                {errorMessage && (
-                  <h3 className=" flex justify-content-center text-red-500 text-sm m-0 p-0 ">
-                    {errorMessage}
-                  </h3>
-                )}
-                <div className="flex justify-center rounded-[6px] p-0 m-0 ">
-                  <button
-                    className="text-white bg-[#ea580c]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2 mt-3"
-                    loading={isloading}
-                    onClick={handleLogin}
+                <div className="w-full flex flex-wrap flex-col px-5 justify-center  border-bottom-1 pb-6 ">
+                  {errorMessage && (
+                    <h3 className=" flex justify-content-center text-red-500 text-sm m-0 p-0 ">
+                      {errorMessage}
+                    </h3>
+                  )}
+                  <div className="flex justify-center rounded-[6px] p-0 m-0 ">
+                    <button
+                      className="text-white bg-[#ea580c]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2 mt-3"
+                      loading={isloading}
+                      onClick={handleLogin}
+                    >
+                      Login
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex justify-center pt-3 pb-2 text-xs lg:text-sm text-600">
+                  Don&apos;t have an account?
+                  <span
+                    className="ml-[5px] text-blue-400 cursor-pointer"
+                    onClick={() => changeScreen("REGISTER")}
                   >
-                    Login
-                  </button>
+                    Register Now!
+                  </span>
                 </div>
               </div>
-
-              <div className="flex justify-center pt-3 pb-2 text-xs lg:text-sm text-600">
-                Don&apos;t have an account?
-                <span
-                  className="no-underline text-blue-400 cursor-pointer"
-                  onClick={() => changeScreen("REGISTER")}
-                >
-                  Register Now!
-                </span>
+            )}
+            {page == 2 && (
+              <div>
+                <p className="font-bold text-center pb-[1rem]">
+                  You have successfully Login
+                </p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

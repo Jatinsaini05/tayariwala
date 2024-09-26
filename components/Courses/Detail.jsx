@@ -46,8 +46,8 @@ export default function Detail({ programDetail }) {
                       </h3>
                     </div>
                     <div className="btn mt-4 md:mt-0 md:ml-[150px]">
-                      <div className="bg-black text-white px-4 rounded py-2 text-sm">
-                        <Link href={`/buy/${programDetail?.linkedProduct}`}>
+                      <div className="bg-black hover:bg-[#2f4285] text-white px-4 rounded pt-1 pb-2 text-sm">
+                        <Link className="text-white"  href={`/buy/${programDetail?.linkedProduct}`}>
                           Enroll Now
                         </Link>
                       </div>

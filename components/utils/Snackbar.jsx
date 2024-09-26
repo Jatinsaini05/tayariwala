@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import {useStoreSnackbar} from '../../store/snackbar'
-import {useStoreSnackbar} from "../../store/snackbar"
+import { useStoreSnackbar } from "../../store/snackbar";
 import { FaXmark } from "react-icons/fa6";
 export default function Snackbar() {
   //  debugger;
@@ -25,7 +25,8 @@ export default function Snackbar() {
   const positionStyle = getPositionStyle(position);
   return (
     <div
-    className={`snackbar bg-[${color === 'default' ? 'default-500' : color}]`}
+      className={`snackbar bg-[${color === "default" ? "default-500" : color}]`}
+      // className="snackbar bg-[red]"
       style={{
         ...snackbarContainerStyle,
         ...positionStyle,

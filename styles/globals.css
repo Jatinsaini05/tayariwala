@@ -89,3 +89,6 @@ body {
   max-height: 500px; /* You can adjust this value */
   overflow-y: auto;
 }
+.react-datepicker-wrapper {
+  width: 100%;
+}

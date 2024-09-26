@@ -11,8 +11,10 @@ export default function Otp({ changeScreen }) {
   const [username, setUsername] = useState("");
   const [showRegister, setShowRegister] = useState(false);
   // const [otp, setOtp] = useState("");
-  const [otp, setOtp] = useState(new Array(4).fill(""));
+  const [myOtp, setOtp] = useState(new Array(4).fill(""));
+  let otp = "";
   const [screen, setScreen] = useState("USERNAME");
+  const otpRefs = useRef([]);
   const isloading = useStoreLoader((state) => state.isloading);
   const [timeLeft, setTimeLeft] = useState(60); // Assuming a 60 seconds timer
   const timerRef = useRef(null);
@@ -85,12 +87,14 @@ export default function Otp({ changeScreen }) {
   const handleChange = (e, index) => {
     const value = e.target.value;
     if (/^\d$/.test(value) || value === "") {
-      let newOtp = [...otp];
+      let newOtp = [...myOtp];
       newOtp[index] = value;
       setOtp(newOtp);
     }
   };
-
+  if (myOtp?.length) {
+    otp = myOtp.join("");
+  }
   return (
     <>
       <section id="loginOtp">
@@ -156,13 +160,8 @@ export default function Otp({ changeScreen }) {
                       /> */}
                       </p>
 
-                      {/* <input
-                      value={otp}
-                      onChange={(e) => setOtp(e.value)}
-                      integerOnly
-                    /> */}
                       <div>
-                        <div className="otpCard flex gap-[10px] justify-content">
+                        {/* <div className="otpCard flex gap-[10px] justify-content">
                           {otp.map((value, index) => (
                             <div key={index} className="w-[60px]">
                               <Input
@@ -172,6 +171,37 @@ export default function Otp({ changeScreen }) {
                                 maxLength={1}
                                 clearable
                                 aria-label={`OTP Digit ${index + 1}`}
+                              />
+                            </div>
+                          ))}
+                        </div> */}
+
+                        <div className="otpCard flex gap-[10px] justify-center">
+                          {myOtp.map((value, index) => (
+                            <div key={index} className="w-[60px]">
+                              <Input
+                                className="border-1 border-[lightgray] border-solid rounded-[10px] bg-transparent outline-none"
+                                value={value}
+                                onChange={(e) => handleChange(e, index)}
+                                maxLength={1}
+                                clearable
+                                aria-label={`OTP Digit ${index + 1}`}
+                                ref={(input) =>
+                                  (otpRefs.current[index] = input)
+                                } // Assigning refs for each input
+                                onKeyUp={(e) => {
+                                  if (
+                                    e.target.value.length === 1 &&
+                                    index < myOtp.length - 1
+                                  ) {
+                                    otpRefs.current[index + 1]?.focus(); // Move to next input box
+                                  } else if (
+                                    e.key === "Backspace" &&
+                                    index > 0
+                                  ) {
+                                    otpRefs.current[index - 1]?.focus(); // Move to previous input on backspace
+                                  }
+                                }}
                               />
                             </div>
                           ))}
@@ -202,7 +232,7 @@ export default function Otp({ changeScreen }) {
 
                           {timeLeft > 0 && (
                             <div>
-                              <p className="text-center border-1 border-[black] border-solid rounded-[100%] w-[36px] h-[36px] leading-[3px] text-[14px] text-[black]">
+                              <p className="text-center border-1 border-[black] border-solid rounded-[100%] w-[36px] h-[36px] leading-[32px] text-[14px] text-[black]">
                                 {timeLeft}s
                               </p>
                             </div>
