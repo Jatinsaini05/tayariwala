@@ -2,39 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-.orderedListstyle {
-  list-style: auto;
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
-@media print {
-  .print-hidden {
-    display: none;
-  }
- 
-  .samePage {
-    page-break-inside: avoid;
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
-    box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
-  }
-  70% {
-    -moz-box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
-    box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
-  }
-  100% {
-    -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
-    box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
-  }
+body {
+  /* color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb)); */
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
-  100% {
-    transform: rotate(360deg);
-  }
+
+}
+
+
+.topNavLink{
+  position: relative;
+}
+
+.topNavLink::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 4px;
+  background: white;
+  top: 100%;
+  left: 0;
+  transition: 0.3s;
+}
+
+.topNavLink:hover::after{
+  width: 100%;
+
+}
+
+.footer-link{
+  position: relative;
+}
+
+.footer-link::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2.5px;
+  background: grey;
+  top: 90%;
+  left: 0;
+  transition: 0.3s;
+}
+
+.footer-link:hover::after{
+  width: 100%;
+}
+
+
+
+#register .otpCard input {
+  text-align: center;
+}
+#loginOtp .otpCard input {
+  text-align: center;
+}
+#loginForgetPwd .otpCard input {
+  text-align: center;
+}
+
+.buy-dialog {
+  max-height: 500px; /* You can adjust this value */
+  overflow-y: auto;
 }
