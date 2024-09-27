@@ -88,7 +88,6 @@ export default function Index({ productResponse, ProductId }) {
   });
 
   const updatePlaceOrderData = async (productResponse) => {
- 
     if (productResponse) {
       try {
         const [stream, course, session, center, batch] = await Promise.all([
@@ -122,7 +121,6 @@ export default function Index({ productResponse, ProductId }) {
   };
 
   const calculateTotalCost = (productResponse) => {
-  
     const cost = parseFloat(productResponse.cost);
     const cgst = parseFloat(productResponse?.tax?.cgst || 0);
     const sgst = parseFloat(productResponse?.tax?.sgst || 0);
@@ -135,7 +133,6 @@ export default function Index({ productResponse, ProductId }) {
 
   useEffect(() => {
     if (productResponse) {
-    
       updatePlaceOrderData(productResponse);
     }
   }, [productResponse]);
@@ -178,7 +175,6 @@ export default function Index({ productResponse, ProductId }) {
 
   const initiateOrder = async () => {
     try {
-     
       setLoading(true);
       if (user && authToken) {
         setIsOpen(false);
@@ -280,8 +276,6 @@ export default function Index({ productResponse, ProductId }) {
     }
   }
   async function getOrderId(placeOrderData) {
-  
-
     try {
       const response = await fetch(`${apiUrl}/api/cmn/order/place-order`, {
         method: "POST",
@@ -407,6 +401,19 @@ export default function Index({ productResponse, ProductId }) {
     }
   }
 
+  function goToDashboard() {
+    debugger;
+    let url = null;
+    if (!authToken) {
+      url = "https://vijethaiasacademyvja.com//student/auth/login";
+    } else {
+      const tk = authToken;
+      const client = user?.client;
+      url = `https://vijethaiasacademyvja.com/student/auth/redirect?token=${tk}&path=student/dashboard&client=${client}`;
+    }
+    window.open(url, "_blank");
+  }
+
   if (loading) {
     return (
       <div class="flex justify-center items-center min-h-screen">
@@ -414,7 +421,7 @@ export default function Index({ productResponse, ProductId }) {
       </div>
     );
   }
-
+  // console.log("client",user?.client);
   return (
     <section id="courseBuy">
       <div className="mx-[6px] px-[1rem] lg:px-[3rem]">
@@ -554,24 +561,13 @@ export default function Index({ productResponse, ProductId }) {
                       orders.
                     </div>
                     <div className="m-0 flex justify-content-center py-5">
-                      {/* <button
-                        type="submit"
-                        className="p-0 px-4 py-2 rounded-[6px] bg-[#2f4285] text-white  text-[14px] sm:text-[16px]  cursor-pointer "
-                        onClick={() =>
-                          (window.location.href = "${apiUrl}/student/shop")
-                        }
-                      >
-                        Go to Order Section
-                      </button> */}
-
                       <button
                         type="submit"
                         className="p-0 px-4 py-2 rounded-[6px] bg-[#2f4285] text-white text-[14px] sm:text-[16px] cursor-pointer"
-                        onClick={() => window.location.reload()}
+                        onClick={() => goToDashboard()}
                       >
                         Go to Order Section
                       </button>
-
                     </div>
                   </div>
                 )}
