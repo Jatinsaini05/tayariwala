@@ -92,3 +92,33 @@ body {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+
+#allBlogs .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+#allBlogs .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#allBlogs .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#allBlogs  .swiper-button-prev:after, #allBlogs .swiper-button-next:after {
+ background-color: #071e63;
+ color: white;
+font-size: 20px;
+padding: 10px;
+}
