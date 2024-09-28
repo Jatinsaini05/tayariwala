@@ -93,7 +93,7 @@ export default function Allblogs({ allCategory, allBlogPost }) {
                     >
                       {allBlogPost.map((item, index) => (
                         <SwiperSlide key={index}>
-                          <div className="img relative w-full h-[23rem]">
+                          <div className="img relative w-full h-[15rem] sm:h-[23rem]">
                             <img
                               src={item?.featureImg}
                               alt="slider-image"
@@ -232,7 +232,7 @@ export default function Allblogs({ allCategory, allBlogPost }) {
                     className="cart grid   lg:grid-cols-4 gap-8 mt-2"
                   >
                     {item?.featureImg && (
-                      <div className="img">
+                      <div>
                         <img
                           src={item.featureImg}
                           alt="card-image"
@@ -277,9 +277,9 @@ export default function Allblogs({ allCategory, allBlogPost }) {
                         </p>
                       </div>
                       {item?.description && (
-                        <div className=" overflow-auto">
+                        <div className=" overflow-auto max-w-[300px]  sm:max-w-full">
                           <span
-                            className="text-sm line-clamp-4 max-w-[300px]  sm:max-w-full"
+                            className="text-sm line-clamp-4 "
                             dangerouslySetInnerHTML={{
                               __html: item.description,
                             }}
