@@ -73,8 +73,8 @@ export default function Detail({ blogPostDetail, allCategory }) {
                 )}
 
                 {blogPostDetail?.description && (
-                  <div className="post-content">
-                    <span
+                  <div className="overflow-auto">
+                    <span className="max-w-[300px] sm:max-w-full"
                       dangerouslySetInnerHTML={{
                         __html: blogPostDetail.description,
                       }}

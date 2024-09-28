@@ -132,7 +132,7 @@ export default function LoginPassword() {
                         meter: { className: "w-full" },
                       }}
                       onChange={(e) => setPassword(e.target.value)}
-                      toggleMask
+                      // toggleMask
                     />
                   </div>
 

@@ -184,8 +184,9 @@ export default function BlogCategory({
                         </Link>
 
                         {item?.description && (
-                          <div className="text-sm font-medium line-clamp-2">
+                          <div className="text-sm font-medium  line-clamp-4  sm:line-clamp-2 max-w-[300px] sm:max-w-full">
                             <span
+                              // className="max-w-[300px] sm:max-w-full"
                               dangerouslySetInnerHTML={{
                                 __html: item.description,
                               }}

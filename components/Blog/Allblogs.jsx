@@ -2,7 +2,7 @@ import { FaRocket } from "react-icons/fa6";
 import Link from "next/link";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -15,8 +15,10 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 export default function Allblogs({ allCategory, allBlogPost }) {
   let allBlogCategorySlug = [];
+  const [isLoading, setIsLoading] = useState(true);
   if (allBlogPost?.length) {
     for (let i = 0; i < allBlogPost?.length; i++) {
+      // allBlogCategorySlug
       if (allBlogPost[i]?.postCategories[0]) {
         for (let j = 0; j < allCategory?.length; j++) {
           if (allBlogPost[i].postCategories[0] === allCategory[j]?.id) {
@@ -27,8 +29,32 @@ export default function Allblogs({ allCategory, allBlogPost }) {
       }
     }
   }
-
-  // console.log("allBlogCategorySlug", allBlogCategorySlug);
+  useEffect(() => {
+    // postCategoriesName
+    if (allBlogPost?.length) {
+      try {
+        setIsLoading(true);
+        for (let i = 0; i < allBlogPost?.length; i++) {
+          allBlogPost[i].postCategoriesName = [];
+          if (allBlogPost[i]?.postCategories) {
+            for (let j = 0; j < allBlogPost[i]?.postCategories?.length; j++) {
+              let categName = allCategory.find(
+                (el, index) => el?.id === allBlogPost[i]?.postCategories[j]
+              );
+              allBlogPost[i].postCategoriesName.push({
+                title: categName?.title,
+                slug: categName?.slug,
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.log("Error in calculating postCategoryName");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [allBlogPost, allCategory]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -37,10 +63,17 @@ export default function Allblogs({ allCategory, allBlogPost }) {
       year: "numeric",
     });
   };
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid"></div>
+      </div>
+    );
+  }
   return (
     <>
       <div id="allBlogs">
-        {/* {JSON.stringify(allBlogPost)} */}
+        {/* {JSON.stringify(isLoading)} */}
         <section className="bloging-sec1">
           <div className="container mx-auto md:px-8 px-4 lg:px-16">
             <div className="grid lg:grid-cols-4 grid-cols-1 lg:gap-6 lg:mt-0 mt-2 py-6 md:mx-start mx-auto">
@@ -75,17 +108,6 @@ export default function Allblogs({ allCategory, allBlogPost }) {
                     </Swiper>
                   </div>
                 )}
-
-                {/* <div className="img relative">
-                  <img
-                    src="https://i.filecdn.in/780vijethaiasacademy/19-1727242496722.png"
-                    alt="slider-image"
-                    className="w-full lg:h-[419px] "
-                  />
-                  <h2 className="bg-[#305e85] text-white text-xl absolute bottom-[10px] px-2 py-2 inline-block font-medium ">
-                    Best inter + Degree + Civils Coaching Programs in Vijayawada
-                  </h2>
-                </div> */}
               </div>
 
               <div className="sideContent text-center lg:mt-0 mt-4">
@@ -231,17 +253,33 @@ export default function Allblogs({ allCategory, allBlogPost }) {
                           </Link>
                         )}
 
-                        <p>
+                        <p className="flex gap-[5px] flex-wrap sm:flex-nowrap">
                           <span>On:</span> {formatDate(item?.createdAt)}
                           <span> | Category:</span>
-                          <Link href="">Article of the day</Link>
-                          <Link href="">Daily current Affairs</Link>
+                          {item?.postCategoriesName?.length && (
+                            <div>
+                              {item.postCategoriesName.map(
+                                (items, nameIndex) => (
+                                  <span
+                                    key={nameIndex}
+                                    className="hover:text-[#0c4270] mr-[5px]"
+                                  >
+                                    <Link
+                                      href={`/blog/category/${items?.slug}`}
+                                    >
+                                      {items?.title}
+                                    </Link>
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          )}
                         </p>
                       </div>
                       {item?.description && (
-                        <div>
+                        <div className=" overflow-auto">
                           <span
-                            className="text-sm line-clamp-4"
+                            className="text-sm line-clamp-4 max-w-[300px]  sm:max-w-full"
                             dangerouslySetInnerHTML={{
                               __html: item.description,
                             }}
