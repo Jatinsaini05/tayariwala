@@ -20,11 +20,6 @@ export default function Enquiry({ enquiryDetail, pageText }) {
     message: "",
     enquiryType: "",
   });
-  // useStoreSnackbar.getState().showSnackbar({
-  //   description: "Enquiry submitted successfully",
-  //   title: "Submitted",
-  //   color: "yellow",
-  // });
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -152,6 +147,7 @@ export default function Enquiry({ enquiryDetail, pageText }) {
 
   const validate = () => {
     let formErrors = {};
+
     if (!formData.firstName) {
       formErrors.firstName = "Full Name is required.";
     } else if (!/^[a-zA-Z\s]+$/.test(formData.Name)) {
@@ -356,48 +352,8 @@ export default function Enquiry({ enquiryDetail, pageText }) {
                     <p className="text-red-500">{errors.course}</p>
                   )}
                 </div>
-                {/* {streamLoading  && (
-                 <div>
-                    Loading
-                 </div>
-                )} */}
 
-                {/* <div className="inp mb-4">
-                  <select
-                    name="stream"
-                    className="w-full py-2.5 px-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#0c4270] focus:ring-2 focus:ring-[#0c4270] box-border"
-                    value={formData.stream}
-                    onChange={handleChange}
-                  >
-                    {allStreams?.length ? (
-                      <>
-                        <option value="">Select Stream *</option>
-                        {allStreams.map((item, index) => (
-                          <option key={index} value={item.id}>
-                            {item.valueAlias}
-                          </option>
-                        ))}
-                      </>
-                    ) : (
-                        {
-                            {streamLoading  ? (
-                               
-                                  <option value="">create Loader</option>
-                               
-                               ) :(
-                                <option value="">Loading Stream ....</option>
-                               )
-                            }
-                        }
-                     
-                    )}
-
-
-                  </select>
-                  {errors.stream && (
-                    <p className="text-red-500">{errors.stream}</p>
-                  )}
-                </div> */}
+                
                 <div className="inp mb-4">
                   <select
                     name="stream"

@@ -11,7 +11,7 @@ export const useStoreLogin = create(
       authToken: null,
 
       login: async (userData) => {
-        // debugger;
+        debugger;
         const { username, password } = userData;
 
         if (!username || !password) {
@@ -20,13 +20,6 @@ export const useStoreLogin = create(
             title: "Required",
             color: "red",
           });
-          useStoreToast
-            .getState()
-            .setShowToast(
-              "Username and password are required",
-              "Invalid Input",
-              "error"
-            );
           return;
         }
         useStoreLoader.getState().setLoading(true);
@@ -49,7 +42,7 @@ export const useStoreLogin = create(
               color: "red",
             });
             response = await response.json();
-            throw new Error(response.message);
+            return;
           } else {
             response = await response.json();
             set({ user: response.user, authToken: response.token });
@@ -61,10 +54,6 @@ export const useStoreLogin = create(
             });
           }
         } catch (error) {
-          useStoreToast
-            .getState()
-            .setShowToast(error.message, "Error", "error");
-          console.error(error);
           useStoreSnackbar.getState().showSnackbar({
             description: "Error in Login",
             title: error,
@@ -180,7 +169,7 @@ export const useStoreLogin = create(
           useStoreLoader.getState().setLoading(false);
         }
       },
-      logout: () => set({ user: null , authToken:null}),
+      logout: () => set({ user: null, authToken: null }),
     }),
     {
       name: "bears-storage",

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useStoreSnackbar } from "../../store/snackbar";
+import { useStoreSnackbar } from "../store/snackbar";
 import { Input } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
-export default function ForgetPassword({ changeScreen }) {
+import Link from "next/link";
+export default function ForgetPassword() {
   const [username, setUsername] = useState("");
   const [page, setPage] = useState(1);
   const otpRefs = useRef([]);
@@ -16,6 +17,7 @@ export default function ForgetPassword({ changeScreen }) {
   const [errorMessagePassword, setErrorMessagePassword] = useState("");
 
   async function resetPasswordOtp() {
+    debugger;
     if (validate()) {
       try {
         setLoading(true);
@@ -132,15 +134,6 @@ export default function ForgetPassword({ changeScreen }) {
     if (!username) {
       errors.username = "Username is required";
     }
-    // if (!confirmPassword) {
-    //   errors.confirmPassword = "Conform Password is required";
-    // }
-    // if (!newPassword) {
-    //   errors.newPassword = "New Password is required";
-    // }
-    // if (!otp) {
-    //   errors.otp = "Otp is required";
-    // }
     setErrorMessage(errors);
     return Object.keys(errors).length === 0;
   };
@@ -177,9 +170,9 @@ export default function ForgetPassword({ changeScreen }) {
   return (
     <>
       <section id="loginForgetPwd">
-        <div className="col-12 rounded-[8px] p-0 shadow-[0_8px_6px_-1px_rgba(0,0,0,0.2),0_8px_8px_0_rgba(0,0,0,0.14),0_8px_8px_0_rgba(0,0,0,0.12)]">
-          <div className="flex  rounded-t-[8px] justify-between bg-[#071e63] text-white mb-5 flex-wrap flex-col sm:flex-row">
-            <h2 className="m-0 py-3 px-4 lg:text-lg text-base  font-bold white-space-nowrap text-center sm:text-left ">
+        <div className="block mt-[2rem] mb-[2rem] mx-auto w-[100%] rounded-[8px] sm:w-[70%]  lg:w-[60%] cl:w-[50%] shadow-[0_8px_6px_-1px_rgba(0,0,0,0.2),0_8px_8px_0_rgba(0,0,0,0.14),0_8px_8px_0_rgba(0,0,0,0.12)] pb-[1rem]">
+          <div className=" bg-[#071e63] rounded-t-[8px] text-white mb-5 ">
+            <h2 className="m-0 py-3 px-4 lg:text-lg text-base  font-bold text-center ">
               Reset Password
             </h2>
           </div>
@@ -215,28 +208,6 @@ export default function ForgetPassword({ changeScreen }) {
                       Reset
                     </button>
                   </div>
-
-                  <div className="flex justify-end gap-2 mt-3 pb-[1rem]">
-                    <div>
-                      <button
-                        className="block mx-auto text-white bg-[#071e63]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2"
-                        onClick={() => changeScreen("LOGIN")}
-                        type="submit"
-                      >
-                        Back
-                      </button>
-                    </div>
-
-                    <div>
-                      <button
-                        className="block mx-auto text-white bg-[#071e63]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2"
-                        onClick={() => changeScreen("REGISTER")}
-                        type="submit"
-                      >
-                        Register
-                      </button>
-                    </div>
-                  </div>
                 </div>
               ) : page === 2 ? (
                 <div className="col-12 flex flex-col justify-content-center px-5">
@@ -271,19 +242,6 @@ export default function ForgetPassword({ changeScreen }) {
                           />
                         </div>
                       ))}
-
-                      {/* {myOtp.map((value, index) => (
-                    <div key={index} className="w-[60px]">
-                      <Input
-                        className="border-1 border-[lightgray] border-solid rounded-[10px] bg-transparent outline-none"
-                        value={value}
-                        onChange={(e) => handleChange(e, index)}
-                        maxLength={1}
-                        clearable
-                        aria-label={`OTP Digit ${index + 1}`}
-                      />
-                    </div>
-                  ))} */}
                     </div>
 
                     {errorMessagePassword?.otp && (
@@ -351,10 +309,24 @@ export default function ForgetPassword({ changeScreen }) {
                   <p className="font-bold text-center pb-[1rem]">
                     Your Password has been reset successfully
                   </p>
+
+                  <div className="flex justify-end gap-2 mt-3 mr-[10px] pb-[1rem]">
+                    <div>
+                      <Link
+                        href="/login"
+                        className="block mx-auto text-white bg-[#071e63]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           )}
+
+
+          
         </div>
       </section>
     </>

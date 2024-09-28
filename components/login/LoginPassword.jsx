@@ -1,5 +1,5 @@
 import React from "react";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import Register from "./Register";
@@ -17,37 +17,27 @@ export default function LoginPassword({ changeScreen }) {
   let user = useStoreLogin.getState().user;
   let authToken = useStoreLogin.getState().authToken;
   const [loading, setLoading] = useState(false);
-  // console.log("user",useStoreLogin.getState().user)
-  // const handleLogin = async () => {
-  //   debugger;
-  //   try {
-  //      let data = await useStoreLogin.getState().login({ username, password });
-  //     console.log("data",data)
-  //     if (!data.success) {
-  //       setErrorMessage("Invalid username or passwordddd");
-  //     }
-  //   } catch (error) {
-  //     setErrorMessage("Incorrect Username and Password");
-  //     console.error(error);
-  //   }
-  // };
 
   const handleLogin = async () => {
-    try {
-      setLoading(true);
-      if (username && password) {
-        let data = await useStoreLogin.getState().login({ username, password });
-      } else {
-        useStoreSnackbar.getState().showSnackbar({
-          description: "Username & Password are required",
-          title: "Required",
-          color: "red",
-        });
+    if (validate()) {
+      try {
+        setLoading(true);
+        if (username && password) {
+          let data = await useStoreLogin
+            .getState()
+            .login({ username, password });
+        } else {
+          useStoreSnackbar.getState().showSnackbar({
+            description: "Username & Password are required",
+            title: "Required",
+            color: "red",
+          });
+        }
+      } catch (err) {
+        console.log("Error", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.log("Error", err);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -56,6 +46,15 @@ export default function LoginPassword({ changeScreen }) {
     }
   }, [user, authToken]);
 
+  useEffect(() => {
+    if (Object.keys(errorMessage).length > 0) {
+      const timer = setTimeout(() => {
+        setErrorMessage({});
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   if (loading) {
     return (
       <div class="flex justify-center items-center min-h-screen">
@@ -63,6 +62,21 @@ export default function LoginPassword({ changeScreen }) {
       </div>
     );
   }
+
+  const validate = () => {
+    const errors = {};
+    if (!username) {
+      errors.username = "Username is required";
+    }
+    if (!password) {
+      errors.password = "Password is required";
+    }
+
+    setErrorMessage(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  
   return (
     <>
       <div>
@@ -91,6 +105,11 @@ export default function LoginPassword({ changeScreen }) {
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
+                {errorMessage?.username && (
+                      <p className="text-[red] text-[15px] mb-[5px]">
+                        {errorMessage.username}
+                      </p>
+                    )}
                 <div className="field py-[8px] rounded-[6px] px-[6px] items-center border border-[lightgray] border-solid flex w-full mb-3 ">
                   <FaLock className="mr-[6px]" />
                   <input
@@ -105,13 +124,12 @@ export default function LoginPassword({ changeScreen }) {
                     toggleMask
                   />
                 </div>
-
+                {errorMessage?.password && (
+                      <p className="text-[red] text-[15px]">
+                        {errorMessage.password}
+                      </p>
+                    )}
                 <div className="w-full flex flex-wrap flex-col px-5 justify-center  border-bottom-1 pb-6 ">
-                  {errorMessage && (
-                    <h3 className=" flex justify-content-center text-red-500 text-sm m-0 p-0 ">
-                      {errorMessage}
-                    </h3>
-                  )}
                   <div className="flex justify-center rounded-[6px] p-0 m-0 ">
                     <button
                       className="text-white bg-[#ea580c]  rounded-[6px] cursor-pointer px-6 pt-1 pb-2 mt-3"
