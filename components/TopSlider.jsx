@@ -18,13 +18,12 @@ export default function TopSlider({ slides }) {
             modules={[Autoplay, Navigation]}
             className="mySwiper"
           >
-            {slides?.length > 0
-              ? slides.map((img, ind) => (
-                  <SwiperSlide key={ind}>
-                    <img src={img?.imgUrl} className="w-full h-auto" alt="" />
-                  </SwiperSlide>
-                ))
-              : "apidata not found"}
+            {slides?.length &&
+              slides.map((img, ind) => (
+                <SwiperSlide key={ind}>
+                  <img src={img?.imgUrl} className="w-full h-auto" alt="" />
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </section>

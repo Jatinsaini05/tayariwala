@@ -9,7 +9,6 @@ export const getStaticPaths = async () => {
   let header = {
     apiHost: "https://vijethaiasacademyvja.com",
   };
-  
   let categoryResponse = await fetch(
     `https://v3.edkt.net/api/s/blogpostcategory?${categoryParams.toString()}`,
     {
@@ -57,8 +56,6 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const { blogPostUri } = context.params;
-  console.log("blogPostUri",blogPostUri);
-
   try {
     let detailParams = new URLSearchParams({
       select: "createdAt,title,postCategories,description,featureImg,uri",

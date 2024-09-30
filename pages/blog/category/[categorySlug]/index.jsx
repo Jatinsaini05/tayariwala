@@ -1,86 +1,91 @@
 import BlogCategory from "../../../../components/Blog/Category/BlogCategory";
-import React, { useRef, useState, useEffect } from "react";
-import Router, { useRouter } from "next/router";
-export default function category() {
-  const initialCall = useRef(true);
-  const [categoryBlog, setCategoryBlog] = useState("");
-  const [blogPostCategory, setBlogPostCategory] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const fetchPostCategories = async () => {
-    setIsLoading(true);
-    try {
-      let params = new URLSearchParams({
-        select: "title,slug,id",
-      });
-      let header = {
-        apiHost: "https://vijethaiasacademyvja.com",
-      };
-      let response = await fetch(
-        `https://v3.edkt.net/api/s/blogpostcategory?${params.toString()}`,
-        {
-          headers: header,
-        }
-      );
-      let data = await response.json();
-      setBlogPostCategory(data);
-    } catch (err) {
-      console.log("Failed to Load Post Categories:", err);
-    } finally {
-      setIsLoading(false);
-    }
+import React from "react";
+
+export const getStaticPaths = async () => {
+  let categoryParams = new URLSearchParams({
+    select: "title,slug,id",
+  });
+  let header = {
+    apiHost: "https://vijethaiasacademyvja.com",
   };
-
-  const fetchCategoryBlog = async () => {
-    setIsLoading(true);
-    try {
-      let params = new URLSearchParams({
-        select: "title,uri,description,featureImg",
-      });
-      let header = {
-        apiHost: "https://vijethaiasacademyvja.com",
-      };
-      let response = await fetch(
-        `https://v3.edkt.net/api/s/blogpost/blogpostcategory-slug/${router.query.categorySlug}?${params.toString()}`,
-        {
-          headers: header,
-        }
-      );
-      let data = await response.json();
-      setCategoryBlog(data);
-    } catch (err) {
-      console.log("Failed to Blog Detail:", err);
-    } finally {
-      setIsLoading(false);
+  let categoryResponse = await fetch(
+    `https://v3.edkt.net/api/s/blogpostcategory?${categoryParams.toString()}`,
+    {
+      headers: header,
     }
-  };
-
-  if (initialCall.current) {
-    fetchPostCategories();
-    initialCall.current = false;
-  }
-  useEffect(() => {
-    if (router?.query?.categorySlug) {
-      fetchCategoryBlog();
-    }
-  }, [router?.query?.categorySlug]);
-  if (isLoading) {
-    return (
-      <div>
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid"></div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <BlogCategory
-        allCategoryBlogs={categoryBlog}
-        allBlogCategory={blogPostCategory}
-        categoryUri={router?.query?.categorySlug}
-      />
-    </>
   );
-}
+  let blogPostCategory = await categoryResponse.json();
+  const categoryPath = blogPostCategory.map((path, index) => ({
+    params: {
+      categorySlug: path?.slug,
+    },
+  }));
+  let paths = [...categoryPath];
+  // Return all paths
+  return {
+    paths,
+    fallback: "blocking", // Can be 'true' or 'false' depending on your use case
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const { categorySlug } = context.params;
+  try {
+    let categoryParams = new URLSearchParams({
+      select: "title,slug,id",
+    });
+    let header = {
+      apiHost: "https://vijethaiasacademyvja.com",
+    };
+    let categoryResponse = await fetch(
+      `https://v3.edkt.net/api/s/blogpostcategory?${categoryParams.toString()}`,
+      {
+        headers: header,
+      }
+    );
+    let blogPostCategory = await categoryResponse.json();
+
+    let params = new URLSearchParams({
+      select: "title,uri,description,featureImg",
+    });
+
+    let response = await fetch(
+      `https://v3.edkt.net/api/s/blogpost/blogpostcategory-slug/${categorySlug}?${params.toString()}`,
+      {
+        headers: header,
+      }
+    );
+    let categoryBlog = await response.json();
+
+    return {
+      props: {
+        categoryBlog,
+        blogPostCategory,
+        categorySlug,
+      },
+    };
+  } catch (err) {
+    console.log("Failed to Load Post Categories:", err);
+    return {
+      props: {
+        categoryBlog: [],
+        courseDetail: [],
+        categorySlug: null,
+      },
+    };
+  }
+};
+
+const category = (props) => {
+  return (
+    <div>
+      <BlogCategory
+        allCategoryBlogs={props?.categoryBlog}
+        allBlogCategory={props?.blogPostCategory}
+        categoryUri={props?.categorySlug}
+      />
+    </div>
+  );
+};
+
+export default category;

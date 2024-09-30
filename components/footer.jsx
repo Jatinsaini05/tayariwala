@@ -82,7 +82,7 @@ export default function Footer({ footerData }) {
                     <ul className="py-4">
                       {footerData.website.socialLinks?.facebook && (
                         <li className="flex items-center gap-2 my-[5px]">
-                          <FaFacebook className="text-[#1877F2] bg-white text-xl" />
+                          <FaFacebook className="text-[#1877F2] text-xl" />
                           <Link
                             href={footerData.website.socialLinks.facebook}
                             className="text-white footer-link"
