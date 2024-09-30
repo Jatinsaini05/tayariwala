@@ -5,6 +5,7 @@ import { useStoreDialog } from "../../../store/dialog";
 import Both from "../../../components/login/Both";
 import { Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
 import { useStoreLoader } from "../../../store/loader";
+import MetaTags from "../../../components/MetaTags";
 // import {Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure} from "@nextui-org/react";
 export const getServerSideProps = async (context) => {
   const { productId } = context.params;
@@ -424,6 +425,9 @@ export default function Index({ productResponse, ProductId }) {
   // console.log("client",user?.client);
   return (
     <section id="courseBuy">
+        <MetaTags
+        title="Buy"
+      ></MetaTags>
       <div className="mx-[6px] px-[1rem] lg:px-[3rem]">
         <div className="grid grid-rows">
           <div className="grid grid-cols-12">

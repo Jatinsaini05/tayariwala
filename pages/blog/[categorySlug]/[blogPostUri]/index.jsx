@@ -1,6 +1,6 @@
 import React  from "react";
 import Detail from "../../../../components/Blog/Detail";
-
+import MetaTags from "../../../../components/MetaTags";
 export const getStaticPaths = async () => {
   // Step 1: Fetch the category slugs
   let categoryParams = new URLSearchParams({
@@ -101,7 +101,12 @@ export const getStaticProps = async (context) => {
 
 const  blogDetail = (props) => {
   return <div>
-    {/* {JSON.stringify(props?.blogDetail)} */}
+     <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
     <Detail blogPostDetail={props?.blogDetail} allCategory={props?.blogPostCategory} />
     </div>;
 };

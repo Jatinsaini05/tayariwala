@@ -1,6 +1,6 @@
 import React  from "react";
 import Enquiry from "../components/ContactUs/Enquiry";
-
+import MetaTags from "../components/MetaTags";
 export const getStaticProps = async () => {
   try {
     let header = {
@@ -45,6 +45,12 @@ export const getStaticProps = async () => {
 const ContactUs = (props) => {
   return (
     <div>
+       <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
       <Enquiry
         enquiryDetail={props?.websiteData?.website}
         pageText={props?.pageData}

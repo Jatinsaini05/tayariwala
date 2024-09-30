@@ -1,7 +1,7 @@
 import Detail from "../../../components/Courses/Detail";
 import React, { useState, useRef } from "react";
 import Router, { useRouter } from "next/router";
-
+import MetaTags from "../../../components/MetaTags";
 export const getStaticPaths = async () => {
   try {
     let header = {
@@ -62,6 +62,12 @@ export const getStaticProps = async (context) => {
 const courseUri = (props) => {
   return (
     <div>
+        <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
       <Detail programDetail={props?.courseDetail} />
     </div>
   );

@@ -1,6 +1,6 @@
 import AllCourses from "../../components/Courses/Allcourses";
 import React  from "react";
-
+import MetaTags from "../../components/MetaTags";
 export const getStaticProps = async () => {
   try {
     let header = {
@@ -29,6 +29,12 @@ export const getStaticProps = async () => {
 const CourseOffered = (props) => {
   return (
     <div>
+       <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
       <AllCourses courseProgram={props?.allCourseProgram} />
     </div>
   );

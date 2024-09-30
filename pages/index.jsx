@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import dynamic from "next/dynamic";
@@ -7,6 +7,7 @@ import Classroom from "../components/Classroom";
 import SecVijetha from "../components/SecVijetha";
 import Course from "../components/Course";
 import Link from "next/link";
+import MetaTags from "../components/MetaTags";
 
 const Marquee = dynamic(() => import("react-fast-marquee"), {
   ssr: false,
@@ -47,15 +48,29 @@ export const getStaticProps = async () => {
 const home = (props) => {
   return (
     <div>
+      {/* {JSON.stringify( props?.apiData?.pageData?.metaTags?.ogTitle)} */}
       <>
+        <MetaTags
+          title={props?.apiData?.pageData?.metaTags?.ogTitle}
+          keywords={props?.apiData?.pageData?.metaTags?.keywords}
+           description={props?.apiData?.pageData?.metaTags?.ogDescription}
+           image={props?.apiData?.pageData?.metaTags?.ogImag}
+        ></MetaTags>
+
         <TopSlider
-          slides={props?.apiData?.contentBlock?.SLIDER?.advanceData?.data?.slides}
+          slides={
+            props?.apiData?.contentBlock?.SLIDER?.advanceData?.data?.slides
+          }
         />
 
         <Classroom
-          classRoom={props?.apiData?.contentBlock?.GREAT_FEATURE?.advanceData?.data}
+          classRoom={
+            props?.apiData?.contentBlock?.GREAT_FEATURE?.advanceData?.data
+          }
         />
-        <SecVijetha aboutSec={props?.apiData?.contentBlock?.AVAIL_OPPORTUNITY} />
+        <SecVijetha
+          aboutSec={props?.apiData?.contentBlock?.AVAIL_OPPORTUNITY}
+        />
         <Course courses={props?.apiData?.contentBlock?.FEATURE_COURSE} />
 
         <section className="sec5">
@@ -67,8 +82,8 @@ const home = (props) => {
             </div>
 
             <div className="vid md:flex  gap-4 justify-center items-center py-4">
-              {props?.apiData?.contentBlock?.VIDEO_GALLERY?.advanceData?.data?.length >
-              0
+              {props?.apiData?.contentBlock?.VIDEO_GALLERY?.advanceData?.data
+                ?.length > 0
                 ? props?.apiData?.contentBlock?.VIDEO_GALLERY?.advanceData?.data.map(
                     (item, index) => {
                       return (

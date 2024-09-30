@@ -3,6 +3,7 @@ import { useStoreSnackbar } from "../store/snackbar";
 import { Input } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
 import Link from "next/link";
+import MetaTags from "../components/MetaTags";
 export default function ForgetPassword() {
   const [username, setUsername] = useState("");
   const [page, setPage] = useState(1);
@@ -169,6 +170,10 @@ export default function ForgetPassword() {
 
   return (
     <>
+      <MetaTags
+        title="Forget Password"
+      
+      ></MetaTags>
       <section id="loginForgetPwd">
         <div className="block mt-[2rem] mb-[2rem] mx-auto w-[100%] rounded-[8px] sm:w-[70%]  lg:w-[60%] cl:w-[50%] shadow-[0_8px_6px_-1px_rgba(0,0,0,0.2),0_8px_8px_0_rgba(0,0,0,0.14),0_8px_8px_0_rgba(0,0,0,0.12)] pb-[1rem]">
           <div className=" bg-[#071e63] rounded-t-[8px] text-white mb-5 ">

@@ -1,5 +1,5 @@
 import React  from "react";
-
+import MetaTags from "../components/MetaTags";
 export const getStaticProps = async () => {
   try {
     let params = new URLSearchParams({
@@ -34,7 +34,13 @@ export const getStaticProps = async () => {
 
 const about = (props) => {
   return (
-    <div className="sec3">
+    <div>
+       <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
       <div className="heading container mx-auto px-6 md:px-16 md:py-2 py-4">
         <h3 className="text-center text-lg md:text-xl lg:text-3xl font-bold text-[#0c4270]">
           {props?.apiData?.contentBlock?.INSTY_INTRO?.heading}

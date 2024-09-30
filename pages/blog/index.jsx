@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Allblogs from "../../components/Blog/Allblogs";
-
+import MetaTags from "../../components/MetaTags";
 export const getStaticProps = async () => {
   try {
     // Fetch blog post data
@@ -52,6 +52,12 @@ export const getStaticProps = async () => {
 
 const blog = (props) => {
   return <div>
+      <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
     <Allblogs  allCategory= {props?.blogPostCategory} allBlogPost ={props?.blogPostData}/>
     </div>;
 };

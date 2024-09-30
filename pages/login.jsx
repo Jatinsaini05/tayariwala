@@ -5,6 +5,7 @@ import { FaLock } from "react-icons/fa";
 import { useStoreLogin } from "../store/login";
 import { useStoreLoader } from "../store/loader";
 import { useStoreSnackbar } from "../store/snackbar";
+import MetaTags from "../components/MetaTags";
 import Link from "next/link";
 export default function LoginPassword() {
   const [username, setUsername] = useState("");
@@ -95,6 +96,10 @@ export default function LoginPassword() {
   };
   return (
     <>
+      <MetaTags
+        title="Login"
+       
+      ></MetaTags>
       <div>
         <div className="grid">
           <div>

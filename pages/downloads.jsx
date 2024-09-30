@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import MetaTags from "../components/MetaTags";
 export default function Downloads() {
   const [apiData, setApiData] = useState([]);
   const [categoryId, setCategoryId] = useState("");
@@ -72,6 +72,12 @@ export default function Downloads() {
 
   return (
     <div>
+       <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
       <section className="sec2">
         <div className="container mx-auto px-16">
           <div className="flex flex-wrap justify-between py-2">

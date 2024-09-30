@@ -1,21 +1,45 @@
+import Head from "next/head";
 
-import Head from 'next/head'
-import React from 'react'
-
-export default function MetaTags() {
+const MetaTags = ({ title, keywords, description, image }) => {
   return (
-    <>
-        <Head>
-        <meta name='description' content=''  />
-        <meta property='og:Description' content=''  />
-        <meta property='og-image' content=''  />
-        <meta name='og:title' content=''  />
-        <meta name='viewport' content=''  />
-        <meta charSet='utf'   />
-        <title>Page title name</title>
-        </Head>
+    <Head>
+    <meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {title && (
+      <>
+        <meta property="og:site_name" content={title} />
+        <title>{title}</title>
+        {title ? (
+          <>
+            <meta property="og:title" content={title} />
+            <meta name="twitter:title" content={title} />
+          </>
+        ) : (
+          <>
+            <meta property="og:title" content={title} />
+            <meta name="twitter:title" content={title} />
+          </>
+        )}
+      </>
+    )}
+      {description && (
+          <>
+              <meta name="description" content={description} />
+              <meta property="og:description" content={description} />
+              <meta name="twitter:description" content={description} />
+          </>
+      )}
+    {image && (
+          <>
+              <meta property="og:image" content={image} />
+              <meta name="twitter:image" content={image} />
+          </>
+      )}
+    {keywords && <meta name="keywords" content={keywords} />}
+  </Head>
+  );
+};
 
-    </>
-   
-  )
-}
+export default MetaTags;
+

@@ -9,6 +9,7 @@ import { FaLock } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa"; // Import the calendar icon
 import { Input } from "@nextui-org/react";
+import MetaTags from "../components/MetaTags";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Register() {
@@ -357,6 +358,10 @@ export default function Register() {
 
   return (
     <section id="register">
+        <MetaTags
+        title="Register"
+       
+      ></MetaTags>
       {loading ? (
         <div className="flex justify-center items-center min-h-[10rem]">
           <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid"></div>

@@ -1,6 +1,6 @@
 import { Link } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-
+import MetaTags from "../components/MetaTags";
 export const getStaticProps = async () => {
   try {
     const params = new URLSearchParams({
@@ -60,6 +60,13 @@ const photoGallery = (props) => {
   }, [category]);
 
   return (
+    <div>
+       <MetaTags
+        title={props?.apiData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.apiData?.pageData?.metaTags?.keywords}
+        description={props?.apiData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      ></MetaTags>
     <section className="sec2 py-4">
       <div className="container mx-auto px-16">
         <div className="heading py-2">
@@ -140,6 +147,7 @@ const photoGallery = (props) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 export default photoGallery;
