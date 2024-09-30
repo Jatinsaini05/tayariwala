@@ -36,7 +36,7 @@ export const getStaticProps = async () => {
       },
     };
   } catch (error) {
-    console.error("Error fetching the home page API:", error);
+    console.error("Error fetching the home page Data:", error);
     return {
       props: {
         apiData: [],
