@@ -38,7 +38,7 @@ export const getStaticProps = async () => {
       },
     };
   } catch (err) {
-    console.log("Failed to Load Blog Data or Categories:", err);
+    console.log("Failed to Load Blog Data or Categories Data:", err);
     return {
       props: {
         blogPostData: [],

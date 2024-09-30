@@ -41,7 +41,7 @@ export default function category() {
         apiHost: "https://vijethaiasacademyvja.com",
       };
       let response = await fetch(
-        `https://v3.edkt.net/api/s/blogpost/blogpostcategory-slug/${router.query.categoryUri}?${params.toString()}`,
+        `https://v3.edkt.net/api/s/blogpost/blogpostcategory-slug/${router.query.categorySlug}?${params.toString()}`,
         {
           headers: header,
         }
@@ -60,10 +60,10 @@ export default function category() {
     initialCall.current = false;
   }
   useEffect(() => {
-    if (router?.query?.categoryUri) {
+    if (router?.query?.categorySlug) {
       fetchCategoryBlog();
     }
-  }, [router?.query?.categoryUri]);
+  }, [router?.query?.categorySlug]);
   if (isLoading) {
     return (
       <div>
@@ -79,7 +79,7 @@ export default function category() {
       <BlogCategory
         allCategoryBlogs={categoryBlog}
         allBlogCategory={blogPostCategory}
-        categoryUri={router?.query?.categoryUri}
+        categoryUri={router?.query?.categorySlug}
       />
     </>
   );
