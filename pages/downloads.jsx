@@ -73,10 +73,10 @@ export default function Downloads() {
   return (
     <div>
        <MetaTags
-        title={props?.apiData?.pageData?.metaTags?.ogTitle}
-        keywords={props?.apiData?.pageData?.metaTags?.keywords}
-        description={props?.apiData?.pageData?.metaTags?.ogDescription}
-        image={props?.apiData?.pageData?.metaTags?.ogImag}
+        title={apiData?.pageData?.metaTags?.ogTitle}
+        keywords={apiData?.pageData?.metaTags?.keywords}
+        description={apiData?.pageData?.metaTags?.ogDescription}
+        image={apiData?.pageData?.metaTags?.ogImag}
       ></MetaTags>
       <section className="sec2">
         <div className="container mx-auto px-16">

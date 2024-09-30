@@ -63,10 +63,8 @@ const courseUri = (props) => {
   return (
     <div>
         <MetaTags
-        title={props?.apiData?.pageData?.metaTags?.ogTitle}
-        keywords={props?.apiData?.pageData?.metaTags?.keywords}
-        description={props?.apiData?.pageData?.metaTags?.ogDescription}
-        image={props?.apiData?.pageData?.metaTags?.ogImag}
+        title="Course-Detail"
+       
       ></MetaTags>
       <Detail programDetail={props?.courseDetail} />
     </div>

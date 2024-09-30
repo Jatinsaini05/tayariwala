@@ -46,10 +46,10 @@ const ContactUs = (props) => {
   return (
     <div>
        <MetaTags
-        title={props?.apiData?.pageData?.metaTags?.ogTitle}
-        keywords={props?.apiData?.pageData?.metaTags?.keywords}
-        description={props?.apiData?.pageData?.metaTags?.ogDescription}
-        image={props?.apiData?.pageData?.metaTags?.ogImag}
+        title={props?.websiteData?.pageData?.metaTags?.ogTitle}
+        keywords={props?.websiteData?.pageData?.metaTags?.keywords}
+        description={props?.websiteData?.pageData?.metaTags?.ogDescription}
+        image={props?.websiteData?.pageData?.metaTags?.ogImag}
       ></MetaTags>
       <Enquiry
         enquiryDetail={props?.websiteData?.website}

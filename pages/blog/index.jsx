@@ -53,10 +53,7 @@ export const getStaticProps = async () => {
 const blog = (props) => {
   return <div>
       <MetaTags
-        title={props?.apiData?.pageData?.metaTags?.ogTitle}
-        keywords={props?.apiData?.pageData?.metaTags?.keywords}
-        description={props?.apiData?.pageData?.metaTags?.ogDescription}
-        image={props?.apiData?.pageData?.metaTags?.ogImag}
+        title="Blog Post"
       ></MetaTags>
     <Allblogs  allCategory= {props?.blogPostCategory} allBlogPost ={props?.blogPostData}/>
     </div>;
