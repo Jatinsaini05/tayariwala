@@ -2,97 +2,233 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+.orderedListstyle {
+  list-style: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+
+@media print {
+  .print-hidden {
+    display: none;
+  }
+
+  .samePage {
+    page-break-inside: avoid;
   }
 }
 
-body {
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
+    box-shadow: 0 0 0 0 rgba(35, 32, 68, 0.6);
   }
+  70% {
+    -moz-box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
+    box-shadow: 0 0 0 15px rgba(35, 32, 68, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
+    box-shadow: 0 0 0 0 rgba(35, 32, 68, 0);
+  }
+}
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Marquee Animation */
+@keyframes move {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes customScroll {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@media (max-width: 337px) {
+  .custom-margin {
+    margin-top: 30px; 
+  }
 }
 
 
-.topNavLink{
+.custom-marquee {
+  height: 100%; /* Set the height of the visible area */
+  overflow: hidden;
   position: relative;
 }
 
-.topNavLink::after{
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 4px;
-  background: white;
-  top: 100%;
-  left: 0;
-  transition: 0.3s;
+.custom-marquee ul {
+  animation: customScroll 30s linear infinite; /* Adjust the duration to control speed */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
 }
 
-.topNavLink:hover::after{
+.custom-marquee ul:hover {
+  animation-play-state: paused; /* Pause animation on hover */
+}
+
+
+.marquee {
+  white-space: nowrap; /* Prevents line break */
+  display: inline-block; /* Ensures the content flows properly */
+  animation: move 15s linear infinite; /* Adjust the duration as needed */
+}
+
+.stop-animation {
+  animation: none; /* Stops the animation on hover */
+}
+
+/* Additional styles */
+.overflow-hidden {
+  overflow: hidden; /* Ensures the marquee is hidden outside the box */
+}
+
+/* Add this in your globals.css file */
+::-webkit-scrollbar {
+  width: 7px; /* Change this value to make it thinner */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(31, 41, 55, 0.5); /* Customize the scrollbar thumb color */
+  border-radius: 6px; /* Rounded edges */
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(209, 209, 209, 0.373);
+  border-radius: 6px;
+  border: 1px solid rgba(169, 165, 165, 0.71);
+}
+
+
+
+#MainSlider .swiper {
   width: 100%;
-
+  height: 100%;
 }
 
-.footer-link{
-  position: relative;
-}
-
-.footer-link::after{
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2.5px;
-  background: grey;
-  top: 90%;
-  left: 0;
-  transition: 0.3s;
-}
-
-.footer-link:hover::after{
-  width: 100%;
-}
-
-
-
-#register .otpCard input {
+#MainSlider .swiper-slide {
   text-align: center;
-}
-#loginOtp .otpCard input {
-  text-align: center;
-}
-#loginForgetPwd .otpCard input {
-  text-align: center;
+  font-size: 18px;
+  background: #ffffff;
+  padding-bottom: 40px;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.buy-dialog {
-  max-height: 500px; /* You can adjust this value */
-  overflow-y: auto;
+#MainSlider .swiper-button-prev:after, #MainSlider .swiper-button-next:after{
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  padding: 3px 5px;
+  font-weight: bolder;
+  opacity: 50%;
 }
+
+#MainSlider .swiper-pagination-bullet{
+  background: #ffffff;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgb(0, 0, 0);
+  opacity: 100%;
+}
+
+#MainSlider .swiper-pagination-bullet-active{
+  background: rgb(21 128 61);
+  width: 12px;
+  height: 12px;
+  border: 2px solid black;
+}
+
+#resultbutton .swiper-button-prev, #resultbutton .swiper-button-next {
+  color: rgb(55, 159, 55);
+  width: 40px; /* Set a specific width */
+  height: 40px; /* Set the same height for a round shape */
+  display: flex; /* Center contents */
+  align-items: center; /* Center contents vertically */
+  justify-content: center; /* Center contents horizontally */
+  border-radius: 50%; 
+}
+
+#resultbutton .swiper-button-prev:hover, #resultbutton .swiper-button-next:hover {
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(55, 159, 55);
+  background: rgb(55, 159, 55);
+}
+
+#resultbutton .swiper-button-prev:after, #resultbutton .swiper-button-next:after {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+#swiperpublication .swiper-button-prev, #swiperpublication .swiper-button-next{
+  color: rgb(55, 159, 55);
+  width: 40px; 
+  height: 40px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 50%; 
+}
+
+#swiperpublication .swiper-button-prev:hover, #swiperpublication .swiper-button-next:hover{
+  color: rgb(249, 249, 249);
+  background: rgb(55, 159, 55);
+}
+
+#swiperpublication .swiper-button-prev:after, #swiperpublication .swiper-button-next:after {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+#swiperTestimonial .swiper-button-prev, #swiperTestimonial .swiper-button-next{
+  color: rgb(55, 159, 55);
+  width: 40px; 
+  height: 40px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 50%; 
+}
+
+#swiperTestimonial .swiper-button-prev:hover, #swiperTestimonial .swiper-button-next:hover{
+  color: rgb(249, 249, 249);
+  background: rgb(55, 159, 55);
+}
+
+#swiperTestimonial .swiper-button-prev:after, #swiperTestimonial .swiper-button-next:after {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.custom-shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .react-datepicker-wrapper {
   width: 100%;
 }
-
 
 #allBlogs .swiper {
   width: 100%;
@@ -116,9 +252,89 @@ body {
   height: 100%;
   object-fit: cover;
 }
-#allBlogs  .swiper-button-prev:after, #allBlogs .swiper-button-next:after {
- background-color: #071e63;
- color: white;
-font-size: 20px;
-padding: 10px;
+#allBlogs .swiper-button-prev:after,
+#allBlogs .swiper-button-next:after {
+  background-color: #071e63;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+}
+#fee-structure .accordion-tab button {
+  background-color: #dff0d8;
+  padding: 4px 16px 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+#fee-structure .accordion-tab button span {
+  color: #457c45;
+  font-size: 16px;
+}
+#fee-structure .accordion-tab button span:hover {
+  text-decoration: underline;
+}
+@media screen and (max-width: 640px) {
+  #fee-structure .accordion-tab button {
+    padding: 4px 10px 6px;
+  }
+  #fee-structure .accordion-tab button span {
+    font-size: 14px;
+  }
+}
+#fee-structure .study-table table tbody tr:nth-child(even) {
+  background-color:#d7f9d3;
+}
+
+#new-batches .accordion-tab button {
+  padding: 4px 16px 6px
+}
+
+#new-batches .accordion-tab button span {
+  color: #16A34A;
+  font-size: 16px;
+}
+
+.parent-div::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px; /* Thickness of the border */
+  background-color: lightgray;
+  z-index: 1; /* Lower z-index than the buttons */
+}
+
+.active-button {
+  z-index: 10; /* Ensure active button is on top */
+  background-color: white; /* Optional: Ensure button background covers the border */
+}
+
+.bg-emerald-50 {
+  background-color: #EBF6F4;
+}
+
+#faqaccordion .text-large {
+  font-size: 13px;
+}
+
+#faqaccordion .py-4 { 
+  padding: 0;
+  padding-left: 1rem;
+}
+
+#faqaccordion .text-foreground{
+   color: #388e3c;
+}
+
+#faqaccordion .bg-divider {
+  opacity: 0%;
+}
+
+#faqaccordion .py-2 {
+ padding-left: 1rem;
+}
+
+#faqaccordion .img, svg, video, canvas, audio, iframe, embed, object {
+display: none;
 }

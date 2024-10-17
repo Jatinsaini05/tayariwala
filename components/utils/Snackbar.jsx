@@ -25,9 +25,10 @@ export default function Snackbar() {
   const positionStyle = getPositionStyle(position);
   return (
     <div
-      className={`snackbar bg-[${color === "default" ? "default-500" : color}]`}
-      // className="snackbar bg-[red]"
+      className="snackbar"
+      // className={`snackbar bg-[${color === "default" ? "default-500" : color}]`}
       style={{
+        backgroundColor: color === "default" ? "default-500" : color,
         ...snackbarContainerStyle,
         ...positionStyle,
         opacity: visible ? 1 : 0,

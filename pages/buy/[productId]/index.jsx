@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useStoreLogin } from "../../../store/login";
-import { useStoreDialog } from "../../../store/dialog";
+import { useStoreSnackbar } from "../../../store/snackbar";
 import Both from "../../../components/login/Both";
 import { Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
 import { useStoreLoader } from "../../../store/loader";
@@ -125,54 +125,26 @@ export default function Index({ productResponse, ProductId }) {
     const cost = parseFloat(productResponse.cost);
     const cgst = parseFloat(productResponse?.tax?.cgst || 0);
     const sgst = parseFloat(productResponse?.tax?.sgst || 0);
-    const totalTax =
-      parseFloat(((cost * cgst) / 100).toFixed(2)) +
-      parseFloat(((cost * sgst) / 100).toFixed(2));
-    const totalAmount = cost + totalTax;
-    return totalAmount;
+    if (coupon?.amount) {
+      const totalAmount = coupon.amount;
+      return totalAmount;
+    } else {
+      const totalTax =
+        parseFloat(((cost * cgst) / 100).toFixed(2)) +
+        parseFloat(((cost * sgst) / 100).toFixed(2));
+      const totalAmount = cost + totalTax;
+      return totalAmount;
+    }
   };
 
   useEffect(() => {
     if (productResponse) {
       updatePlaceOrderData(productResponse);
     }
+    // if (coupon?.amount) {
+    //   updatePlaceOrderData(productResponse);
+    // }
   }, [productResponse]);
-
-  // const initiateOrder = async () => {
-  //   try {
-  //     debugger;
-  //     if (user && authToken) {
-  //       setVisible(false);
-  //       updatePlaceOrderData();
-  //       placeOrderData.user = user;
-  //       orderId.current = await getOrderId(placeOrderData);
-  //       console.log(
-  //         "Order ID Inside the InitiateOrder function",
-  //         orderId.current
-  //       );
-
-  //       if (!orderId.current) {
-  //         setPage("orderInitiated");
-  //       }
-  //       if (couponCode && orderId.current) {
-  //         const cleanedOrderId = orderId.current.replace(/"/g, "");
-  //         applyCouponCode(cleanedOrderId);
-  //         console.log("Inside the initiated fnction", orderId.current);
-  //       }
-
-  //       const paymentNode = await getPaymentNodes(orderId.current);
-  //       if (paymentNode) {
-  //         getGatewayUrl(paymentNode, orderId.current);
-  //       } else {
-  //         console.error("No payment node found for this order.");
-  //       }
-  //     } else {
-  //       setVisible(true);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
 
   const initiateOrder = async () => {
     try {
@@ -204,7 +176,7 @@ export default function Index({ productResponse, ProductId }) {
       }
     } catch (e) {
       alert("Error in initaitong order");
-      onOpenChange(false); // Close modal in case of error
+      // onOpenChange(false);
       console.error(e);
     } finally {
       setLoading(false);
@@ -300,8 +272,13 @@ export default function Index({ productResponse, ProductId }) {
       );
       const data = await response.json();
       if (data.length > 0) {
-        const { id, dueAmount, orderNo, store } = data[0];
-        return { id, dueAmount, orderNo, store };
+        let { id, dueAmount, orderNo, store } = data[0];
+        // Check if the coupon is applied and has a valid amount
+        if (coupon?.apply && coupon?.amount) {
+          data[0].dueAmount = coupon.amount; // Update dueAmount directly
+        }
+      
+        return { id, dueAmount: data[0].dueAmount, orderNo, store };
       } else {
         return null;
       }
@@ -324,7 +301,7 @@ export default function Index({ productResponse, ProductId }) {
   const handleSubmitCoupon = (e) => {
     e.preventDefault();
     CheckDiscount(ProductId);
-    // applyCouponCode(orderId)
+    applyCouponCode(orderId);
     setIsCouponApplied(true);
   };
 
@@ -366,8 +343,6 @@ export default function Index({ productResponse, ProductId }) {
       return result;
     } catch (error) {
       console.log("error", error);
-      // toast.current.show({severity: 'error', summary: 'Error', detail: error.message || 'Unable to apply discount', life: 3000 });
-      // throw error;
     }
   }
 
@@ -378,21 +353,42 @@ export default function Index({ productResponse, ProductId }) {
       );
       const result = await response.json();
       if (response.ok) {
-        alert("Successfully");
+        useStoreSnackbar.getState().showSnackbar({
+          description: "Successfully Applied",
+          title: "Coupon Used",
+          color: "green",
+        });
         // toast.current.show({ severity: "success",summary: "Success",detail: result.message || "Discount applied successfully!",life: 3000,});
         coupon.apply = true;
         coupon.discountAmount = result.discountAmount;
-        const CalculatedCoupanAmount =
-          productResponse.cost * (1 - coupon.discountAmount / 100);
-        setCoupon((prevCoupon) => ({
-          ...prevCoupon,
-          apply: true,
-          discountAmount: "",
-          amount: CalculatedCoupanAmount,
-        }));
+
+        if (result?.discountType === "PER" && result?.discountAmount <= 100) {
+          const CalculatedCoupanAmount =
+            productResponse.cost * (1 - coupon.discountAmount / 100);
+          setCoupon((prevCoupon) => ({
+            ...prevCoupon,
+            apply: true,
+            discountAmount:
+              productResponse.cost * (coupon.discountAmount / 100),
+            amount: CalculatedCoupanAmount,
+          }));
+        } else {
+          const CalculatedCoupanAmount =
+            productResponse.cost - coupon.discountAmount;
+          setCoupon((prevCoupon) => ({
+            ...prevCoupon,
+            apply: true,
+            discountAmount: coupon.discountAmount,
+            amount: CalculatedCoupanAmount,
+          }));
+        }
       } else {
         console.log("check discount is response is not okay");
-        alert("check discount is response is not okay");
+        useStoreSnackbar.getState().showSnackbar({
+          description: "check discount is response is not okay",
+          title: "Error",
+          color: "red",
+        });
         // toast.current.show({severity: "error",summary: "Error",detail: result.message || "Unable to apply discount",life: 3000,});
       }
       return result;
@@ -403,7 +399,6 @@ export default function Index({ productResponse, ProductId }) {
   }
 
   function goToDashboard() {
-    debugger;
     let url = null;
     if (!authToken) {
       url = "https://vijethaiasacademyvja.com//student/auth/login";
@@ -425,9 +420,7 @@ export default function Index({ productResponse, ProductId }) {
   // console.log("client",user?.client);
   return (
     <section id="courseBuy">
-        <MetaTags
-        title="Buy"
-      ></MetaTags>
+      <MetaTags title="Buy"></MetaTags>
       <div className="mx-[6px] px-[1rem] lg:px-[3rem]">
         <div className="grid grid-rows">
           <div className="grid grid-cols-12">

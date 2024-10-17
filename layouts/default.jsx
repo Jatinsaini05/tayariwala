@@ -1,87 +1,84 @@
-import TopNav from "../components/topNav";
-import Footer from "../components/footer";
-import React , {useState,useRef} from "react";
+import React, { useEffect, useState } from "react";
+import FooterSection from "../components/FooterSection";
+import Header from "../components/Header";
+import BellBar from "../components/BellBar";
+import { Lato } from "@next/font/google";
+// import { error } from "console";
+
+const lato = Lato({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 // export const getStaticProps = async () => {
-//   debugger;
 //   try {
-//     console.log("Starting fetch for website data...");
-//     let header = {
-//       apiHost: "https://vijethaiasacademyvja.com",
-//     };
-//     let websiteResponse = await fetch(
-//       "https://v3.edkt.net/api/s/website/62a196794ed50566c7603b72/data",
+//     const response = await fetch(
+//       `https://v3.edkt.net/api/s/website/5bc48477a794a34a0c07775f/data`,
 //       {
-//         headers: header,
+//         headers: {
+//           apihost: "https://iesmaster.institute.org.in",
+//         },
 //       }
 //     );
-//     let apiData = await websiteResponse.json();
-//     console.log("apiData",apiData);
+//     if (!response.ok) {
+//       throw new Error("api data fetching errror");
+//     }
+//     const data = await response.json()
 //     return {
 //       props: {
-//         apiData: apiData || null,
+//         apiData: data
 //       },
 //     };
-//   } catch (err) {
-//     console.log("Failed to Load Website Data:", err);
-//     return {
-//       props: {
-//         apiData: null,
-//       },
-//     };
+    
+//   } catch (error) {
+//     console.error(error)
+//     return{
+//       props:{
+//         apiData:[]
+//       }
+//     }
+    
 //   }
+ 
 // };
-
-// const DefaultLayout = ({ apiData, children }) => {
-//   debugger;
-//   return (
-//     <div>
-//       <div>
-//         <TopNav topNavData={apiData} />
-//       </div>
-//       <div>{children}</div>
-//       <div>
-//         <Footer footerData={apiData} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DefaultLayout;
 
 export default function DefaultLayout({ children }) {
-  const [apiData, setApiData] = useState(null);
-  const initialCall = useRef(true);
-  const webApi = async () => {
+  const [apiData , setApiData] = useState();
+  const url = "https://v3.edkt.net/api/s/website/5bc48477a794a34a0c07775f/data"
+  const fetchApi = async ()=>{
     try {
-      let url = "https://v3.edkt.net/api/s/website/62a196794ed50566c7603b72/data";
-
-      let fetchApi = await fetch(url, {
-        headers: {
-          apihost: "https://vijethaiasacademyvja.com/",
-        },
-      });
-
-      let response = await fetchApi.json();
-      setApiData(response);
-
+      const res = await fetch(url,{
+        headers:{
+          apihost: "https://iesmaster.institute.org.in"
+        }
+      })
+      if(!res.ok){
+        throw new Error('api data fetching error')
+      }
+      const data = await res.json()
+      // console.log(data)
+      setApiData(data)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
+  }
 
-  }
-  if (initialCall.current) {
-    webApi();
-    initialCall.current = false;
-  }
+  useEffect(()=>{
+    fetchApi()
+  },[])
 
   return (
-    <div className="">
-      <div>
-        <TopNav topNavData={apiData} />
+    
+    <div className={lato.className}>
+      <div className="top-head">
+        <Header topNav={apiData} />
       </div>
       <div>{children}</div>
+      <div className="foot">
+        <FooterSection footerSection = {apiData} />
+      </div>
       <div>
-        <Footer footerData={apiData} />
+        <BellBar />
       </div>
     </div>
   );

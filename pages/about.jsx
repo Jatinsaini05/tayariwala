@@ -1,32 +1,35 @@
-import React  from "react";
+import React from "react";
 import MetaTags from "../components/MetaTags";
+import Content from "../components/About/Content";
+import TopperTalk from "../components/TopperTalk";
+
 export const getStaticProps = async () => {
   try {
     let params = new URLSearchParams({
       contentBlock: "Object",
     });
     let response = await fetch(
-      `https://v3.edkt.net/api/s/frontpage/about?${params.toString()}`,
+      `https://v3.edkt.net/api/s/frontpage/about-new?${params.toString()}`,
       {
         headers: {
-          apihost: "https://vijethaiasacademyvja.com/",
+          apihost: "https://iesmaster.institute.org.in",
         },
       }
     );
     if (!response.ok) {
       throw new Error(`HTTP Error Status code ${url.status}`);
     }
-    let apiData = await response.json();
+    let pageData = await response.json();
     return {
       props: {
-        apiData,
+        pageData,
       },
     };
   } catch (error) {
     console.error("Error in  fetching data ", error);
     return {
       props: {
-        apiData: [],
+        pageData: [],
       },
     };
   }
@@ -35,103 +38,31 @@ export const getStaticProps = async () => {
 const about = (props) => {
   return (
     <div>
-       <MetaTags
-        title={props?.apiData?.pageData?.metaTags?.ogTitle}
-        keywords={props?.apiData?.pageData?.metaTags?.keywords}
-        description={props?.apiData?.pageData?.metaTags?.ogDescription}
-        image={props?.apiData?.pageData?.metaTags?.ogImag}
+      {/* {JSON.stringify(props?.pageData)} */}
+      <MetaTags
+        title={props?.pageData?.pageData?.metaTags?.ogTitle || "About"}
+        keywords={props?.pageData?.pageData?.metaTags?.keywords}
+        description={props?.pageData?.pageData?.metaTags?.ogDescription}
+        image={props?.apiData?.pageData?.metaTags?.ogImage}
       ></MetaTags>
-      <div className="heading container mx-auto px-6 md:px-16 md:py-2 py-4">
-        <h3 className="text-center text-lg md:text-xl lg:text-3xl font-bold text-[#0c4270]">
-          {props?.apiData?.contentBlock?.INSTY_INTRO?.heading}
-        </h3>
-
-        <div className="border-b-2 border-[#0c4270] w-[150px] mx-auto py-1"></div>
-      </div>
-      <div className="container mx-auto px-6 md:px-16 md:py-2 py-4">
-        <div className="grid lg:grid-cols-2 md:grid-cols-1  py-4">
-          <div className="rt"></div>
-          <div className="lft">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: props?.apiData?.contentBlock?.INSTY_INTRO?.content,
-              }}
-            />
-          </div>
-        </div>
-      </div>
+      <Content
+        title={props?.pageData?.pageData?.title}
+        contentData={props?.pageData?.contentBlock}
+      />
+      <TopperTalk />
     </div>
   );
 };
-
 export default about;
 
-// export default function About() {
-//   const [apiData, setApiData] = useState("");
-//   const [isloading , setIsloading] = useState(false)
-
-//   const fetchApi = async () => {
-//     setIsloading(true)
-//     try {
-//       let params = new URLSearchParams({
-//         contentBlock: "Object",
-//       });
-//       let url = await fetch(
-//         `https://v3.edkt.net/api/s/frontpage/about?${params.toString()}`,
-//         {
-//           headers: {
-//             apihost: "https://vijethaiasacademyvja.com/",
-//           },
-//         }
-//       );
-//       if (!url.ok) {
-//         throw new Error(`HTTP Error Status code ${url.status}`);
-//       }
-
-//       let newUrl = await url.json();
-//       setApiData(newUrl);
-//       // console.log(newUrl)
-//     } catch (error) {
-//       console.log("Error");
-//       console.error("error fetching data ", error);
-//     }finally{
-//       setIsloading(false)
-//     }
-//   };
-//   useEffect(() => {
-//     fetchApi();
-//   }, []);
-
-//   if (isloading) {
-//     return (
-//       <div className="flex justify-center items-center min-h-screen">
-//         <div className="border-gray-100 border-t-blue-500 w-[60px] h-[60px] animate-spin rounded-[50%] border-8 border-solid"></div>
-//       </div>
-//     );
-//   }
+// export default function about1() {
 //   return (
 //     <div>
-//       <section className="sec3">
-//         <div className="heading container mx-auto px-6 md:px-16 md:py-2 py-4">
-//           <h3 className="text-center text-lg md:text-xl lg:text-3xl font-bold text-[#0c4270]">
-//             {apiData?.contentBlock?.INSTY_INTRO?.heading}
-//           </h3>
-
-//           <div className="border-b-2 border-[#0c4270] w-[150px] mx-auto py-1"></div>
-//         </div>
-//         <div className="container mx-auto px-6 md:px-16 md:py-2 py-4">
-//           <div className="grid lg:grid-cols-2 md:grid-cols-1  py-4">
-//             <div className="rt"></div>
-//             <div className="lft">
-//               <div
-//                 dangerouslySetInnerHTML={{
-//                   __html: apiData?.contentBlock?.INSTY_INTRO?.content,
-//                 }}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       </section>
+//       <MetaTags
+//         title="About"
+//       ></MetaTags>
+//       <Content />
+//       <TopperTalk />
 //     </div>
 //   );
 // }
