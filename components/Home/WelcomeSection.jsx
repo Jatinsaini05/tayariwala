@@ -15,7 +15,7 @@ const Welcome = ({ welcomeData }) => {
             __html: welcomeData?.contentBlock?.ABOUT_US?.content,
           }}
         />
-        <div className="btn">
+        {/* <div className="btn">
           {welcomeData?.contentBlock?.ABOUT_US?.buttons
             ? welcomeData.contentBlock.ABOUT_US.buttons.map((item, ind) => (
                 <Link
@@ -27,20 +27,20 @@ const Welcome = ({ welcomeData }) => {
                 </Link>
               ))
             : "data not found"}
-        </div>
+        </div> */}
       </div>
       <div className="mt-11 bg-emerald-50">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           {welcomeData?.contentBlock?.SECOND_IMAGES?.advanceData?.data
             ? welcomeData.contentBlock.SECOND_IMAGES.advanceData.data.map(
                 (itm, ind) => (
-                  <a href="#" className="mb-4 md:mb-0" key={ind}>
+                  <Link href={itm.link} className="mb-4 md:mb-0" key={ind}>
                     <img
                       src={itm.thumb}
                       className="w-full md:w-[360px] h-auto md:h-44 shadow-md rounded"
                       alt="Image"
                     />
-                  </a>
+                  </Link>
                 )
               )
             : "images not found"}

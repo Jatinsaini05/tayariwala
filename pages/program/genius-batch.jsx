@@ -1,9 +1,9 @@
 import React from 'react'
-import AboutGenius from '../components/GeniusBatch/AboutGenius'
+import AboutGenius from '../../components/GeniusBatch/AboutGenius'
 import { Lato } from '@next/font/google';
-import AdmissionSection from '../components/GeniusBatch/AdmissionSection';
-import Tables from '../components/GeniusBatch/Tables';
-import TopperTalk from '../components/TopperTalk';
+import AdmissionSection from '../../components/GeniusBatch/AdmissionSection';
+import Tables from '../../components/GeniusBatch/Tables';
+import TopperTalk from '../../components/TopperTalk';
 
 const lato = Lato({
     subsets: ['latin'],

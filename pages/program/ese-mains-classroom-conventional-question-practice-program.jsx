@@ -1,6 +1,6 @@
 import React from 'react'
-import Cqpp from '../components/CQPP/Cqpp'
-import Program from '../components/CQPP/ProgramPackages'
+import Cqpp from '../../components/CQPP/Cqpp'
+import Program from '../../components/CQPP/ProgramPackages'
 
 const CQPP = () => {
   return (

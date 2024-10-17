@@ -22,13 +22,13 @@ const Faqs = ({ faqData }) => {
               </h3>
             </a>
           </div>
-          <div className="flex-grow overflow-y-auto p-4  my-3">
+          <div className="flex-grow overflow-y-auto  px-3 mt-3">
             <Accordion className="text-sm">
               {faqData?.contentBlock?.ESE_FAQS?.advanceData?.data
                 ? faqData.contentBlock.ESE_FAQS.advanceData.data.map(
                     (itm, ind) => (
                       <AccordionItem
-                        className="mb-2 border rounded-md"
+                        className="mb-1 border rounded-md text-[#388e3c]"
                         title={itm.title}
                         key={ind}
                       >
@@ -37,11 +37,18 @@ const Faqs = ({ faqData }) => {
                     )
                   )
                 : "faq title list not found"}
+
+              
             </Accordion>
           </div>
 
-          <div className="mb-1 text-right text-xs text-emerald-600">
-            <Link href="/faq" className="bg-gray-300 px-1 mt-2 text-[black]">View More &gt;</Link>
+          <div className="mb-1 text-right  text-emerald-600">
+            <Link
+              href="/faq"
+              className="bg-gray-200 px-1 mt-2 py-1 hover:bg-[#388e3c] hover:text-white  text-xs text-[#388e3c]"
+            >
+              View More &gt;
+            </Link>
           </div>
         </div>
 
@@ -56,13 +63,13 @@ const Faqs = ({ faqData }) => {
               </h3>
             </a>
           </div>
-          <div className="flex-grow overflow-y-auto p-4  my-3">
+          <div className="flex-grow overflow-y-auto  px-3 mt-3">
             <Accordion className="text-sm">
               {faqData?.contentBlock?.GATE_FAQS?.advanceData?.data
                 ? faqData.contentBlock.GATE_FAQS.advanceData.data.map(
                     (itm, ind) => (
                       <AccordionItem
-                        className="mb-2 border rounded-md"
+                        className="mb-1 border rounded-md text-[#388e3c]"
                         title={itm.title}
                         key={ind}
                       >
@@ -75,7 +82,10 @@ const Faqs = ({ faqData }) => {
           </div>
 
           <div className="mb-1 text-right text-xs text-emerald-600">
-            <Link href="/faq" className="bg-gray-300 px-1 mt-2 text-[black]">
+            <Link
+              href="/faq"
+              className="bg-gray-200 px-1 mt-2 py-1 hover:bg-[#388e3c] hover:text-white  text-xs text-[#388e3c]"
+            >
               View More &gt;
             </Link>
           </div>
@@ -100,7 +110,7 @@ const Faqs = ({ faqData }) => {
                       <li key={ind}>
                         <Link
                           href=""
-                          className="mb-2 border-b pb-1 hover:underline cursor-pointer text-[black] text-sm flex items-center"
+                          className="mb-2 border-b pb-1 hover:underline cursor-pointer text-[black] font-normal text-sm flex items-center"
                         >
                           <FaRegCircleDot />
                           {itm.title}
@@ -109,78 +119,16 @@ const Faqs = ({ faqData }) => {
                     )
                   )
                 : "data not found"}
-
-              {/* <li>
-                <Link
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Classroom Course for ESE 2025 & GATE 2025
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Live Online Course for GATE 2025-Computer Science
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Classroom Course for SSC-JE 2024
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Live Online Classes - ESE 2025 & GATE 2025
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Classroom Course for ESE 2025 & GATE 2025
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Live Online Course for GATE 2025-Computer Science
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="mb-2 border-b pb-1 hover:underline cursor-pointer flex items-center"
-                >
-                  <FaRegCircleDot />
-                  Classroom Course for SSC-JE 2024
-                </a>
-              </li> */}
             </ul>
-        
           </div>
-          <div className="mb-2 text-right text-xs text-emerald-600">
-            <Link href="" className="border bg-gray-300 px-1 text-[black]">View More &gt;</Link>
+          <div className="mb-1 text-right text-xs text-emerald-600">
+            <Link
+              href="/faq"
+              className="bg-gray-200 px-1 mt-2 py-1 hover:bg-[#388e3c] hover:text-white  text-xs text-[#388e3c]"
+            >
+              View More &gt;
+            </Link>
           </div>
-
-      
         </div>
       </div>
     </div>

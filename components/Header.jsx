@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { FaPhoneAlt, FaFileAlt, FaUniversity, FaLaptop, FaBook, FaHome, FaRegCheckCircle, FaBars, FaGraduationCap } from "react-icons/fa";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { FaPhoneAlt, FaFileAlt, FaUniversity, FaLaptop, FaBook, FaHome, FaRegCheckCircle, FaBars, FaGraduationCap, FaPhoneSquareAlt } from "react-icons/fa";
+import { FaPlus, FaMinus, FaLocationDot } from "react-icons/fa6";
 import { LuCheckSquare } from "react-icons/lu";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
+import Link from 'next/link';
+import { GrNotes } from "react-icons/gr";
+import { IoMail } from "react-icons/io5";
 
 const Header = () => {
   const [openSections, setOpenSections] = useState({});
@@ -60,7 +63,7 @@ const Header = () => {
 
   return (
     <div>
-       <div className="bg-black flex items-center">
+      <div className="bg-black flex items-center">
         <div className="container m-auto flex justify-between items-center">
           <div className='hidden lg:flex'>
             <ul className="flex items-center space-x-4">
@@ -120,7 +123,7 @@ const Header = () => {
 
       <div className="container flex flex-col lg:flex-row justify-between items-center h-20">
         <div className="hidden lg:flex justify-center w-full md:w-auto mb-1">
-          <a href="#">
+          <a href="/">
             <img
               src="/images/logo.png"
               alt="logo"
@@ -130,7 +133,7 @@ const Header = () => {
         </div>
         <div className="flex items-center justify-center gap-5 sm:gap-0 mt-4 md:mt-2 flex-wrap sm:flex-nowrap">
           <div>
-            <a href="#" className="flex flex-col sm:flex-row items-center mx-2 mb-1 sm:mb-0">
+            <a href="" className="flex flex-col sm:flex-row items-center mx-2 mb-1 sm:mb-0">
               <div className="flex items-center bg-green-700 p-1.5 hover:rounded-full">
                 <FaFileAlt className="text-white w-4 h-5 sm:w-6 sm:h-7" />
               </div>
@@ -193,13 +196,13 @@ const Header = () => {
       </div>
       <div className="container lg:hidden flex justify-between items-center pt-28 sm:pt-0">
         <div className="flex items-center justify-center">
-          <a href="#">
+          <Link href="/">
             <img
               src="/images/logo.png"
               alt="logo"
               className="mx-auto w-36 sm:w-48 h-auto  lg:w-64 "
             />
-          </a>
+          </Link>
         </div>
         <div>
           <div className="z-20">
@@ -274,66 +277,95 @@ const Header = () => {
       <div className="bg-green-700 h-10 mt-2 hidden lg:flex">
         <div className="container m-auto flex items-center h-full">
           <ul className="flex items-center space-x-1 h-full relative">
-            <a href="#" className="h-full flex items-center">
+            <Link href="/" className="h-full flex items-center">
               <li className="pr-4 hover:bg-green-900 cursor-pointer text-white h-full flex items-center pl-3">
                 <FaHome className="w-6 h-6" />
               </li>
-            </a>
+            </Link>
 
             <div className="h-full flex items-center group relative">
-              <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900 hover:cursor-pointer">
+              <li  className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 About Us
               </li>
 
               <ul className="absolute z-10 top-10 left-0 bg-green-900 w-40 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#">- About IES Master</a>
+                  <Link href="http://localhost:3000/about">- About IES Master</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#">- About Director</a>
+                  <Link href="http://localhost:3000/about">- About Director</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#">- Director's Message</a>
+                  <Link href="http://localhost:3000/about">- Director's Message</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#">- Why IES Master</a>
+                  <Link href="http://localhost:3000/about">- Why IES Master</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#">- Our Success Story</a>
+                  <Link href="http://localhost:3000/about">- Our Success Story</Link>
                 </li>
               </ul>
             </div>
 
-            <a href="#" className="h-full flex items-center">
+            <div href="#" className="h-full flex items-center  group relative">
               <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 Programs
               </li>
-            </a>
-            <a href="#" className="h-full flex items-center">
+              <ul className="absolute z-10 top-10 left-0 bg-green-900 w-max shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                <div className='grid grid-cols-2'>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/classroom" className="flex items-center"><FaUniversity /> 1 Year Class Room Program</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/2-year-classroom-program" className="flex items-center"><FaUniversity /> 2 Year Class Room Program</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/genius-batch" className="flex items-center"><FaGraduationCap /> Genius Batch</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/classroom-course-ese-prelims-gs-and-engineering-aptitude" className="flex items-center"><FaUniversity /> GS & Engg.Aptitude Program</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/postal" className="flex items-center"><FaBook /> Postal Program</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/interview-guidance" className="flex items-center"><FaUniversity /> Interview Guidance Program</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="http://localhost:3000/program/ese-mains-classroom-conventional-question-practice-program" className="flex items-center"><GrNotes /> CQPP for ESE 2024 Mains</Link>
+                  </li>
+                  <li className="text-white text-sm py-2 px-4 hover:bg-green-600">
+                    <Link href="https://masterlearners.in/" className="flex items-center"><FaBook /> SSC-JE Live Online Course</Link>
+                  </li>
+                </div>
+              </ul>
+            </div>
+
+            <Link href="http://localhost:3000/admission" className="h-full flex items-center">
               <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 Admission
               </li>
-            </a>
-            <a href="#" className="h-full flex items-center">
+            </Link>
+            <Link href="http://localhost:3000/upcoming-batches" className="h-full flex items-center">
               <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 New Batches
               </li>
-            </a>
-            <a href="#" className="h-full flex items-center">
+            </Link>
+            <Link href="http://localhost:3000/fee-structure" className="h-full flex items-center">
               <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 Fee Structure
               </li>
-            </a>
+            </Link>
             <div className="relative group h-full flex items-center">
-              <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900 hover:cursor-pointer">
+              <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 Result
               </li>
               <ul className="absolute z-10 top-10 left-0 bg-green-900 w-40 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#"> - GATE</a>
+                  <Link href="http://localhost:3000/result/gate"> - GATE</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#"> - ESE/IES</a>
+                  <Link href="http://localhost:3000/result/ese"> - ESE/IES</Link>
                 </li>
               </ul>
             </div>
@@ -343,23 +375,40 @@ const Header = () => {
               </li>
               <ul className="absolute z-10 top-10 left-0 bg-green-900 w-40 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#"> - Photo Gallery</a>
+                  <Link href="http://localhost:3000/gallery/photos"> - Photo Gallery</Link>
                 </li>
                 <li className="text-white text-sm py-2 px-4 border-b border-green-700 hover:bg-green-600">
-                  <a href="#"> - Video Gallery</a>
+                  <Link href="http://localhost:3000/gallery/videos"> - Video Gallery</Link>
                 </li>
               </ul>
             </div>
-            <a href="#" className="h-full flex items-center">
-              <li className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
+
+            <div className="h-full flex items-center  group relative">
+              <Link href="http://localhost:3000/contact-us" className="border-l-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 Contact Us
-              </li>
-            </a>
-            <a href="#" className="h-full flex items-center">
+              </Link>
+              <div className="absolute z-10 top-10 left-0 bg-green-900 w-max shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                <div className='flex gap-5 p-4'>
+                    <ul className='text-white'>
+                      <li className='pb-2 border-b border-dashed border-green-700'><IoMail /> info@iesmaster.org</li>
+                      <li className='pt-2'><FaPhoneSquareAlt /> +91 - 8010009955</li>
+                      <li className='my-2'><FaPhoneSquareAlt /> +91 - 9711853908</li>
+                      <li><FaPhoneSquareAlt /> 011 - 41013406</li>
+                    </ul>
+                    <ul className='text-white'>
+                      <li className='pb-2 border-b border-dashed border-green-700'><FaLocationDot /> <b>Address</b></li>
+                      <li className='pt-2'><b>IES MASTER</b></li>
+                      <li>F - 126, Katwaria Sarai, <br/> New Delhi- 110016</li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+
+            <Link href="http://localhost:3000/career" className="h-full flex items-center">
               <li className="border-l-1 border-r-1 border-green-800 text-white text-sm px-3 h-full flex items-center hover:bg-green-900">
                 <FaRegCheckCircle className="mr-1" /> Career
               </li>
-            </a>
+            </Link>
           </ul>
         </div>
       </div>
