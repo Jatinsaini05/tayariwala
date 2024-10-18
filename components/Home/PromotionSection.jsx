@@ -33,7 +33,7 @@ const PromotionSection = ({ publication }) => {
       <div className="bg-emerald-50 mt-10 pt-4 pb-4">
         <div className="container mx-auto">
           {/* Center the container */}
-          <h1 className="text-3xl mb-4">
+          <h1 className="text-3xl text-[#50b167] font-medium mb-4">
             {publication?.contentBlock?.TESTMONIALS?.heading}
           </h1>
           <hr />
@@ -74,7 +74,7 @@ const PromotionSection = ({ publication }) => {
                                   presentation skills is what makes IES Master
                                   stand apart.”
                                 </p>
-                                <p className="mt-1">
+                                <p className="mt-1 text-[#50b167] ">
                                   <strong>{elm.studentName}</strong>
                                   <br />
                                   <span>
@@ -136,7 +136,7 @@ const PromotionSection = ({ publication }) => {
                                   presentation skills is what makes IES Master
                                   stand apart.”
                                 </p>
-                                <p className="mt-1">
+                                <p className="mt-1 text-[#50b167]">
                                   <strong>{elm.studentName}</strong>
                                   <br />
                                   <span>
@@ -203,8 +203,8 @@ const PromotionSection = ({ publication }) => {
                     <SwiperSlide key={ind}>
                       <Link href={itm.href}>
                         <img
-                          src={itm.imgUrl}
-                          className="w-40 border-l border-t border-r-3 border-r-gray-400 border-b-3 border-b-gray-300 hover:border-r-green-700 hover:border-b-green-700"
+                          src={itm.imgUrl} style={{ filter: 'drop-shadow(5px 5px 5px #222)' }}
+                          className="publication-slider w-40 "
                           alt="Publication books"
                         />
                       </Link>
@@ -223,14 +223,14 @@ const PromotionSection = ({ publication }) => {
       <section>
         <div className="mt-8 container m-auto flex flex-col lg:flex-row justify-between gap-8">
           <div className="relative border flex flex-col w-full lg:w-1/2 rounded-sm">
-            <div className="bg-emerald-50 p-3 font-lato font-bold text-lg text-green-700 border-b-1 border-b-black">
-              <a
+            <div className="bg-emerald-50 p-3 font-lato font-bold text-xl text-[#50b167] border-b-1 border-b-black">
+              <Link
                 href={publication?.contentBlock?.ARTICLES?.link}
-                className="inline-flex items-center"
+                className="inline-flex items-center text-xl text-[#50b167]"
               >
                 <FaRegBookmark className="mr-1" />
                 {publication?.contentBlock?.ARTICLES?.heading}
-              </a>
+              </Link>
             </div>
             {publication?.contentBlock?.ARTICLES?.advanceData?.data
               ? publication.contentBlock.ARTICLES.advanceData.data.map(
@@ -249,13 +249,12 @@ const PromotionSection = ({ publication }) => {
                           <h4>
                             <Link
                               href={itm.uri}
-                              className="text-base font-lato text-blue-500 hover:underline hover:text-blue-700"
+                              className="text-base font-lato text-[#337ab7] hover:underline hover:text-blue-700"
                             >
-                              {/* ESE Mains 2023 Exam Solution – IES Master */}
                               {itm.title}
                             </Link>
                           </h4>
-                          <p className="text-xs flex justify-between py-3">
+                          <p className="text-xs flex justify-between py-3 text-[]">
                             <span className="inline-flex items-center">
                               <CiClock2 />
                               {itm.publishedAt}
@@ -281,10 +280,10 @@ const PromotionSection = ({ publication }) => {
 
           <div className="relative border flex flex-col w-full lg:w-1/2 rounded-sm">
             <div className="bg-emerald-50 p-3 font-lato font-bold text-lg text-green-700 border-b-1 border-b-black">
-              <a href="#" className="inline-flex items-center">
-                <FaCamera className="mr-1" />{" "}
+              <Link href="#" className="inline-flex items-center text-xl text-[#50b167]">
+                <FaCamera className="mr-1" />
                 {publication?.contentBlock?.ARTICLES_GALLRY?.heading}
-              </a>
+              </Link>
             </div>
             <div className="p-4">
               <Swiper
@@ -303,7 +302,7 @@ const PromotionSection = ({ publication }) => {
                   <SwiperSlide key={index}>
                     <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                       {itm.map((el, ind) => (
-                        <img src={el.url} className="w-full h-44" key={ind} />
+                        <img src={el.url} className="w-full max-h-48" key={ind} />
                       ))}
                     </div>
                   </SwiperSlide>
@@ -348,8 +347,8 @@ const PromotionSection = ({ publication }) => {
             {publication?.contentBlock?.ARTICLES_GALLRY?.link && (
               <div className="mb-1 text-right text-xs text-emerald-600 hover:text-white">
                 <Link
-                  href="/gallery/photos"
-                  className="absolute bottom-4 z-10 right-0 border bg-gray-300 px-1 mt-2 hover:bg-green-800"
+                  href={publication?.contentBlock?.ARTICLES_GALLRY?.link}
+                  className="absolute z-10 text-[11px]  px-2 bg-green-700 text-white  py-1 transform translate-y-1/2 right-0 bottom-3"
                 >
                   View More &gt;
                 </Link>

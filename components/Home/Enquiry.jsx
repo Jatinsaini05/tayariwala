@@ -3,7 +3,7 @@ import React from 'react';
 const Enquiry = () => {
   return (
     <div>
-      <div className="mt-14 bg-gray-200 pt-8 pb-9">
+      <div className="mt-14 bg-[#e6eae8] pt-8 pb-9">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl text-zinc-800 font-normal">Quick Enquiry</h2>
           <hr className="my-5 w-full border-t-2 border-gray-100" />
@@ -15,7 +15,7 @@ const Enquiry = () => {
                   type="text"
                   name="name"
                   placeholder="Your Full Name"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 />
               </div>
               <div className="mb-4">
@@ -23,7 +23,7 @@ const Enquiry = () => {
                   type="email" // changed type to "email" for better validation
                   name="email"
                   placeholder="Your Email Address"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 />
               </div>
               <div className="mb-4">
@@ -31,13 +31,13 @@ const Enquiry = () => {
                   type="tel" // changed type to "tel" for better validation
                   name="mobile"
                   placeholder="Your Mobile Number"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 />
               </div>
               <div className="mb-4">
                 <select
                   name="enquiryType"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 >
                   <option>Select Enquiry Type</option>
                   <option>Admission</option>
@@ -61,7 +61,7 @@ const Enquiry = () => {
               <div className="mb-4">
                 <select
                   name="stream"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 >
                   <option>Select Stream</option>
                   <option>Civil Engineering</option>
@@ -74,7 +74,7 @@ const Enquiry = () => {
               <div className="mb-4">
                 <select
                   name="course"
-                  className="w-full rounded-sm py-2 px-3 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md py-2 px-2 border text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
                 >
                   <option>Select Course</option>
                   <option>GATE</option>
@@ -96,17 +96,17 @@ const Enquiry = () => {
               <div>
                 <textarea
                   placeholder="Message*:"
-                  className="w-full rounded-sm px-3 py-2 border border-gray-300 resize-none focus:outline-none focus:ring-1 focus:ring-green-600"
+                  className="w-full rounded-md px-3 py-2 border bordesmgray-300 resize-none focus:outline-none focus:ring-1 focus:ring-green-600"
                 />
               </div>
             </div>
 
             {/* Right Column */}
-            <div className="flex flex-col w-full md:w-1/3">
+            <div className="flex flex-col w-full md:w-1/4">
               <button
                 type="submit"
-                className="w-full text-white bg-green-600 hover:bg-green-700 rounded-sm py-2 mt-4 md:mt-10"
-              >
+                className="w-full text-white bg-[#5cb85c] text-sm hover:bg-green-700 rounded-md py-2 mt-4 md:mt-10"
+sm          >
                 Submit Query
               </button>
             </div>

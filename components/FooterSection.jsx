@@ -1,3 +1,4 @@
+import { Link } from '@nextui-org/link';
 import React, { useState } from 'react'
 import { FaFacebookF, FaPlus, FaBell, FaMinus, FaInstagram, FaLinkedinIn, FaTelegram, FaTwitter } from 'react-icons/fa'
 import { TiSocialYoutubeCircular } from "react-icons/ti";
@@ -121,11 +122,13 @@ const FooterSection = () => {
                 </ul>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col xl:col-span-2">
                 <div className="flex items-center pb-3">
-                  <div className="text-gray-300 text-xs px-4 pr-10">Follow Us</div>
+                  <div className="text-gray-300 text-sm ">
+                    <h3>Follow us</h3>
+                  </div>
                   <div>
-                    <ul className='flex gap-5 items-center'>
+                    <ul className='flex gap-5 items-center px-4'>
                       <li>
                         <a href="#" className='rounded-full bg-blue-800 p-3 flex items-center justify-center'>
                           <FaFacebookF className="text-white" />
@@ -177,16 +180,16 @@ const FooterSection = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="">
+              
                   <div className="text-gray-300 text-sm">
                     Download App
                   </div>
-                  <div className='flex justify-start mt-3 gap-3 mb-3'>
-                    <a href="#"><img src="/images/Google-play.png" className="w-40"></img></a>
-                    <a href="#"><img src="/images/window-play.png" className="w-40"></img></a>
+                  <div className='mt-3 gap-3 mb-3 grid grid-cols-2'>
+                    <Link href="#"><img src="/images/Google-play.png" className="w-full "></img></Link>
+                    <Link href="#"><img src="/images/window-play.png" className="w-full "></img></Link>
+                    <Link href="#"><img src="/images/mac-app-store.svg" className="w-full "></img></Link>
                   </div>
-                  <a href="#"><img src="/images/mac-app-store.svg" className="w-40"></img></a>
-                </div>
+               
               </div>
             </div>
             <div className='hidden max-md:grid'>
@@ -272,10 +275,10 @@ const FooterSection = () => {
                   <div className="text-gray-300 text-sm">
                     Download App
                   </div>
-                  <div className=''>
-                    <a href="#"><img src="/images/Google-play.png" className="w-16"></img></a>
-                    <a href="#"><img src="/images/window-play.png" className="w-16"></img></a>
-                    <a href="#"><img src="/images/mac-app-store.svg" className="w-16"></img></a>
+                  <div className='flex gap-2 flex-col'>
+                    <a href="#"><img src="/images/Google-play.png" className="w-36"></img></a>
+                    <a href="#"><img src="/images/window-play.png" className="w-36"></img></a>
+                    <a href="#"><img src="/images/mac-app-store.svg" className="w-36"></img></a>
                   </div>
                 </div>
               </div>

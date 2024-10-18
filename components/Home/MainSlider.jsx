@@ -5,7 +5,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import "@/styles/globals.css";
 import { FaRegCircleDot } from "react-icons/fa6";
 import { Link } from "@nextui-org/link";
 

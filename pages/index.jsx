@@ -1,6 +1,6 @@
 import React from "react";
-import Head from "next/head";
-import { Lato } from "@next/font/google";
+// import Head from "next/head";
+// import { Lato } from "@next/font/google";
 import MainSlider from "../components/Home/MainSlider";
 import WelcomeSection from "../components/Home/WelcomeSection";
 import Links from "../components/Home/Links";
@@ -8,10 +8,10 @@ import PromotionSection from "../components/Home/PromotionSection";
 import Enquiry from "../components/Home/Enquiry";
 import Faqs from "../components/Home/Faqs";
 
-const lato = Lato({
-  subsets: ["latin"],
-  weight: "400",
-});
+// const lato = Lato({
+//   subsets: ["latin"],
+//   weight: "400",
+// });
 
 export const getStaticProps = async () => {
   try {
@@ -47,7 +47,7 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ getApi }) {
-  // console.log(getApi);
+
 
   return (
     <>
@@ -56,7 +56,7 @@ export default function Home({ getApi }) {
           IES Master - Best Coaching For ESE, Gate and PSUs in Delhi
         </title>
       </Head> */}
-      <div className={`${lato.className}`}>
+      <div>
         <div>
           <MainSlider topSlider = {getApi} />
         </div>

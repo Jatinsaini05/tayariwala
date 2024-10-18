@@ -1,8 +1,8 @@
 import { NextUIProvider } from "@nextui-org/system";
-import "@/styles/globals.css";
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import "@/styles/globals.css";
  const Snackbar = dynamic(() => import('@/components/utils/Snackbar'), { ssr: false });
 
 export default function App({ Component, pageProps }) {
