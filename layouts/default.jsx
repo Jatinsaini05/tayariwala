@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import FooterSection from "../components/FooterSection";
 import Header from "../components/Header";
 import BellBar from "../components/BellBar";
-import { Lato } from "@next/font/google";
+// import { Lato } from "@next/font/google";
 // import { error } from "console";
 
-const lato = Lato({
-  subsets: ["latin"],
-  weight: "400",
-});
+// const lato = Lato({
+//   subsets: ["latin"],
+//   weight: "400",
+// });
 
 // export const getStaticProps = async () => {
 //   try {
@@ -68,8 +68,9 @@ export default function DefaultLayout({ children }) {
   },[])
 
   return (
-    
-    <div className={lato.className}>
+    // className={lato.className}
+    <div>
+ 
       <div className="top-head">
         <Header topNav={apiData} />
       </div>
