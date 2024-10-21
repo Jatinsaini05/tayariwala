@@ -5,7 +5,9 @@ import { useStoreSnackbar } from "../../../store/snackbar";
 import Both from "../../../components/login/Both";
 import { Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
 import { useStoreLoader } from "../../../store/loader";
-import MetaTags from "../../../components/MetaTags";
+import MetaTags from "../../../components/Head/MetaTags";
+// import MetaTags from "../../../components/MetaTags";
+
 // import {Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure} from "@nextui-org/react";
 export const getServerSideProps = async (context) => {
   const { productId } = context.params;
