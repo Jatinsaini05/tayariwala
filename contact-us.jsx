@@ -3,10 +3,9 @@ import HeadOffice from '../components/contactUs/HeadOffice'
 import TopperTalk from '../components/TopperTalk'
 import NoidaOffice from '../components/contactUs/NoidaOffice'
 
-export default function contactus() {
+const ContactUs = () => {
   return (
     <div>
-       <div>
       <div>
         <HeadOffice/>
       </div>
@@ -17,7 +16,7 @@ export default function contactus() {
         <TopperTalk/>
       </div>
     </div>
-
-    </div>
   )
 }
+
+export default ContactUs
