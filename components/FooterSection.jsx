@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { FaFacebookF, FaPlus, FaBell, FaMinus, FaInstagram, FaLinkedinIn, FaTelegram, FaTwitter } from 'react-icons/fa'
 import { TiSocialYoutubeCircular } from "react-icons/ti";
 
-const FooterSection = () => {
+const FooterSection = ({footerSection}) => {
   const [openIndex, setOpenIndex] = useState(null);
+  console.log(footerSection)
 
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -67,7 +68,7 @@ const FooterSection = () => {
         <div className="bg-zinc-800">
           <div className="container m-auto">
             <div className="lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-6 pt-8 hidden md:grid">
-
+          
               <div>
                 <h5 className="text-sm font-lato font-semibold text-green-500 pb-5">About Us</h5>
                 <ul className="text-xs text-white">
