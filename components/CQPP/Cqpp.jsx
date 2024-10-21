@@ -4,7 +4,7 @@ const Cqpp = () => {
     return (
         <div>
             <div className='container'>
-                <div className='pt-4'>
+                <div className='pt-4 px-10 md:px-0'>
                     <h1 className='text-[28px] font-semibold text-custom1DB24E'>ESE 2024 Main Exam</h1>
                     <div className="pt-10">
                         <h2 className="text-xl pt-4">Conventional Question Practice Program for ESE 2024 Mains Exam</h2>
