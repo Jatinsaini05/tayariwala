@@ -7,7 +7,7 @@ import Links from "../components/Home/Links";
 import PromotionSection from "../components/Home/PromotionSection";
 import Enquiry from "../components/Home/Enquiry";
 import Faqs from "../components/Home/Faqs";
-
+import { getPageData } from "../service/apiFetch";
 // const lato = Lato({
 //   subsets: ["latin"],
 //   weight: "400",
@@ -15,29 +15,15 @@ import Faqs from "../components/Home/Faqs";
 
 export const getStaticProps = async () => {
   try {
-    const params = new URLSearchParams({
-      contentBlock: "Object",
-    });
-    const res = await fetch(
-      `https://v3.edkt.net/api/s/frontpage/home-page-edukit?${params.toString()}`,
-      {
-        headers: {
-          apihost: "https://iesmaster.institute.org.in",
-        },
-      }
-    );
-    if (!res.ok) {
-      throw new Error("api data fetching error ");
-    }
-
-    const apidata = await res.json();
+    const res = await getPageData("home-page-edukit", {contentBlock: "Object"});
+    const apiData = res;
     return {
       props: {
-        getApi: apidata,
+        getApi: apiData,
       },
     };
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.log("Error", err);
     return {
       props: {
         getApi: [],
@@ -47,8 +33,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ getApi }) {
-
-
   return (
     <>
       {/* <Head>
@@ -58,15 +42,15 @@ export default function Home({ getApi }) {
       </Head> */}
       <div>
         <div>
-          <MainSlider topSlider = {getApi} />
+          <MainSlider topSlider={getApi} />
         </div>
 
         <div>
-          <WelcomeSection welcomeData= {getApi} />
+          <WelcomeSection welcomeData={getApi} />
         </div>
 
         <div>
-          <Faqs faqData= {getApi} />
+          <Faqs faqData={getApi} />
         </div>
 
         <div>
@@ -74,7 +58,7 @@ export default function Home({ getApi }) {
         </div>
 
         <div>
-          <PromotionSection publication={getApi}/>
+          <PromotionSection publication={getApi} />
         </div>
 
         <div>
