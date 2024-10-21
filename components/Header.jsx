@@ -392,7 +392,7 @@ const Header = ({ topNav }) => {
                         {item.title}
                       </Link>
 
-                      <ul className="absolute z-10 top-10 left-0 bg-green-900 w-40 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                      <ul className="absolute z-10 top-10 left-0 bg-green-900 w-[300px] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                         {item?.subItems?.length > 0
                           ? item.subItems.map((subitm, ind) => (
                               <li
