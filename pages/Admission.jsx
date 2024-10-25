@@ -4,20 +4,40 @@ import WalkIn from '../components/Admissions/WalkIn';
 import DemandDraft from '../components/Admissions/DemandDraft';
 import OnlineAdmission from '../components/Admissions/OnlineAdmission';
 import TopperTalk from '../components/TopperTalk';
-import {getAdmissionPage} from "../service/apiFetch"
+import {getPageData} from "../service/apiFetch"
 // const lato = Lato({
 //     subsets: ['latin'],
 //     weight: '400'
 //   })
-export const getStaticProps = async() =>{
-    const response = await getAdmissionPage()
-    console.log(getAdmissionPage)
 
-}
+export const getStaticProps = async () => {
+    try {
+      const res = await getPageData("admission", {
+        contentBlock: "Object",
+      });
+      const pageData = res;
+      return {
+        props: {
+          pageData,
+        },
+      };
+    } catch (err) {
+      console.log("Error", err);
+      return {
+        props: {
+          pageData: [],
+        },
+      };
+    }
+  
+    
+  };
+  
+const Admission = (pageData) => {
 
-const Admission = () => {
     return (
         <div>
+            {JSON.stringify(pageData)}
             <div><WalkIn/></div>
             <div><DemandDraft/></div>
             <div><OnlineAdmission/></div>

@@ -1,5 +1,6 @@
 import { useStoreLogin } from "@/store/login";
 import { fetchWithOutToken } from "@/utils/fetchApi";
+// import { url } from "inspector";
 
 export const login = async (params = {}) => {
   const response = await fetchWithOutToken("/api/auth/signin", params, {
@@ -69,5 +70,6 @@ export const getPageData = async (url,params = {}) => {
     }
     return response;
   }
+
 
 
