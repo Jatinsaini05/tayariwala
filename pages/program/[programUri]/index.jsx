@@ -38,7 +38,7 @@ export const getStaticProps = async (context) => {
 };
 
 export default function index(programData) {
-    console.log(programData);
+    // console.log(programData);
 
   return (
     <div>

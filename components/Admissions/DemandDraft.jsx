@@ -1,13 +1,20 @@
-import React from 'react'
+import React from "react";
 import { FaPlus } from "react-icons/fa";
 
-const DemandDraft = () => {
-    return (
-        <div>
-            <div className='bg-emerald-50 pt-8 pb-10'>
-                <div className='container'>
-                    <h1 className='font-bold text-xl'>Admission Through Demand Draft</h1>
-                    <p className='text-sm mt-3 mb-3'>The candidates, who cannot come to our office, should follow the following procedure:</p>
+const DemandDraft = ({ admissionDemand }) => {
+  return (
+    <div>
+      <div className="bg-emerald-50 pt-8 pb-10">
+        <div className="container">
+          <h1 className="font-bold text-xl">{admissionDemand?.heading}</h1>
+
+          <div
+            className="inner-html-box"
+            dangerouslySetInnerHTML={{
+              __html: admissionDemand?.content
+            }}
+          />
+          {/* <p className='text-sm mt-3 mb-3'>The candidates, who cannot come to our office, should follow the following procedure:</p>
                     <p classname="text sm mb-3">Download the Application form.</p>
                     <ul className='list-disc list-inside text-sm mb-2'>
                         <li>Take a print out of the Application Form.</li>
@@ -25,11 +32,11 @@ const DemandDraft = () => {
                     <p className='pl-5 mb-2 text-sm'>  NEW DELHI-110016  </p>
                 <div className='mt-10 flex justify-end'>
                     <button className='text-white bg-blue-600 px-1 py-1 rounded flex justify-between items-center gap-1'>Download Admission Form <FaPlus className='text-black'/></button>
-                </div>
-                </div>
-            </div>
+                </div> */}
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default DemandDraft
+export default DemandDraft;

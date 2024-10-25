@@ -47,49 +47,12 @@ export default function Book({ book }) {
                       </button>
                     </div>
                   ))}
-
-                  {/* <div>
-                    <button
-                      onClick={() => setActiveIndex(1)}
-                      className={` text-[14px] px-2 py-1 rounded pr-3 pl-3 text-[#5698d0] ${activeIndex === 1 ? "border-2 border-[#33a037] bg-[#d7f9d3]" : "border-[none] bg-[transparent] hover:bg-[#eee]"}`}
-                    >
-                      ME
-                    </button>
-                  </div> */}
                 </div>
 
                 {apiData?.map(
                   (item, index) =>
                     activeIndex == index && (
                       <div className="book-table mt-[1rem]">
-                        {/* <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="bg-[#007339] text-[white]">
-                          <th>S.NO</th>
-                          <th>Subject / Book Name</th>
-                          <th>Author Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Strength of Materials /Mechanics of Structure</td>
-                          <td>Gere & Goodno, L. Singer</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Theory of Structures/ Analysis of Structure</td>
-                          <td>
-                            L.S. Negi & Jangit, Gupta & Pandit, C.S. Reddy
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Soil Mechanics & Foundation Engineering.</td>
-                          <td>R.F.Craig , Muni Budhu</td>
-                        </tr>
-                      </tbody>
-                    </table> */}
                         <div
                           dangerouslySetInnerHTML={{
                             __html: item.desci,
@@ -98,39 +61,6 @@ export default function Book({ book }) {
                       </div>
                     )
                 )}
-
-                {/* {activeIndex === 1 && (
-                  <div className="book-table mt-[1rem]">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="bg-[#007339] text-[white]">
-                          <th>S.NO</th>
-                          <th>Subject / Book Name</th>
-                          <th>Author Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Strength of Materials /Mechanics of Structure</td>
-                          <td>Gere & Goodno, L. Singer</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Theory of Structures/ Analysis of Structure</td>
-                          <td>
-                            L.S. Negi & Jangit, Gupta & Pandit, C.S. Reddy
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Soil Mechanics & Foundation Engineering.</td>
-                          <td>R.F.Craig , Muni Budhu</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                )} */}
               </div>
             </div>
           </div>

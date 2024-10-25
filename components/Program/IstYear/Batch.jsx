@@ -19,7 +19,7 @@ export default function Batch({batch}) {
                   <Link
                     href="https://iesmaster.org/upcoming-batches"
                     target="_blank"
-                    //   rel="noopener noreferrer"
+               
                     className="mx-auto sm:mx-[0] w-fit hover:bg-[#286090]  block px-2 pt-1 pb-[8px] bg-[#337ab7] text-white font-normal rounded-md  text-base transition-all duration-[0.4s] ease-[ease-in-out]"
                   >
                     Click here to view Upcoming Batches
