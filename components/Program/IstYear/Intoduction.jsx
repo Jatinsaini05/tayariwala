@@ -1,18 +1,21 @@
 import React from "react";
 
-export default function Intoduction() {
+export default function Intoduction({intro}) {
+  // console.log(intro)
   return (
     <section className="px-[10px] sm:px-[2rem] pt-[1rem] pb-[3rem] ">
+      {/* {JSON.stringify(intro)} */}
       <div className="container mx-auto">
         <div className="grid grid-rows">
           <div className="grid grid-cols-12">
             <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 lg:px-2.5">
               <div>
                 <h1 className="text-center sm:text-left text-[23px] sm:text-[28px] font-semibold text-green-600">
-                  Classroom Programs
+                  {intro?.programData?.name}
                 </h1>
               </div>
-              <div className="mt-3 sm:mt-6">
+              <div dangerouslySetInnerHTML={{ __html: intro?.programData?.desci }} className="inner-html-box mt-3 sm:mt-6"/>
+              {/* <div className="mt-3 sm:mt-6">
                 <h2 className="text-[22px] text-center sm:text-left text-[#333333] font-semibold">
                   Regular Classroom Program
                 </h2>
@@ -66,7 +69,7 @@ export default function Intoduction() {
                   Note: &nbsp;Guidance for Non-technical syllabus will be
                   available in online mode.
                 </h3>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

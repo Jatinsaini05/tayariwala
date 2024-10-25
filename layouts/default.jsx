@@ -48,9 +48,9 @@ export default function DefaultLayout({ children }) {
   // const url = "https://v3.edkt.net/api/s/website/5bc48477a794a34a0c07775f/data"
   const fetchApi = async () => {
     try {
-      debugger;
+   
       const response = await getWebsiteData("5bc48477a794a34a0c07775f");
-      console.log("response",response);
+      // console.log("response",response);
       setApiData(response);
     } catch (err) {
       console.log("Error", err);

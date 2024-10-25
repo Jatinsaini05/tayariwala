@@ -27,7 +27,7 @@ export const getAuthToken = async () => {
 };
 
 export const getWebsiteData = async (id, params={}) => {
-  debugger;
+
     const response = await fetchWithOutToken(`/api/s/website/${id}/data`, params);
     if (response.error) {
       console.error('Error fetching booking type:', response.error);
@@ -43,5 +43,31 @@ export const getPageData = async (url,params = {}) => {
     }
     return response;
   };
+  export const getCourseProgramByUri = async (url, params={}) => {
+    const response = await fetchWithOutToken(`/api/s/courseprogram-by-uri/${url}`, params);
+    if (response.error) {
+      console.error('Error fetching booking type:', response.error);
+      return { error: response.error, details: response?.details };
+    }
+    // console.log(23)
+    // console.log(response)
+    return response;
+  }
+  export const getWebberListItem = async (params={}) => {
+    const response = await fetchWithOutToken(`/api/s/webberlistitem`, params);
+    if (response.error) {
+      console.error('Error fetching booking type:', response.error);
+      return { error: response.error, details: response?.details };
+    }
+    return response;
+  }
+  export const getTestimonial = async (params={}) => {
+    const response = await fetchWithOutToken(`/api/s/testimonial`, params);
+    if (response.error) {
+      console.error('Error fetching booking type:', response.error);
+      return { error: response.error, details: response?.details };
+    }
+    return response;
+  }
 
 

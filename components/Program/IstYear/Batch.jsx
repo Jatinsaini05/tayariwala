@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
-export default function Batch() {
+export default function Batch({batch}) {
+
+ 
+  // console.log(newData)
   return (
     <section>
       <div className="px-[10px] lg:px-[2rem]  py-[2rem] sm:py-[3rem]">
@@ -8,7 +11,8 @@ export default function Batch() {
           <div className="grid grid-rows">
             <div className="grid grid-cols-12">
               <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 lg:px-2.5">
-                <h1 className="text-center sm:text-left text-[23px] text-[#333333] font-semibold mb-[10px]">
+                <div dangerouslySetInnerHTML={{ __html: batch?.programData?.linkedBatchProduct?.content}} className=" mt-3 sm:mt-6"/>
+                {/* <h1 className="text-center sm:text-left text-[23px] text-[#333333] font-semibold mb-[10px]">
                   New Batch for Classroom Program
                 </h1>
                 <div>
@@ -20,7 +24,7 @@ export default function Batch() {
                   >
                     Click here to view Upcoming Batches
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -31,7 +35,8 @@ export default function Batch() {
           <div className="grid grid-rows">
             <div className="grid grid-cols-12">
               <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 lg:px-2.5">
-                <h1 className="text-center sm:text-left  text-[23px] text-[#333333] font-semibold mb-[10px]">
+              <div dangerouslySetInnerHTML={{ __html: batch?.programData?.feeStructure?.content}} className="inner-html-box mt-3 sm:mt-6"/>
+                {/* <h1 className="text-center sm:text-left  text-[23px] text-[#333333] font-semibold mb-[10px]">
                   Fee Structure of classroom Program
                 </h1>
                 <div>
@@ -43,7 +48,7 @@ export default function Batch() {
                   >
                     Click here to view Fee Structure
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

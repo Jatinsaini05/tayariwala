@@ -8,6 +8,7 @@ import PromotionSection from "../components/Home/PromotionSection";
 import Enquiry from "../components/Home/Enquiry";
 import Faqs from "../components/Home/Faqs";
 import { getPageData } from "../service/apiFetch";
+
 // const lato = Lato({
 //   subsets: ["latin"],
 //   weight: "400",
@@ -15,15 +16,18 @@ import { getPageData } from "../service/apiFetch";
 
 export const getStaticProps = async () => {
   try {
-    const res = await getPageData("home-page-edukit", {contentBlock: "Object"});
-    const apiData = res;
+    const apidata = await getPageData('home-page-edukit', {contentBlock: "Object"});
+    if(!apidata){
+      console.log('no data found')
+    }
+    
     return {
       props: {
-        getApi: apiData,
+        getApi: apidata,
       },
     };
-  } catch (err) {
-    console.log("Error", err);
+  } catch (error) {
+    console.error(error);
     return {
       props: {
         getApi: [],
@@ -33,24 +37,21 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ getApi }) {
+
+
   return (
     <>
-      {/* <Head>
-        <title>
-          IES Master - Best Coaching For ESE, Gate and PSUs in Delhi
-        </title>
-      </Head> */}
       <div>
         <div>
-          <MainSlider topSlider={getApi} />
+          <MainSlider topSlider = {getApi} />
         </div>
 
         <div>
-          <WelcomeSection welcomeData={getApi} />
+          <WelcomeSection welcomeData= {getApi} />
         </div>
 
         <div>
-          <Faqs faqData={getApi} />
+          <Faqs faqData= {getApi} />
         </div>
 
         <div>
@@ -58,7 +59,7 @@ export default function Home({ getApi }) {
         </div>
 
         <div>
-          <PromotionSection publication={getApi} />
+          <PromotionSection publication={getApi}/>
         </div>
 
         <div>

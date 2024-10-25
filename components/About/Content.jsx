@@ -28,7 +28,7 @@ export default function Content({ contentData ,title}) {
           </div>
         </div>
       </div>
-      <div className="bg-[#ebf6f4]">
+      <div id="about_director" className="bg-[#ebf6f4]">
         <div className="container m-auto py-[2rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
           <div className="grid grid-rows">
             <div className="grid grid-cols-12">
@@ -88,7 +88,7 @@ export default function Content({ contentData ,title}) {
           </div>
         </div>
       </div>
-      <div className="container m-auto py-[2rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
+      <div id="Director's_Message" className="container m-auto py-[2rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
         <div className="grid grid-rows">
           <div className="grid grid-cols-12">
             <div className="col-span-12  sm:col-span-12  md:col-span-12  lg:col-span-12 xl:col-span-12 lg:px-2.5">
@@ -110,7 +110,7 @@ export default function Content({ contentData ,title}) {
         </div>
       </div>
       <div className="bg-[#ebf6f4] py-[1rem]">
-        <div className="container m-auto py-[1rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
+        <div id="Why_IES_Master" className="container m-auto py-[1rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
           <div className="grid grid-rows">
             <div className="grid grid-cols-12">
               <div className="col-span-12  sm:col-span-12  md:col-span-12  lg:col-span-12 xl:col-span-12 lg:px-2.5">
@@ -132,7 +132,7 @@ export default function Content({ contentData ,title}) {
           </div>
         </div>
       </div>
-      <div className="container m-auto py-[1rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
+      <div id="Our_Success_Story" className="container m-auto py-[1rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]">
         <div className="grid grid-rows">
           <div className="grid grid-cols-12">
             <div className="col-span-12  sm:col-span-12  md:col-span-12  lg:col-span-12 xl:col-span-12 lg:px-2.5">

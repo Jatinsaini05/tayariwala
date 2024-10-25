@@ -4,10 +4,16 @@ import WalkIn from '../components/Admissions/WalkIn';
 import DemandDraft from '../components/Admissions/DemandDraft';
 import OnlineAdmission from '../components/Admissions/OnlineAdmission';
 import TopperTalk from '../components/TopperTalk';
+import {getAdmissionPage} from "../service/apiFetch"
 // const lato = Lato({
 //     subsets: ['latin'],
 //     weight: '400'
 //   })
+export const getStaticProps = async() =>{
+    const response = await getAdmissionPage()
+    console.log(getAdmissionPage)
+
+}
 
 const Admission = () => {
     return (

@@ -7,3 +7,5 @@ export default function Poster() {
     </div>
   );
 }
+
+

@@ -81,7 +81,7 @@ const fetchWithToken = async (url, data = {}, options = {}) => {
 };
 
 export const fetchWithOutToken = async (url, data = {}, options = {}) => {
-  debugger;
+
   try {
     const headers = {
       ...options.headers,
@@ -105,7 +105,7 @@ export const fetchWithOutToken = async (url, data = {}, options = {}) => {
       const queryString = new URLSearchParams(data).toString();
       url = `${url}?${queryString}`;
     }
-    debugger;
+  
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
       let errorData;
@@ -117,7 +117,7 @@ export const fetchWithOutToken = async (url, data = {}, options = {}) => {
 
       console.error("API Error:", {
         status: response.status,
-        url: newUrl,
+        url: url,
         details: errorData,
       });
 
