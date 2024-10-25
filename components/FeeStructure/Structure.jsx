@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import Link from "next/link";
 export default function Structure() {
+  console.log("checked")
   return (
     <section id="fee-structure">
       <div className="container m-auto py-[2rem] px-[10px] sm:px-[2rem] lg:px-[3rem]">
