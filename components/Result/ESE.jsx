@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaWindows } from "react-icons/fa";
 
-export default function Gate({ topperData }) {
+export default function ESE({ topperData }) {
   const [tab, setTab] = useState(0);
   return (
     <>
@@ -12,7 +12,7 @@ export default function Gate({ topperData }) {
               <div className="grid grid-cols-12">
                 <div className="col-span-12  sm:col-span-12  md:col-span-12  lg:col-span-12 xl:col-span-12 lg:px-2.5">
                   <h1 className="bg-[#2d2c2c] font-[500] text-[20px] sm:text-[23px] pt-[2px] pb-[3px] px-[25px] text-[white] rounded-[2px] w-fit">
-                  {topperData?.pageData?.title}
+                    {topperData?.pageData?.title}
                   </h1>
                 </div>
               </div>
@@ -78,7 +78,11 @@ export default function Gate({ topperData }) {
                                               className={`${tab === categIndex ? "text-[black] border-t-[lightgray] border-x-[lightgray] border-t border-solid border-l border-r py-[3px] px-[12px] rounded-t-[6px]  rounded-t-md relative z-10 active-button" : "text-[#4585bd] z-0"}`}
                                               onClick={() => setTab(categIndex)}
                                             >
-                                              {categName?.title.split(" || ")[0]}
+                                              {
+                                                categName?.title.split(
+                                                  " || "
+                                                )[0]
+                                              }
                                             </button>
                                           </div>
                                         )

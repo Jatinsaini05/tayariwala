@@ -29,9 +29,9 @@ const TopperTalk = () => {
       <div className="mt-10 bg-customEBF5F3 py-10">
         <div className="container">
           <h2 className="text-xl font-bold mb-3">Topper's Talk</h2>
-          <div className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center gap-4">
+          <div className="flex  flex-wrap justify-center md:justify-between items-center gap-4 sm:gap-2">
             {apiData?.map((item, index) => (
-              <div className="w-full md:w-[400px] mx-auto" key={index}>
+              <div className="w-full sm:w-[48%] lg:w-[32%] mx-auto" key={index}>
                 <iframe
                   className="w-full aspect-video"
                   height="250"
@@ -44,32 +44,7 @@ const TopperTalk = () => {
                 ></iframe>
               </div>
             ))}
-{/* 
-            <div className="w-full md:w-[400px] mx-auto">
-              <iframe
-                className="w-full aspect-video"
-                height="250"
-                src="https://www.youtube.com/embed/KinyO8IP1RA?si=jFbpbdpPn7xU7LIW"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div>
 
-            <div className="w-full md:w-[400px] mx-auto">
-              <iframe
-                className="w-full aspect-video"
-                height="250"
-                src="https://www.youtube.com/embed/zzyafqNijR0?si=m7nh1jr0GiVTZ2bs"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div> */}
           </div>
         </div>
       </div>
