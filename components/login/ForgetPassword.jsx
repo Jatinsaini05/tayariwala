@@ -21,7 +21,7 @@ export default function ForgetPassword({ changeScreen }) {
         setLoading(true);
         let data = { username };
         const response = await fetch(
-          "https://vijethaiasacademyvja.com/api/public/user/sent-reset-password-otp",
+          "https://ihub.masterlearners.in/api/public/user/sent-reset-password-otp",
           {
             method: "POST",
             headers: {
@@ -76,7 +76,7 @@ export default function ForgetPassword({ changeScreen }) {
         let data = { newPassword, id: userId, confirmPassword, otp };
 
         const response = await fetch(
-          "https://vijethaiasacademyvja.com/api/public/user/reset-password",
+          "https://ihub.masterlearners.in/api/public/user/reset-password",
           {
             method: "POST",
             headers: {

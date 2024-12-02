@@ -1,71 +1,65 @@
 import React from "react";
-// import Head from "next/head";
-// import { Lato } from "@next/font/google";
-import MainSlider from "../components/Home/MainSlider";
-import WelcomeSection from "../components/Home/WelcomeSection";
-import Links from "../components/Home/Links";
-import PromotionSection from "../components/Home/PromotionSection";
-import Enquiry from "../components/Home/Enquiry";
-import Faqs from "../components/Home/Faqs";
+import MetaTags from "../components/MetaTags";
+import HeroSection from "../components/Home/HeroSection";
+import Approach from "../components/Home/Approach";
+import AchieveYourGoal from "../components/Home/AchieveYourGoal";
+import Review from "../components/Home/Review";
+import CourseNews from "../components/Home/CourseNews";
+import Subscribe from "../components/Home/Subscribe";
 import { getPageData } from "../service/apiFetch";
-
-// const lato = Lato({
-//   subsets: ["latin"],
-//   weight: "400",
-// });
-
+import PopularCourses from "../components/Home/PopularCourses";
+import LatestNews from "../components/Home/LatestNews";
 export const getStaticProps = async () => {
   try {
-    const apidata = await getPageData('home-page-edukit', {contentBlock: "Object"});
-    if(!apidata){
-      console.log('no data found')
+    const response = await getPageData("__home", {
+      contentBlock: "Object",
+    });
+    if (!response) {
+      console.log("pageData not found");
     }
-    
+
     return {
       props: {
-        getApi: apidata,
+        pageData: response,
       },
     };
   } catch (error) {
     console.error(error);
     return {
       props: {
-        getApi: [],
+        pageData: [],
       },
     };
   }
 };
 
-export default function Home({ getApi }) {
-
-
+export default function home({ pageData }) {
   return (
-    <>
+    <div>
       <div>
-        <div>
-          <MainSlider topSlider = {getApi} />
-        </div>
-
-        <div>
-          <WelcomeSection welcomeData= {getApi} />
-        </div>
-
-        <div>
-          <Faqs faqData= {getApi} />
-        </div>
-
-        <div>
-          <Links usefulLink={getApi} />
-        </div>
-
-        <div>
-          <PromotionSection publication={getApi}/>
-        </div>
-
-        <div>
-          <Enquiry />
-        </div>
+        <HeroSection pageData = {pageData?.contentBlock?.HERO_SECTION} />
       </div>
-    </>
+      <div>
+        <Approach pageData = {pageData?.contentBlock?.APPROACH} />
+      </div>
+      <div>
+        <AchieveYourGoal pageData = {pageData?.contentBlock?.ACHIEVE_GOAL}/>
+      </div>
+      <div>
+        <PopularCourses pageData = {pageData?.contentBlock?.POPULAR_COURSES}/>
+      </div>
+      <div>
+        <Review pageData = {pageData?.contentBlock?.REVIEW}/>
+      </div>
+      <div>
+        <CourseNews pageData = {pageData?.contentBlock?.LATEST_NEWS}/>
+      </div>
+      <div>
+        <LatestNews pageData = {pageData?.contentBlock?.NEWS_AND_BLOGS}/>
+      </div>
+      <div>
+        <Subscribe pageData = {pageData?.contentBlock?.SUBSCRIBE}/>
+      </div>
+    </div>
   );
 }

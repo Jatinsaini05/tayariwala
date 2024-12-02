@@ -1,5 +1,5 @@
 import { useStoreLogin } from "@/store/login";
-const clientBaseUrl = "https://iesmaster.institute.org.in";
+const clientBaseUrl = "https://ihub.masterlearners.in";
 const apiBaseUrl = "https://v3.edkt.net";
 const fetchWithToken = async (url, data = {}, options = {}) => {
   try {
@@ -105,7 +105,7 @@ export const fetchWithOutToken = async (url, data = {}, options = {}) => {
       const queryString = new URLSearchParams(data).toString();
       url = `${url}?${queryString}`;
     }
-  
+
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
       let errorData;

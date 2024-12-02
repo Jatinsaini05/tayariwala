@@ -70,6 +70,3 @@ export const getPageData = async (url,params = {}) => {
     }
     return response;
   }
-
-
-

@@ -83,7 +83,7 @@ export default function Register({ changeScreen }) {
           console.log(1, fd);
           try {
             const myData = await fetch(
-              "https://vijethaiasacademyvja.com/api/public/file/upload",
+              "https://ihub.masterlearners.in/api/public/file/upload",
               {
                 method: "POST",
                 body: fd,
@@ -121,7 +121,7 @@ export default function Register({ changeScreen }) {
     const fetchCourses = async () => {
       try {
         let response = await fetch(
-          `https://vijethaiasacademyvja.com/api/public/data/all-courses`
+          `https://ihub.masterlearners.in/api/public/data/all-courses`
         );
         let data = await response.json();
         setAllCourse(data);
@@ -136,7 +136,7 @@ export default function Register({ changeScreen }) {
     try {
       setStreamLoading(true);
       let response = await fetch(
-        `https://vijethaiasacademyvja.com/api/public/data/all-stream?status=true`
+        `https://ihub.masterlearners.in/api/public/data/all-stream?status=true`
       );
       let data = await response.json();
       setAllStreams(data);
@@ -172,7 +172,7 @@ export default function Register({ changeScreen }) {
         setLoading(true);
         let data = { mobile: regisData.mobile };
         const response = await fetch(
-          "https://vijethaiasacademyvja.com/api/public/user/signup-with-otp",
+          "https://ihub.masterlearners.in/api/public/user/signup-with-otp",
           {
             method: "POST",
             headers: {
@@ -222,7 +222,7 @@ export default function Register({ changeScreen }) {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://vijethaiasacademyvja.com/api/public/user/register-student-with-otp",
+          "https://ihub.masterlearners.in/api/public/user/register-student-with-otp",
           {
             method: "POST",
             headers: {

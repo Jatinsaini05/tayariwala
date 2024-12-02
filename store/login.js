@@ -26,7 +26,7 @@ export const useStoreLogin = create(
 
         try {
           let response = await fetch(
-            `https://vijethaiasacademyvja.com/api/auth/signin`,
+            `/api/auth/signin`,
             {
               method: "POST",
               headers: {
@@ -86,7 +86,7 @@ export const useStoreLogin = create(
           let response;
           try {
             response = await fetch(
-              `https://vijethaiasacademyvja.com/api/public/send-otp`,
+              `https://ihub.masterlearners.in/api/public/send-otp`,
               {
                 method: "POST",
                 headers: {
@@ -143,7 +143,7 @@ export const useStoreLogin = create(
         let response;
         try {
           response = await fetch(
-            `https://vijethaiasacademyvja.com/api/public/varify`,
+            `https://ihub.masterlearners.in/api/public/varify`,
             {
               method: "POST",
               headers: {
