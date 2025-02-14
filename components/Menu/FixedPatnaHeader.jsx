@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PatnaHeader from './PatnaHeader';
 
-const FixedPatnaHeader = () => {
+const FixedPatnaHeader = ({websiteData}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
@@ -26,7 +26,7 @@ const FixedPatnaHeader = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'
         }`}
       >
-        <PatnaHeader/>
+        <PatnaHeader websiteData={websiteData}/>
       </div>
     </div>
   );

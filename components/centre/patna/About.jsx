@@ -3,7 +3,7 @@ import React from 'react'
 const About = ({ pageData }) => {
     return (
         <div className='container'>
-            <div className='pt-[100px] pb-[40px]'>
+            <div className='sm:pt-[100px] pt-9 pb-[40px]'>
 
                 <h2 className='sm:text-[40px] text-[35px] text-customFC6200'>{pageData?.heading}</h2>
                 <div className='text-[#606060] leading-7'><span dangerouslySetInnerHTML={{ __html: pageData?.content }}></span></div>

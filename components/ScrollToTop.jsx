@@ -26,7 +26,7 @@ const ScrollToTopButton = () => {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
       }`}
       style={{
-        marginBottom: '15px', // Adjust margin if needed
+        marginBottom: '15px',
       }}
     >
       <RiArrowUpSLine className="text-4xl text-[#221638] group-hover:text-white transition-colors duration-0" />

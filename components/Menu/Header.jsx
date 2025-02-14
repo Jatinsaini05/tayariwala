@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from '@nextui-org/link';
-import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa';
 import { RiArrowDownSLine } from "react-icons/ri";
 import { LuUser2 } from "react-icons/lu";
@@ -7,11 +7,51 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import HoverButton from '../hover effect/hoverButton';
+import { useStoreLogin } from "../../store/login";
+import { search } from '../../service/apiFetch';
 
-
-const Header = () => {
+const Header = ({ websiteData }) => {
     const [activeSection, setActiveSection] = useState(null);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [input, setInput] = useState("");
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+
+    // Fix hydration issue by checking if running on the client
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // Login state
+    const user = useStoreLogin.getState().user;
+    const authToken = useStoreLogin.getState().authToken;
+
+    // Search API call
+    useEffect(() => {
+        if (input.trim() === "") {
+            setData([]);
+            return;
+        }
+
+        const fetchData = async () => {
+            try {
+                const params = { term: input };
+                const response = await search(params);
+                // if (!response.ok) throw new Error("Error occurred while fetching data");
+                // const result = await response.json();
+                setData(response);
+                // console.log(data)
+                setError(null);
+            } catch (error) {
+                setError(error.message);
+                setData([]);
+            }
+        };
+        fetchData();
+    }, [input]);
+
 
     const toggleDropdown = (dropdown) => {
         if (openDropdown === dropdown) {
@@ -28,7 +68,7 @@ const Header = () => {
                     <div className='flex flex-grow lg:flex-grow-0 justify-between  gap-3 xl:gap-14'>
                         <div>
                             <Link href="/">
-                                <img src='/images/logo.png' className='hover:cursor-pointer' />
+                                <img src={websiteData?.website?.logo} className='hover:cursor-pointer max-w-[140px]' />
                             </Link>
                         </div>
                         <div className="hidden relative sm:flex items-center">
@@ -36,78 +76,90 @@ const Header = () => {
                                 type="search"
                                 placeholder="Search"
                                 className="bg-neutral-100 py-3 lg:px-1 2xl:px-4 w-48 2xl:w-auto px-4 rounded-md focus:outline-none"
+                                onChange={(e) => setInput(e.target.value)}
                             />
                             <div className="absolute right-0 flex items-center pr-4">
                                 <button><FaSearch className="text-customFC6200" /></button>
                             </div>
+                            <div className='absolute scbar right-0 left-0 top-[52px]'>
+                                {input.length > 0 && (
+                                    <>
+                                        <div className='h-[300px] bg-[#f5f5f5] border overflow-x-auto'>
+                                            {data?.products?.map((item, index) => (
+                                                <div key={index} className='bg-[#f5f5f5] p-2'>
+                                                    <div className='border-b'>
+                                                        <Link href={`/${item?.uri}`} className='text-[#221638] text-xs inline hover:text-customFC6200'>
+                                                            <span>
+                                                                {item?.title}
+                                                            </span>
+                                                        </Link>
+                                                        <span className='text-xs text-customFC6200'>{`(${item?.stream?.valueAlias})`}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+
                         </div>
                     </div>
                     <div className='flex flex-grow lg:flex-grow-0 justify-end sm:justify-between gap-1 2xl:gap-14'>
-                        <div className='hidden lg:flex items-center'>
-                            <div className=" flex h-full items-center group relative">
-                                <Link href="/courses" className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold h-full px-1 2xl:px-3 flex items-center hover:text-customFC6200 hover:cursor-pointer">Select Exam &nbsp;<RiArrowDownSLine /></Link>
-                                <div className="absolute top-full left-0 w-full h-6 z-10"></div>
-                                <ul className="absolute bg-white border-t-3 border-t-customFC6200 z-10 top-full left-0 w-max mt-6 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
-                                    <li className="text-base py-3 px-4 border-b border-dashed">
-                                        <Link href="/course/ssc-je" className="text-black font-semibold hover:text-customFC6200">SSC-JE</Link>
-                                    </li>
-                                    <li className="text-base py-3 px-4 border-b border-dashed">
-                                        <Link href="/course/rrb-je" className="text-black font-semibold hover:text-customFC6200">RRB-JE</Link>
-                                    </li>
-                                    <li className="text-base py-3 px-4 border-b border-dashed">
-                                        <Link href="/course/jdlcce-je" className="text-black font-semibold hover:text-customFC6200">JDLCCE (JSSC-JE)</Link>
-                                    </li>
-                                    <li className="text-base py-3 px-4 border-b border-dashed">
-                                        <Link href="dda-je" className="text-black font-semibold hover:text-customFC6200">DDA-JE</Link>
-                                    </li>
-                                    <li className="text-sm py-3 text-gray-500 px-4 border-b border-dashed">
-                                        More Courses are coming soon
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className=" flex h-full items-center group relative">
+                        <div className="hidden lg:flex items-center">
+                            {websiteData?.menus?.PRIMARY_MENU?.items?.map((menuItem, index) => (
+                                <div key={index} className="relative group">
+                                    <Link
+                                        href={menuItem.url}
+                                        className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold px-1 xl:px-3 flex items-center hover:text-customFC6200"
+                                    >
+                                        {menuItem.title}
+                                        {menuItem.subItems && menuItem.subItems.length > 0 && (
+                                            <RiArrowDownSLine className="ml-1" />
+                                        )}
+                                    </Link>
 
+                                    {menuItem.subItems && menuItem.subItems.length > 0 && (
+                                        <div>
+                                            <div className='h-6 w-full absolute -bottom-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible'></div>
+                                            <ul className="absolute bg-white border-t-3 border-t-customFC6200 z-10 top-full mt-6 left-0 w-max shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
 
-                                <Link
-                                    href="/centre/patna"
-                                    className="text-[13px] lg:text-[12px] xl:text-[13px] text-customFC6200 font-semibold px-1 2xl:px-3 h-full flex items-center hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Offline Courses &nbsp; <RiArrowDownSLine />
-                                </Link>
+                                                {menuItem.subItems.map((subItem, subIndex) => {
+                                                    const isLastItem = subIndex === menuItem.subItems.length - 1;
 
-                                <div className="absolute top-full left-0 w-full h-6 z-10"></div>
-
-                                <ul
-                                    className="absolute bg-white border-t-3 border-t-customFC6200 z-10 top-full mt-6 left-0 w-max shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
-                                >
-                                    <li className="text-base py-3 px-4 border-b border-dashed">
-                                        <Link href="/centre/patna" className="text-black font-semibold hover:text-customFC6200">Patna Centre</Link>
-                                    </li>
-                                    <li className="text-sm text-gray-500 py-3 px-4 border-b border-dashed">
-                                        More Centres are coming soon
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <Link href="/live-classes" className='text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer'>Online Courses</Link>
-                            </div>
-                            <div>
-                                <Link href="/online-test-series" className='text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer'>Test Series</Link>
-                            </div>
-                            <div>
-                                <Link href="/postal-study-package" className='text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer'>Study Package</Link>
-                            </div>
-                            <div>
-                                <Link href="/contact" className='text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer'>Contact Us</Link>
-                            </div>
+                                                    return (
+                                                        <li
+                                                            key={subIndex}
+                                                            className={`text-base py-3 px-4 border-b border-dashed ${isLastItem
+                                                                ? 'text-sm text-gray-500 py-3 px-4 border-b border-dashed'
+                                                                : 'hover:text-customFC6200'
+                                                                }`}
+                                                        >
+                                                            {!isLastItem ? (
+                                                                <Link href={subItem.url} className="text-black font-semibold hover:text-customFC6200">
+                                                                    {subItem.title}
+                                                                </Link>
+                                                            ) : (
+                                                                <span>{subItem.title}</span>
+                                                            )}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                         <div className='hidden sm:flex items-center'>
-                            <Link href="/login" className='relative flex py-3 font-semibold lg:px-1 lg:text-[12px] xl:text-[16px] items-center text-white px-4 xl:px-8 bg-customFC6200 rounded-md overflow-hidden group'>
-                                <span className="relative z-10 flex items-center">
-                                    <LuUser2 /> &nbsp; Login/Register
-                                </span>
-                                <span className="absolute inset-0 bg-custom241737 transition-all duration-500 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                            </Link>
+                            {isClient && user && authToken ? (
+                                <div className='flex items-center' id='loginheader'>
+                                    <HoverButton icon={LuUser2} text="Profile" link='/profile' />
+                                </div>
+                            ) : (
+                                <div className='flex items-center' id='loginheader'>
+                                    <HoverButton icon={LuUser2} text="Login/Register" link='/login' />
+                                </div>
+                            )}
                         </div>
 
                         <div className={`text-sm sm:hidden px-2 py-1 ${activeSection === 1 ? 'text-customFC6200' : 'text-custom241737'}`}
@@ -121,20 +173,47 @@ const Header = () => {
                                 <div className="relative flex items-center">
                                     <input
                                         type="search"
+                                        value={input}
                                         placeholder="Search"
                                         className="bg-neutral-100 py-3 px-4 rounded-md focus:outline-none"
+                                        onChange={(e) => setInput(e.target.value)}
                                     />
                                     <div className="absolute right-0 flex items-center pr-4">
                                         <button><FaSearch className="text-customFC6200" /></button>
                                     </div>
+                                    <div className='absolute scbar right-0 left-0 z-20 top-[52px]'>
+                                        {input.length > 0 && (
+                                            <>
+                                                <div className='h-[300px] bg-[#f5f5f5] border overflow-x-auto'>
+                                                    {data?.products?.map((item, index) => (
+                                                        <div key={index} className='bg-[#f5f5f5] p-2'>
+                                                            <div className='border-b'>
+                                                                <Link href={`/${item?.uri}`} className='text-[#221638] text-xs inline hover:text-customFC6200'>
+                                                                    <span>
+                                                                        {item?.title}
+                                                                    </span>
+                                                                </Link>
+                                                                <span className='text-xs text-customFC6200'>{`(${item?.stream?.valueAlias})`}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className='flex justify-center'>
-                                    <Link href="/login" className='relative flex text-sm py-3 font-semibold items-center text-white px-4 bg-customFC6200 rounded-md overflow-hidden group'>
-                                        <span className="relative z-10 flex items-center">
-                                            <LuUser2 /> &nbsp; Login/Register
-                                        </span>
-                                        <span className="absolute inset-0 bg-custom241737 transition-all duration-300 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                                    </Link>
+                                    <div id="hiddenlogin">
+                                        {isClient && user && authToken ? (
+                                            <div className='flex items-center' id='loginheader'>
+                                                <HoverButton icon={LuUser2} text="Profile" link='/profile' />
+                                            </div>
+                                        ) : (
+                                            <div className='flex items-center' id='loginheader'>
+                                                <HoverButton icon={LuUser2} text="Login/Register" link='/login' />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
                             </div>
@@ -152,53 +231,67 @@ const Header = () => {
                         <div className={`absolute top-[120px] text-[#221638] px-2 sm:right-3 sm:left-3 right-10 left-10 z-10 bg-white shadow-lg
                 origin-top transform transition-transform duration-500 ${activeSection === 2 ? 'scale-y-100' : 'scale-y-0'}`}>
                             <div className='lg:hidden overflow-scroll h-72'>
-                                <ul>
+                                {websiteData?.menus?.PRIMARY_MENU?.items?.map((menuItem, index) => (
+                                    <ul key={index}>
+                                        <li className="cursor-pointer border-t py-2 border-[#DBEEFD] flex items-center justify-between">
+                                            <Link href={menuItem?.url} className="text-[#221638] text-[13px]">
+                                                {menuItem?.title}
+                                            </Link>
+                                            {menuItem?.subItems?.length > 0 && (
+                                                <>
+                                                    {openDropdown === `menu-${index}` ? (
+                                                        <FiMinus
+                                                            className="text-[#221638]"
+                                                            onClick={() => toggleDropdown(`menu-${index}`)}
+                                                        />
+                                                    ) : (
+                                                        <FiPlus
+                                                            className="text-[#221638]"
+                                                            onClick={() => toggleDropdown(`menu-${index}`)}
+                                                        />
+                                                    )}
+                                                </>
+                                            )}
+                                        </li>
 
-                                    <li className="cursor-pointer border-t py-2 border-[#DBEEFD] flex items-center justify-between">
-                                        <Link href="/courses" className='text-[#221638] text-[13px]'>Select Exam</Link>
-                                        {openDropdown === 'exam' ? (
-                                            <FiMinus className='text-[#221638]' onClick={() => toggleDropdown('exam')} />
-                                        ) : (
-                                            <FiPlus className='text-[#221638]' onClick={() => toggleDropdown('exam')} />
+                                        {/* Sub-menu rendering */}
+                                        {menuItem?.subItems?.length > 0 && (
+                                            <ul
+                                                className={`overflow-hidden pl-2 text-[14.5px] transition-transform transform duration-300 origin-top ${openDropdown === `menu-${index}` ? "scale-y-100 max-h-max" : "scale-y-0 max-h-0"
+                                                    }`}
+                                            >
+                                                {menuItem?.subItems.map((subItem, subIndex) => {
+                                                    const isLastItem = subIndex === menuItem.subItems.length - 1;
+
+                                                    return (<>
+                                                        < li
+                                                            key={`${index}-${subIndex}`
+                                                            }
+                                                            className={`border-t border-[#DBEEFD] py-2 ${isLastItem ? 'text-sm text-gray-500' : ''}`}
+                                                        >
+                                                            {!isLastItem ? (
+                                                                <Link href={subItem?.url} className="text-[#221638] text-[14.5px]">
+                                                                    {subItem?.title}
+                                                                </Link>
+                                                            ) : (<span>{subItem.title}</span>
+                                                            )}
+                                                        </li>
+
+
+                                                    </>)
+
+                                                })}
+                                            </ul>
                                         )}
-                                    </li>
-
-
-
-                                    <ul className={`overflow-hidden  pl-2 text-[14.5px] transition-transform transform duration-300 origin-top ${openDropdown === 'exam' ? 'scale-h-100 max-h-max' : 'scale-y-0 max-h-0'
-                                        }`}>
-                                        <li className='border-t border-[#DBEEFD] py-2'><Link href="/course/ssc-je" className='text-[#221638] text-[14.5px]'>SSC-JE</Link></li>
-                                        <li className='border-t border-[#DBEEFD] py-2'><Link href="/course/rrb-je" className='text-[#221638] text-[14.5px]'>RRB-JE</Link></li>
-                                        <li className='border-t border-[#DBEEFD] py-2'><Link href="/course/jdlcce-je" className='text-[#221638] text-[14.5px]'>JDLCCE (JSSC-JE)</Link></li>
-                                        <li className='border-t border-[#DBEEFD] py-2'><Link href="/course/dda-je" className='text-[#221638] text-[14.5px]'>DDA-JE</Link></li>
-                                        <li className='text-[11.7px] border-t border-[#DBEEFD] py-2'>More Courses are coming soon</li>
                                     </ul>
+                                ))}
 
-                                    <li className="cursor-pointer border-t border-[#DBEEFD] py-2 flex items-center justify-between">
-                                        <Link href="/centre/patna" className='text-customFC6200 text-[13px]'>Offline Courses</Link>
-                                        {openDropdown === 'courses' ? (
-                                            <FiMinus className='text-[#221638]' onClick={() => toggleDropdown('courses')} />
-                                        ) : (
-                                            <FiPlus className='text-[#221638]' onClick={() => toggleDropdown('courses')} />
-                                        )}
-                                    </li>
-
-                                    <ul className={`overflow-hidden pl-2 text-[14.5px] transition-transform transform duration-300 origin-top ${openDropdown === 'courses' ? 'scale-y-100 max-h-max' : 'scale-y-0 max-h-0'
-                                        }`}>
-                                        <li className='border-t border-[#DBEEFD] py-2'><Link href="/centre/patna" className='text-[#221638] text-[14.5px]'>Patna Centre</Link></li>
-                                        <li className='text-[11.6px] border-t border-[#DBEEFD] py-2'>More Centres are coming soon</li>
-                                    </ul>
-                                    <li className='border-t border-[#DBEEFD] py-2'><Link href="/live-classes" className='text-[13px] text-[#221638]'>Online Courses</Link></li>
-                                    <li className='border-t border-[#DBEEFD] py-2'><Link href="/online-test-series" className='text-[13px] text-[#221638]'>Test Series</Link></li>
-                                    <li className='border-t border-[#DBEEFD] py-2'><Link href="/postal-study-package" className='text-[13px] text-[#221638]'>Study Package</Link></li>
-                                    <li className='border-t border-[#DBEEFD] py-2'><Link href="/contact" className='text-[13px] text-[#221638]'>Contact Us</Link></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 export default Header

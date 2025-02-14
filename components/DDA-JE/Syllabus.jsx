@@ -5,13 +5,16 @@ const Syllabus = ({ pageData }) => {
     return (
         <div>
             <div className='container mb-24'>
-                <section id="exam-info">
+                <section id="syllabus">
                     <div className='flex flex-col-reverse lg:flex-row justify-between gap-5'>
                         <div>
+                            {/* {JSON.stringify(pageData)} */}
                             <h1 className='sm:text-[40px] text-[32px] text-[#221638]'>{pageData?.heading}</h1>
                             {pageData?.advanceData?.data?.map((item, index) => (
                                 <div key={index}>
-                                    <span dangerouslySetInnerHTML={{ __html: item[index]?.desci }}></span>
+                                    <div className='overflow-x-auto'>
+                                    <span dangerouslySetInnerHTML={{ __html: item?.desci }}></span>
+                                </div>
                                 </div>
                             ))}
                         </div>
@@ -60,7 +63,7 @@ const Syllabus = ({ pageData }) => {
                     </div> */}
                         <div className='lg:w-full'>
                             <ul className='border shadow-xl'>
-                                <li className='border-b p-4'><Link href="#Syllabus" className='hover:text-customFC6200 text-[#221638] text-base'>Syllabus</Link></li>
+                                <li className='border-b p-4'><Link href="#syllabus" className='hover:text-customFC6200 text-[#221638] text-base'>Syllabus</Link></li>
                             </ul>
                         </div>
                     </div>

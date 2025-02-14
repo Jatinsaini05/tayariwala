@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LuUser2 } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
+import { useStoreLogin } from "../../store/login";
+import HoverButton from '../hover effect/hoverButton';
 
-const PatnaHeader = () => {
+const PatnaHeader = ({ websiteData }) => {
     const [activeSection, setActiveSection] = useState(null);
     const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -17,6 +19,13 @@ const PatnaHeader = () => {
         }
     };
 
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+let user = useStoreLogin.getState().user;
+    let authToken = useStoreLogin.getState().authToken;
     return (
         <div>
             <div>
@@ -24,72 +33,33 @@ const PatnaHeader = () => {
                     <div className="flex flex-grow lg:flex-grow-0 justify-between  gap-3 xl:gap-14">
                         <div>
                             <Link href="/">
-                                <img src="/images/logo.png" className="hover:cursor-pointer" />
+                                <img src={websiteData?.website?.logo} className="hover:cursor-pointer max-w-[140px]" />
                             </Link>
                         </div>
                     </div>
                     <div className="flex flex-grow lg:flex-grow-0 justify-end sm:justify-between gap-1 2xl:gap-14">
                         <div className="hidden lg:flex items-center text-[#221638]">
                             <div className=" flex h-full items-center">
-                                <Link
-                                    href="#about"
-                                    className="lg:text-[12px] xl:text-[13px] text-[13px] font-semibold h-full px-1 2xl:px-3 flex items-center hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    About Patna Centre
-                                </Link>
-                            </div>
-                            <div className=" flex h-full items-center">
-                                <Link
-                                    href="#batch"
-                                    className="text-[13px] lg:text-[12px] xl:text-[13px] font-semibold px-1 2xl:px-3 h-full flex items-center hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Upcoming Batches
-                                </Link>
-                            </div>
-
-                            <div>
-                                <Link
-                                    href="/online-test-series"
-                                    className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Test Series
-                                </Link>
-                            </div>
-                            <div>
-                                <Link
-                                    href="/postal-study-package"
-                                    className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Study Package
-                                </Link>
-                            </div>
-                            <div>
-                                <Link
-                                    href="/live-classes"
-                                    className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Online Courses
-                                </Link>
-                            </div>
-                            <div>
-                                <Link
-                                    href="/contact"
-                                    className="text-black lg:text-[12px] xl:text-[13px] text-[13px] font-semibold  px-1 xl:px-3 hover:text-customFC6200 hover:cursor-pointer"
-                                >
-                                    Contact Us
-                                </Link>
+                                {websiteData?.menus?.PATNA_MENUS?.items?.map((item, index) => (
+                                    <Link
+                                        href={item?.url}
+                                        className="lg:text-[12px] xl:text-[13px] text-[13px] font-semibold h-full px-1 2xl:px-3 flex items-center hover:text-customFC6200 hover:cursor-pointer"
+                                    >
+                                        {item?.title}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
                         <div className="hidden sm:flex items-center">
-                            <Link
-                                href="/login"
-                                className="relative flex py-3 font-semibold lg:px-1 lg:text-[12px] xl:text-[16px] items-center text-white px-4 xl:px-8 bg-customFC6200 rounded-md overflow-hidden group"
-                            >
-                                <span className="relative z-10 flex items-center">
-                                    <LuUser2 /> &nbsp; Login/Register
-                                </span>
-                                <span className="absolute inset-0 bg-custom241737 transition-all duration-500 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                            </Link>
+                            {isClient && user && authToken ? (
+                                <div className='flex items-center' id='loginheader'>
+                                    <HoverButton icon={LuUser2} text="Profile" link='/profile' />
+                                </div>
+                            ) : (
+                                <div className='flex items-center' id='loginheader'>
+                                    <HoverButton icon={LuUser2} text="Login/Register" link='/login' />
+                                </div>
+                            )}
                         </div>
 
                         <div
@@ -105,15 +75,15 @@ const PatnaHeader = () => {
                         >
                             <div className="px-3 py-4 sm:hidden">
                                 <div className="flex justify-center">
-                                    <Link
-                                        href="/login"
-                                        className="relative flex text-sm py-3 font-semibold items-center text-white px-4 bg-customFC6200 rounded-md overflow-hidden group"
-                                    >
-                                        <span className="relative z-10 flex items-center">
-                                            <LuUser2 /> &nbsp; Login/Register
-                                        </span>
-                                        <span className="absolute inset-0 bg-custom241737 transition-all duration-300 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                                    </Link>
+                                    {isClient && user && authToken ? (
+                                        <div className='flex items-center' id='loginheader'>
+                                            <HoverButton icon={LuUser2} text="Profile" link='/profile' />
+                                        </div>
+                                    ) : (
+                                        <div className='flex items-center' id='loginheader'>
+                                            <HoverButton icon={LuUser2} text="Login/Register" link='/login' />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -135,58 +105,16 @@ const PatnaHeader = () => {
                         >
                             <div className="lg:hidden overflow-scroll h-72">
                                 <ul>
-                                    <li className="cursor-pointer border-t py-2 border-[#DBEEFD] flex items-center justify-between">
-                                        <Link
-                                            href="#about"
-                                            className="text-[#221638] text-[13px]"
-                                        >
-                                            About Patna Centre
-                                        </Link>
-                                    </li>
-
-                                    <li className="cursor-pointer border-t border-[#DBEEFD] py-2 flex items-center justify-between">
-                                        <Link
-                                            href="#batch"
-                                            className="text-customFC6200 text-[13px]"
-                                        >
-                                            Upcoming Batches
-                                        </Link>
-                                        
-                                    </li>
-                                    
-                                    <li className="border-t border-[#DBEEFD] py-2">
-                                        <Link
-                                            href="/online-test-series"
-                                            className="text-[13px] text-[#221638]"
-                                        >
-                                            Test Series
-                                        </Link>
-                                    </li>
-                                    <li className="border-t border-[#DBEEFD] py-2">
-                                        <Link
-                                            href="/postal-study-package"
-                                            className="text-[13px] text-[#221638]"
-                                        >
-                                            Study Package
-                                        </Link>
-                                    </li>
-                                    <li className="border-t border-[#DBEEFD] py-2">
-                                        <Link
-                                            href="/live-classes"
-                                            className="text-[13px] text-[#221638]"
-                                        >
-                                            Online Courses
-                                        </Link>
-                                    </li>
-                                    <li className="border-t border-[#DBEEFD] py-2">
-                                        <Link
-                                            href="/contact"
-                                            className="text-[13px] text-[#221638]"
-                                        >
-                                            Contact Us
-                                        </Link>
-                                    </li>
-                                    
+                                    {websiteData?.menus?.PATNA_MENUS?.items?.map((item, index) => (
+                                        <li className="cursor-pointer border-t py-2 border-[#DBEEFD] flex items-center justify-between">
+                                            <Link
+                                                href={item?.url}
+                                                className="text-[#221638] text-[13px]"
+                                            >
+                                                {item?.title}
+                                            </Link>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>

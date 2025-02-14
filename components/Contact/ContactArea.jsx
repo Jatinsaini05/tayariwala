@@ -30,7 +30,6 @@ const ContactArea = ({ pageData, websiteData }) => {
                         Our Address
                       </h3>
                       <p className='max-w-[300px] text-[#606060]'>{websiteData?.address}
-
                       </p>
                     </div>
                   </div>
@@ -63,7 +62,7 @@ const ContactArea = ({ pageData, websiteData }) => {
                         Contact
                       </h3>
                       {websiteData?.contactNumber?.map((item, index) => (
-                        <p className='max-w-[300px]'><span className='text-[#606060]'>Mobile:&nbsp;</span><Link href={`tel:${item}`} className='text-customFC6200'>
+                        <p key={index} className='max-w-[300px]'><span className='text-[#606060]'>Mobile:&nbsp;</span><Link href={`tel:${item}`} className='text-customFC6200'>
                           {item}
                         </Link>
                         </p>

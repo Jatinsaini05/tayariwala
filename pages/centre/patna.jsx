@@ -1,61 +1,61 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PageTitle from '../../components/centre/patna/PageTitle'
 import About from '../../components/centre/patna/About'
 import CoursesOffered from '../../components/centre/patna/CoursesOffered'
 import WhatsNew from '../../components/centre/patna/WhatsNew'
 import Testimonial from '../../components/centre/patna/Testimonial'
 import ContactUs from '../../components/centre/patna/ContactUs'
-import { getPageData } from '../../service/apiFetch'
+import { getInitialData, getPageData, getProductData } from '../../service/apiFetch'
 
 export const getStaticProps = async () => {
-  try {
-    const response = await getPageData("centre/patna", {
-      contentBlock: "Object",
-    });
-
-    const additionalContactResponse = await getPageData("contact-patna", {
-      contentBlock: "Object",
-    });
-
-    if (!response) {
-      console.log("pageData not found");
-    }
-
-    return {
-      props: {
-        pageData: response,
-        pageData1: additionalContactResponse, 
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        pageData: [],
-        pageData1: [],
-      },
-    };
-  }
+  const initialData = await getInitialData("centre/patna", { contentBlock: "Object" });
+  const additionalContactResponse = await getPageData("contact-patna", { contentBlock: "Object" });
+  return {
+    props: {
+      websiteData: initialData?.websiteData,
+      pageData: initialData?.data,
+      title: initialData?.title,
+      metaTags: initialData?.metaTags,
+      pageData1: additionalContactResponse
+    },
+  };
 };
 
 const Patna = ({ pageData, pageData1 }) => {
+  const [additionalData, setAdditionalData] = useState(null);
+
+  useEffect(() => {
+    const fetchAdditionalData = async () => {
+      try {
+        const response = await getProductData("category=3030707264637463636c7370");
+        setAdditionalData(response);
+      } catch (error) {
+        console.error("Error fetching additional data:", error);
+      }
+    };
+
+    fetchAdditionalData();
+  }, [pageData]);
+
   return (
     <div>
-      {/* {JSON.stringify(pageData1)} */}
       <div>
-        <PageTitle />
+        <PageTitle pageData={pageData} />
       </div>
       <div>
         <About pageData={pageData?.contentBlock?.ABOUT_PATNA_CENTRE} />
       </div>
       <div>
-        <CoursesOffered />
+        <CoursesOffered data={additionalData} />
       </div>
       <div>
-        <WhatsNew />
+        <WhatsNew blogData={pageData?.contentBlock?.WHATS_NEW_LATEST_BLOG}
+          updateData={pageData?.contentBlock?.WHATS_NEW_NEW_UPDATES}
+          linksData={pageData?.contentBlock?.WHATS_NEW_QUICK}
+        />
       </div>
       <div>
-        <Testimonial pageData={pageData?.contentBlock?.TESTIMONIAL}/>
+        <Testimonial pageData={pageData?.contentBlock?.TESTIMONIAL} />
       </div>
       <div>
         <ContactUs pageData={pageData1?.contentBlock?.CONTACT_DETAILS} />

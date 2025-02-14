@@ -1,30 +1,42 @@
 import React from 'react'
 import PageTitle from '../components/About-Us/PageTitle'
 import About from '../components/About-Us/About'
-import { getPageData } from "../service/apiFetch";
+import { getInitialData, getPageData } from "../service/apiFetch";
+
+// export const getStaticProps = async () => {
+//   try {
+//     const response = await getPageData("about-us", {
+//       contentBlock: "Object",
+//     });
+//     if (!response) {
+//       console.log("pageData not found");
+//     }
+
+//     return {
+//       props: {
+//         pageData: response,
+//       },
+//     };
+//   } catch (error) {
+//     console.error(error);
+//     return {
+//       props: {
+//         pageData: [],
+//       },
+//     };
+//   }
+// };
 
 export const getStaticProps = async () => {
-  try {
-    const response = await getPageData("about-us", {
-      contentBlock: "Object",
-    });
-    if (!response) {
-      console.log("pageData not found");
-    }
-
-    return {
-      props: {
-        pageData: response,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        pageData: [],
-      },
-    };
-  }
+  const initialData = await getInitialData("about-us", { contentBlock: "Object" });
+  return {
+    props: {
+      websiteData: initialData?.websiteData,
+      pageData: initialData?.data,
+      title: initialData?.title,
+      metaTags: initialData?.metaTags,
+    },
+  };
 };
 
 const AboutUs = ({pageData}) => {
@@ -32,7 +44,7 @@ const AboutUs = ({pageData}) => {
     <div>
       {/* {JSON.stringify(pageData)} */}
       <div>
-        <PageTitle/>
+        <PageTitle pageData={pageData}/>
       </div>
       <div>
         <About pageData={pageData?.contentBlock?.MAIN_CONTENT}/>

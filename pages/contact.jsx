@@ -1,44 +1,55 @@
 import React from 'react'
 import PageTitle from '../components/Contact/PageTitle'
 import ContactArea from '../components/Contact/ContactArea'
-import { getPageData } from '../service/apiFetch';
-import { getWebsiteData } from '../service/apiFetch';
+import { getInitialData, getPageData } from '../service/apiFetch';
+// import { getWebsiteData } from '../service/apiFetch';
+// export const getStaticProps = async () => {
+//   try {
+//     const response = await getPageData("contact", {
+//       contentBlock: "Object",
+//     });
+
+//     const websiteResponse = await getWebsiteData("62384c4fa71aa5f073af559d");
+//     if (!websiteResponse ) {
+//       console.log("websiteData not found");
+//     }
+//     if (!response) {
+//       console.log("pageData not found");
+//     }
+
+//     return {
+//       props: {
+//        websiteData :websiteResponse,
+//         pageData: response,
+//       },
+//     };
+//   } catch (error) {
+//     console.error(error);
+//     return {
+//       props: {
+//         websiteData:[],
+//         pageData: [],
+//       },
+//     };
+//   }
+// };
+
 export const getStaticProps = async () => {
-  try {
-    const response = await getPageData("contact", {
-      contentBlock: "Object",
-    });
-
-    const websiteResponse = await getWebsiteData("62384c4fa71aa5f073af559d");
-    if (!websiteResponse ) {
-      console.log("websiteData not found");
-    }
-    if (!response) {
-      console.log("pageData not found");
-    }
-
+    const initialData = await getInitialData("contact", { contentBlock: "Object" });
     return {
       props: {
-       websiteData :websiteResponse,
-        pageData: response,
+        websiteData: initialData?.websiteData,
+        pageData: initialData?.data,
+        title: initialData?.title,
+        metaTags: initialData?.metaTags,
       },
     };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        websiteData:[],
-        pageData: [],
-      },
-    };
-  }
-};
-
+  };
 const contact = ({pageData, websiteData}) => {
   return (
     <div>
         <div>
-            <PageTitle />
+            <PageTitle pageData={pageData}/>
         </div>
         <div>
             <ContactArea pageData={pageData?.contentBlock?.CONTACT_DETAILS}

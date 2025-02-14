@@ -1,6 +1,7 @@
 import React from 'react'
 import { RiBookletFill } from "react-icons/ri";
 import Link from 'next/link';
+import HoverButton from '../hover effect/hoverButton';
 
 
 const CourseNews = ({ pageData }) => {
@@ -21,14 +22,9 @@ const CourseNews = ({ pageData }) => {
                         <div className='mt-5'>
                         <span className='text-[#606060]' dangerouslySetInnerHTML={{__html: pageData?.advanceData?.data[0]?.desci}}></span>
                         </div>
-                        <div className='flex justify-center mt-8'>
+                        <div id="getnow" className='flex justify-center mt-8'>
                             {pageData?.buttons[0]?.link && (
-                            <Link href="#" className='relative bg-customFC6200 flex w-max items-center py-[14px] px-11 rounded-md text-white text-base overflow-hidden group'>
-                                <span className="relative z-10 flex items-center capitalize font-medium">
-                                    <RiBookletFill className='mr-2' />{pageData?.buttons[0]?.title}
-                                </span>
-                                <span className="absolute inset-0 bg-custom241737 transition-all duration-300 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                            </Link>
+                                <HoverButton text={pageData?.buttons[0]?.title} icon={RiBookletFill} link={pageData?.buttons[0]?.link}/>
                             )}
                         </div>
                         <div className='hidden lg:block'>

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Topbar from './Topbar';
 
-const FixedHeader = () => {
+const FixedHeader = ({websiteData}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
-    // Check if the page has been scrolled more than 150px
     setIsVisible(window.scrollY > 115);
   };
 
@@ -27,8 +26,8 @@ const FixedHeader = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'
         }`}
       >
-        <Topbar />
-        <Header />
+        <Topbar websiteData={websiteData}/>
+        <Header websiteData={websiteData}/>
       </div>
     </div>
   );

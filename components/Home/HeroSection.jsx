@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { LuUser2 } from "react-icons/lu";
+import HoverButton from '../hover effect/hoverButton';
+import { useStoreLogin } from "../../store/login";
 
 const HeroSection = ({ pageData }) => {
+  let user = useStoreLogin.getState().user;
+  let authToken = useStoreLogin.getState().authToken;
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <div>
       <div className="bg-customEAE1D6">
@@ -21,21 +29,17 @@ const HeroSection = ({ pageData }) => {
                 dangerouslySetInnerHTML={{ __html: pageData?.content }}
               ></span>
             </div>
-            <div className='flex flex-wrap gap-4 md:justify-normal justify-center'>
-              <div>
-                {pageData?.buttons?.[0]?.link && (
-                  <Link
-                    href={pageData.buttons[0].link}
-                    className="relative bg-customFC6200 flex w-max items-center py-[14px] px-11 rounded-md text-white text-base overflow-hidden group"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      <LuUser2 className="inline-block mr-2" />
-                      {pageData.buttons[0]?.title}
-                    </span>
-                    <span className="absolute inset-0 bg-custom241737 transition-all duration-300 transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-                  </Link>
-                )}
-              </div>
+
+            <div id="join" className='flex flex-wrap gap-4 md:justify-normal justify-center'>
+              {isClient && user && authToken ? (<div>
+                <div className='flex items-center'>
+                  <HoverButton icon={LuUser2} text="Profile" link='/profile' />
+                </div>
+              </div>) : (
+                <div className='flex items-center'>
+                  <HoverButton icon={LuUser2} text={pageData?.buttons[0]?.title} link={pageData?.buttons[0]?.link} />
+                </div>
+              )}
               <div>
                 {pageData?.buttons[1]?.link && (
                   <Link href={pageData?.buttons[1]?.link}>

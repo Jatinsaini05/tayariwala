@@ -25,7 +25,7 @@ export default function Register({ changeScreen }) {
     personalImg: null,
     address: {
       city: "",
-      state:"",
+      state: "",
     },
   };
 
@@ -69,6 +69,7 @@ export default function Register({ changeScreen }) {
       personalImg: file,
     });
   };
+  
   const isFile = (value) => {
     return value && typeof value === "object" && value instanceof File;
   };
@@ -599,8 +600,8 @@ export default function Register({ changeScreen }) {
                                       value={
                                         regisData.dob
                                           ? regisData.dob.toLocaleDateString(
-                                              "en-GB"
-                                            )
+                                            "en-GB"
+                                          )
                                           : ""
                                       }
                                     />

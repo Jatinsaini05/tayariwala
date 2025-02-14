@@ -11,7 +11,7 @@ const ExamInfo = ({ pageData }) => {
                     <div>
                         <h1 className='sm:text-[40px] text-[32px] text-[#221638]'>{pageData?.heading}</h1>
                         {pageData?.advanceData?.data?.map((item, index) => (
-                            <div key={index} id={item?.title}>
+                            <div key={index} id={item?.title} className='overflow-x-auto'>
                                 <span dangerouslySetInnerHTML={{ __html: item?.desci }}></span>
                             </div>
                         ))}

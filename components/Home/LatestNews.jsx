@@ -7,10 +7,12 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { CiCalendar } from "react-icons/ci";
 
 const LatestNews = ( {pageData} ) => {
-    const news = pageData?.advanceData?.data || [];
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: '2-digit' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+      };
   return (
     <div>
-     
       <div className='container sm:pt-28'>
                 <div className='text-center xl:px-52'>
                     <span className='text-base text-customFC6200 uppercase'>{pageData?.subHeading}</span>
@@ -43,25 +45,25 @@ const LatestNews = ( {pageData} ) => {
                         }
                     }}
                 >
-                    {news.map((item, index) => (
-                    <SwiperSlide key={news.id || index}><div className='overflow-hidden group'>
+                    {pageData?.advanceData?.data.map((item, index) => (
+                    <SwiperSlide key={index}><div className='overflow-hidden group'>
                         <div className='overflow-hidden'>
                             
-                            <Link href={news[index]?.targetUrl}>
-                                <img src={news[index]?.featuredImage} className=' group-hover:scale-125 group-hover:rotate-6'></img>
+                            <Link href={`blog/${item?.uri}`}>
+                                <img src={item?.featureImg} className=' group-hover:scale-125 group-hover:rotate-6'></img>
                             </Link>
                             
                         </div>
                         <div className='p-5 flex flex-col justify-between bg-[#fffaf3] h-64'>
                             <div className='flex flex-col gap-2'>
-                                <Link href={news[index]?.targetUrl} className='text-start text-sm text-[#606060] hover:text-customFC6200'>EDUCATION</Link>
-                                <Link href={news[index]?.targetUrl} className='text-start md:text-2xl text-lg font-semibold hover:text-customFC6200'>{news[index]?.title}</Link>
+                                <Link href={`blog`} className='text-start text-sm text-[#606060] hover:text-customFC6200'>EDUCATION</Link>
+                                <Link href={`blog/${item?.uri}`} className='text-start md:text-2xl text-lg line-clamp-4 font-semibold hover:text-customFC6200'>{item.title}</Link>
                             </div>
                             <div className='flex justify-between items-center text-xs sm:text-[15px]'>
-                                <span className='flex items-center gap-1 text-customFC6200'><img src="https://i.filecdn.in/1mlearners/user-1732266672215.png" className='rounded-full w-9'></img> Master Learners</span>
+                                <span className='flex items-center gap-1 text-customFC6200'><img src="https://i.filecdn.in/1mlearners/user-1732266672215.png" className='rounded-full w-9'></img> {item?.createdBy?.firstName} {item?.createdBy?.lastName} </span>
                                 <span className='flex items-center gap-1'>
                                     <CiCalendar className='text-xl text-customFC6200' />
-                                    <span>{news[index]?.startDate}</span>
+                                    <span>{formatDate(item?.publishedAt)}</span>
                                 </span>
                             </div>
                         </div>

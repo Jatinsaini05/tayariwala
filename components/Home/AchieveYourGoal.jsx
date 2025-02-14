@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { LuUser2 } from 'react-icons/lu'
+import HoverButton from '../hover effect/hoverButton'
 
 const AchieveYourGoal = ({ pageData }) => {
     return (
@@ -15,7 +16,12 @@ const AchieveYourGoal = ({ pageData }) => {
 
                         <span className='leading-7 text-[#606060]' dangerouslySetInnerHTML={{ __html: pageData?.content }}></span>
                     </div>
-                    <div className='flex justify-center md:justify-normal'>
+                    <div id="viewcourses" className='flex justify-center md:justify-normal'>
+                    {pageData?.buttons[0]?.link &&(
+                            <HoverButton text={pageData?.buttons[0]?.title} icon={LuUser2} link={pageData?.buttons[0]?.link}/>
+                            )}
+                    </div>
+                    {/* <div className='flex justify-center md:justify-normal'>
                         <div>
                             {pageData?.buttons[0]?.link &&(
                             <Link href={pageData?.buttons[0]?.link} className='relative bg-customFC6200 flex w-max items-center py-[14px] px-11 rounded-md text-white text-base overflow-hidden group'>
@@ -26,7 +32,7 @@ const AchieveYourGoal = ({ pageData }) => {
                             </Link>
                             )}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className='md:w-1/2'>
                     <div className='relative'>

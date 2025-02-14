@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
-export default function Tab({ activeSection, pageData }) {
+export default function Tab({ activeSection}) {
   const [visible, setIsVisible] = useState(true);
 
   const handleScroll = () => {
@@ -9,10 +9,8 @@ export default function Tab({ activeSection, pageData }) {
   };
 
   useEffect(() => {
-    // Add scroll event listener on mount
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup event listener on unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -25,18 +23,54 @@ export default function Tab({ activeSection, pageData }) {
       }`}
     >
       <ul className="overflow-auto flex text-[#221638] sm:text-base text-xs shadow-[2px_10px_15px_6px_rgba(0,0,0,0.1)]">
-        {pageData?.advanceData?.data?.map((item, index) => (
-          <li key={index}>
-            <Link
-              href={item?.link || "#"}
-              className={`p-5 capitalize inline-block hover:text-customFC6200 ${
-                activeSection === item?.title ? 'border-b-2 border-customFC6200' : ''
-              }`}
-            >
-              {item?.title}
-            </Link>
-          </li>
-        ))}
+      <li>
+          <Link
+            href="#exam-info"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'exam-info' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Exam Info
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="#syllabus"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'syllabus' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Syllabus
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="#live-classes"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'test-series' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Live Classes
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="#offline-classes"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'test-series' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Offline Classes
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="#test-series"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'test-series' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Test Series
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="#study-material"
+            className={`p-5 inline-block hover:text-customFC6200 ${activeSection === 'test-series' ? 'border-b-2 border-customFC6200' : ''}`}
+          >
+            Study Material
+          </Link>
+        </li>
       </ul>
     </div>
   );

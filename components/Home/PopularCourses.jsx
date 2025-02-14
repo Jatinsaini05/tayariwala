@@ -10,7 +10,10 @@ const PopularCourses = ({ pageData }) => {
     const course = pageData?.advanceData?.data || [];
     return (
         <div>
-            {/* {JSON.stringify(pageData)} */}
+            {/* <pre>
+
+                {JSON.stringify(pageData, null, 2)}
+            </pre> */}
             <div className='container text-center lg:w-[50%]'>
                 <span className='text-sm text-customFC6200'>{pageData?.subHeading}</span>
                 <h2 className='text-[#221638] sm:text-4xl text-2xl font-semibold my-4 capitalize'>
@@ -48,48 +51,48 @@ const PopularCourses = ({ pageData }) => {
                     className="mySwiper"
                 >
                     {course.map((item, index) => (
-                    <SwiperSlide key={course.id || index}>
-                        <div className='bg-white max-w-[380px] shadow-xl'>
-                            <div className="relative">
-                                <Link href={course[index]?.uri}>
-                                    <img src={course[index]?.thumb} alt="image" className="w-[380px]"></img>
-                                </Link>
-                                <span className='absolute right-0 bottom-0 bg-customFC6200 rounded-tl-lg px-2 py-1'>
-                                    <span className='line-through text-[13px] font-semibold'>
-                                        ₹ {course[index]?.linkedProduct?.mrp}
+                        <SwiperSlide key={course.id || index}>
+                            <div className='bg-white max-w-[380px] shadow-xl'>
+                                <div className="relative">
+                                    <Link href={course[index]?.uri}>
+                                        <img src={course[index]?.thumb} alt="image" className="w-[380px]"></img>
+                                    </Link>
+                                    <span className='absolute right-0 bottom-0 bg-customFC6200 rounded-tl-lg px-2 py-1'>
+                                        <span className='line-through text-[13px] font-semibold'>
+                                            ₹ {course[index]?.linkedProduct?.mrp}
+                                        </span>
+                                        &nbsp;
+                                        <span className='text-white text-xl font-semibold ml-1'>
+                                            ₹ {course[index]?.linkedProduct?.cost}
+                                        </span>
                                     </span>
-                                    &nbsp;
-                                    <span className='text-white text-xl font-semibold ml-1'>
-                                        ₹ {course[index]?.linkedProduct?.cost}
-                                    </span>
-                                </span>
-                            </div>
-                            <div className='mt-6'>
-                                <div className='text-center'>
-                                    <p className='text-[#606060] text-xl font-semibold'><Link href={course[index]?.uri}>{course[index]?.name}</Link></p>
-                                    <div className='pt-5'>
-                                        <span className='text-[#606060] text-base line-clamp-5 leading-6' dangerouslySetInnerHTML={{ __html: course[index]?.desci }}></span>
-                                    </div>
-
                                 </div>
-                                <div className='py-8 flex justify-between mx-3 border-t-2 border-t-[#F1F1F1]'>
-                                    <div className='text-customFC6200 text-base flex flex-col'>
-                                        <span>{course[index]?.eduStandard?.name}</span>
-                                        <span>{course[index]?.course?.name}</span>
-                                    </div>
+                                <div className='mt-6'>
+                                    <div className='text-center'>
+                                        <p className='text-[#606060] text-xl font-semibold'><Link href={course[index]?.uri}>{course[index]?.name}</Link></p>
+                                        <div className='pt-5 h-[140px] p-3 overflow-hidden'>
+                                            <span className='text-[#606060] text-justify text-base  leading-6' dangerouslySetInnerHTML={{ __html: course[index]?.desci }}></span>
+                                        </div>
 
-                                    <ul>
-                                        {course[index]?.linkedProduct?.customParam?.testNo && (
-                                            <li className='flex items-center gap-1 text-[#050404] text-[15px]'>
-                                                <RiBookletFill className='text-customFC6200' />
-                                                {course[index]?.linkedProduct?.customParam?.testNo} Tests
-                                            </li>
-                                        )}
-                                    </ul>
+                                    </div>
+                                    <div className='py-8 flex justify-between mx-3 border-t-2 border-t-[#F1F1F1]'>
+                                        <div className='text-customFC6200 text-base flex flex-col'>
+                                            <span>{course[index]?.eduStandard?.name}</span>
+                                            <span>{course[index]?.course?.name}</span>
+                                        </div>
+
+                                        <ul>
+                                            {course[index]?.linkedProduct?.customParam?.tests && (
+                                                <li className='flex items-center gap-1 text-[#050404] text-[15px]'>
+                                                    <RiBookletFill className='text-customFC6200' />
+                                                    {course[index]?.linkedProduct?.customParam?.tests} Tests
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </SwiperSlide>
+                        </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
