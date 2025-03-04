@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getInitialData, getPageData, getQuiz, quizSubmit} from "../../service/apiFetch";
+import {
+  getInitialData,
+  getPageData,
+  getQuiz,
+  quizSubmit,
+} from "../../service/apiFetch";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { IoPauseCircleOutline } from "react-icons/io5";
@@ -38,6 +43,7 @@ export const getStaticProps = async () => {
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
@@ -55,8 +61,8 @@ const Index = ({ pageData }) => {
   const userId = useStoreLogin((state) => state?.user?.id);
   const [submitRes, setSubmitRes] = useState();
   const [isPaused, setIsPaused] = useState(false);
-  const duration = quiz?.qset?.duration; 
-  const [timeLeft, setTimeLeft] = useState(); 
+  const duration = quiz?.qset?.duration;
+  const [timeLeft, setTimeLeft] = useState();
   const [remTimeOnActiveQ, setRemTimeOnActiveQ] = useState();
 
   // Initialize global timer once quiz data is loaded.
@@ -132,7 +138,7 @@ const Index = ({ pageData }) => {
   };
 
   // When "SAVE & NEXT" is clicked:
-  // Calculate time taken for current question using: 
+  // Calculate time taken for current question using:
   //   timeTaken = (remTimeOnActiveQ - current timeLeft)
   // Then update response for that question and update remTimeOnActiveQ for next question.
   const saveandnext = () => {
@@ -141,7 +147,10 @@ const Index = ({ pageData }) => {
     const questionId = currentQuestion?.question?._id;
     const qsetQsId = currentQuestion?._id;
     if (!qsetQsId || !questionId) {
-      console.error("qsetQsId or questionId is undefined!", { qsetQsId, questionId });
+      console.error("qsetQsId or questionId is undefined!", {
+        qsetQsId,
+        questionId,
+      });
       return;
     }
 
@@ -264,183 +273,188 @@ const Index = ({ pageData }) => {
     }
   };
 
-    return (
-        <div className="container">
-            {page === 1 && (
-                <>
-                    <div className="flex justify-center py-10 border-b border-custom241737">
-                        <img
-                            className="w-44"
-                            src={pageData?.contentBlock?.AGREEMENT?.media}
-                            alt="Logo"
-                        />
-                    </div>
-                    <div className="flex items-center justify-center gap-4 my-7">
-                        <div className="text-custom241737">
-                            {agreed ? (
-                                <button onClick={() => setAgreed(false)}>
-                                    <IoMdCheckboxOutline className="text-2xl text-customFC6200" />
-                                </button>
-                            ) : (
-                                <button onClick={() => setAgreed(true)}>
-                                    <MdOutlineCheckBoxOutlineBlank className="text-2xl" />
-                                </button>
-                            )}
-                        </div>
-                        <div>
-                            <span
-                                className="font-semibold"
-                                dangerouslySetInnerHTML={{
-                                    __html: pageData?.contentBlock?.AGREEMENT?.content,
-                                }}
-                            ></span>
-                        </div>
-                    </div>
-                    <div className="text-center mb-4">
-                        <button
-                            disabled={!agreed}
-                            className={`text-white text-sm px-3 py-2 shadow rounded ${agreed
-                                ? "hover:shadow-lg hover:bg-custom241737 bg-customFC6200"
-                                : "hover:cursor-not-allowed bg-[#fc9351]"}`
-                            }
-                            onClick={() => setPage(2)}
+  return (
+    <div className="container">
+      {page === 1 && (
+        <>
+          <div className="flex justify-center py-10 border-b border-custom241737">
+            <img
+              className="w-44"
+              src={pageData?.contentBlock?.AGREEMENT?.media}
+              alt="Logo"
+            />
+          </div>
+          <div className="flex items-center justify-center gap-4 my-7">
+            <div className="text-custom241737">
+              {agreed ? (
+                <button onClick={() => setAgreed(false)}>
+                  <IoMdCheckboxOutline className="text-2xl text-customFC6200" />
+                </button>
+              ) : (
+                <button onClick={() => setAgreed(true)}>
+                  <MdOutlineCheckBoxOutlineBlank className="text-2xl" />
+                </button>
+              )}
+            </div>
+            <div>
+              <span
+                className="font-semibold"
+                dangerouslySetInnerHTML={{
+                  __html: pageData?.contentBlock?.AGREEMENT?.content,
+                }}
+              ></span>
+            </div>
+          </div>
+          <div className="text-center mb-4">
+            <button
+              disabled={!agreed}
+              className={`text-white text-sm px-3 py-2 shadow rounded ${
+                agreed
+                  ? "hover:shadow-lg hover:bg-custom241737 bg-customFC6200"
+                  : "hover:cursor-not-allowed bg-[#fc9351]"
+              }`}
+              onClick={() => setPage(2)}
+            >
+              READY TO BEGIN
+            </button>
+          </div>
+        </>
+      )}
+      {page === 2 && (
+        <>
+          <div className="flex justify-between items-center py-2">
+            <div>
+              <h2 className="font-semibold text-[18px]">{quiz?.qset?.alias}</h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-red-600">
+                <span className="text-custom241737">Time Left - </span>
+                {formatTime()}
+              </span>
+              <button
+                className="text-lg"
+                onClick={handlePause}
+                title={isPaused ? "" : "Pause Quiz"}
+              >
+                <IoPauseCircleOutline />
+              </button>
+            </div>
+          </div>
+          <hr className="mb-[1px]" />
+          <hr className="" />
+          {quiz?.qset?.questions?.EN[currentQue]?.question?.qType === "MCQ" && (
+            <div>
+              <div className="flex sm:flex-row flex-col justify-between my-2">
+                <h3 className="font-semibold text-[#f07f5f]">
+                  Question Type :{" "}
+                  {quiz?.qset?.questions?.EN[currentQue]?.question?.qType}
+                </h3>
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs">
+                    <span className="text-green-500">
+                      Marks for correct answer{" "}
+                      <span className="font-semibold">
+                        {quiz?.qset?.questions?.EN[currentQue]?.mp}
+                      </span>
+                    </span>
+                    &nbsp;|&nbsp;
+                    <span className="text-red-500">
+                      Negative Marks{" "}
+                      <span className="font-semibold">
+                        {quiz?.qset?.questions?.EN[currentQue]?.mn}
+                      </span>
+                    </span>
+                  </span>
+                  <select
+                    name=""
+                    id=""
+                    className="p-2 my-2 outline-1 rounded focus-within:outline-orange-400 outline text-xs"
+                  >
+                    <option value="">English</option>
+                  </select>
+                </div>
+              </div>
+              <div className="scbar">
+                <div className="border h-[65vh] overflow-y-auto">
+                  <div className="p-1 border">
+                    <span className="font-semibold">
+                      Question No. {currentQue + 1}
+                    </span>
+                  </div>
+                  <div className="p-2">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          quiz?.qset?.questions?.EN[currentQue]?.question
+                            ?.qContent,
+                      }}
+                    ></span>
+                  </div>
+                  <div className="p-3">
+                    {Object.entries(
+                      quiz?.qset?.questions?.EN[currentQue]?.question?.qOption
+                    )
+                      .filter(([key, value]) => value.trim() !== "")
+                      .map(([key, value]) => (
+                        <div
+                          key={key}
+                          className="cursor-pointer"
+                          onClick={() => handleOptionSelect(key)}
                         >
-                            READY TO BEGIN
-                        </button>
-                    </div>
-                </>
-            )}
-            {page === 2 && (
-                <>
-                    <div className="flex justify-between items-center py-2">
-                        <div>
-                            <h2 className="font-semibold text-[18px]">
-                                {quiz?.qset?.alias}
-                            </h2>
+                          <div className="flex items-center gap-2 border rounded p-2 sm:p-3 mb-3">
+                            <input
+                              type="radio"
+                              name="quiz-option"
+                              value={key}
+                              checked={selectedOptions[currentQue] === key}
+                              onChange={() => handleOptionSelect(key)}
+                            />
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: value,
+                              }}
+                            />
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <span className="font-semibold text-red-600">
-                                <span className="text-custom241737">Time Left - </span>{formatTime()}
-                            </span>
-                            <button
-                                className="text-lg"
-                                onClick={handlePause}
-                                title={isPaused ? "" : "Pause Quiz"}
-                            >
-                                <IoPauseCircleOutline />
-                            </button>
-                        </div>
-                    </div>
-                    <hr className="mb-[1px]" />
-                    <hr className="" />
-                    {quiz?.qset?.questions?.EN[currentQue]?.question?.qType === "MCQ" && (
-                        <div>
-                            <div className="flex sm:flex-row flex-col justify-between my-2">
-                                <h3 className="font-semibold text-[#f07f5f]">
-                                    Question Type : {" "}
-                                    {quiz?.qset?.questions?.EN[currentQue]?.question?.qType}
-                                </h3>
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-xs">
-                                        <span className="text-green-500">
-                                            Marks for correct answer {" "}
-                                            <span className="font-semibold">
-                                                {quiz?.qset?.questions?.EN[currentQue]?.mp}
-                                            </span>
-                                        </span>
-                                        &nbsp;|&nbsp;
-                                        <span className="text-red-500">
-                                            Negative Marks {" "}
-                                            <span className="font-semibold">
-                                                {quiz?.qset?.questions?.EN[currentQue]?.mn}
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <select
-                                        name=""
-                                        id=""
-                                        className="p-2 my-2 outline-1 rounded focus-within:outline-orange-400 outline text-xs"
-                                    >
-                                        <option value="">English</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="scbar">
-                                <div className="border h-[65vh] overflow-y-auto">
-                                    <div className="p-1 border">
-                                        <span className="font-semibold">
-                                            Question No. {currentQue + 1}
-                                        </span>
-                                    </div>
-                                    <div className="p-2">
-                                        <span
-                                            dangerouslySetInnerHTML={{
-                                                __html: quiz?.qset?.questions?.EN[currentQue]?.question
-                                                    ?.qContent,
-                                            }}
-                                        ></span>
-                                    </div>
-                                    <div className="p-3">
-                                        {Object.entries(
-                                            quiz?.qset?.questions?.EN[currentQue]?.question?.qOption
-                                        )
-                                            .filter(([key, value]) => value.trim() !== "")
-                                            .map(([key, value]) => (
-                                                <div
-                                                    key={key}
-                                                    className="cursor-pointer"
-                                                    onClick={() => handleOptionSelect(key)}
-                                                >
-                                                    <div className="flex items-center gap-2 border rounded p-2 sm:p-3 mb-3">
-                                                        <input
-                                                            type="radio"
-                                                            name="quiz-option"
-                                                            value={key}
-                                                            checked={selectedOptions[currentQue] === key}
-                                                            onChange={() => handleOptionSelect(key)}
-                                                        />
-                                                        <span
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: value,
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                </div>
-                                <div className="border p-3 mt-3 mb-3 text-sm">
-                                    <div className="flex flex-wrap gap-3">
-                                        <button
-                                            onClick={() =>
-                                                setCurrentQue((prev) => Math.max(prev - 1, 0))
-                                            }
-                                            disabled={currentQue === 0}
-                                            className={`px-4 py-2 border rounded ${currentQue === 0
-                                                ? "bg-[#e0e0e0] text-[#606060] cursor-not-allowed"
-                                                : " shadow-md"
-                                                }`}
-                                        >
-                                            PREVIOUS
-                                        </button>
-                                        <button
-                                            className="px-4 rounded py-1 shadow-md bg-customFC6200 text-white"
-                                            onClick={() => saveandnext()}
-                                        >
-                                            SAVE & NEXT
-                                        </button>
-                                        <button className="px-4 rounded py-1 shadow-md bg-customFC6200 text-white" onClick={() => submit()}>
-                                            FINISH
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </>
-            )}
-        </div>
-    );
+                      ))}
+                  </div>
+                </div>
+                <div className="border p-3 mt-3 mb-3 text-sm">
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      onClick={() =>
+                        setCurrentQue((prev) => Math.max(prev - 1, 0))
+                      }
+                      disabled={currentQue === 0}
+                      className={`px-4 py-2 border rounded ${
+                        currentQue === 0
+                          ? "bg-[#e0e0e0] text-[#606060] cursor-not-allowed"
+                          : " shadow-md"
+                      }`}
+                    >
+                      PREVIOUS
+                    </button>
+                    <button
+                      className="px-4 rounded py-1 shadow-md bg-customFC6200 text-white"
+                      onClick={() => saveandnext()}
+                    >
+                      SAVE & NEXT
+                    </button>
+                    <button
+                      className="px-4 rounded py-1 shadow-md bg-customFC6200 text-white"
+                      onClick={() => submit()}
+                    >
+                      FINISH
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Index;

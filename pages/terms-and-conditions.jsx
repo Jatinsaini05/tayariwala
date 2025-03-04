@@ -1,5 +1,5 @@
-import React from 'react'
-import TermsConditions from '../components/Terms And Conditions/T&C'
+import React from "react";
+import TermsConditions from "../components/Terms And Conditions/T&C";
 import { getInitialData, getPageData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
@@ -20,7 +20,6 @@ import { getInitialData, getPageData } from "../service/apiFetch";
 //     console.error(error);
 //     return {
 
-      
 //       props: {
 //         pageData: [],
 //       },
@@ -29,7 +28,9 @@ import { getInitialData, getPageData } from "../service/apiFetch";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("terms-and-conditions", { contentBlock: "Object" });
+  const initialData = await getInitialData("terms-and-conditions", {
+    contentBlock: "Object",
+  });
   // const courseResponse = await getCourses({contentBlock: "Object",});
   return {
     props: {
@@ -37,19 +38,20 @@ export const getStaticProps = async () => {
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
       // CoursesData: courseResponse,
     },
   };
 };
 
-const TermsAndConditions = ({pageData}) => {
+const TermsAndConditions = ({ pageData }) => {
   return (
     <div>
       <div>
-        <TermsConditions pageData={pageData?.contentBlock?.MAIN_CONTENT}/>
+        <TermsConditions pageData={pageData?.contentBlock?.MAIN_CONTENT} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TermsAndConditions
+export default TermsAndConditions;

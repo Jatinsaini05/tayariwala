@@ -5,7 +5,11 @@ import BIHARDAROGA from "../../components/BIHARDAROGA/BIHARDAROGA";
 import Syllabus from "../../components/BIHARDAROGA/Syllabus";
 import LiveOnlineClasses from "../../components/BIHARDAROGA/LiveOnlineClasses";
 import OfflineClasses from "../../components/BIHARDAROGA/OfflineClasses";
-import { getInitialData, getPageData, getProductData } from "../../service/apiFetch";
+import {
+  getInitialData,
+  getPageData,
+  getProductData,
+} from "../../service/apiFetch";
 import TestSeries from "../../components/BIHARDAROGA/TestSeries";
 import StudyPackage from "../../components/BIHARDAROGA/StudyPackage";
 import Toptab from "../../components/BIHARDAROGA/TopTab";
@@ -35,13 +39,16 @@ import Toptab from "../../components/BIHARDAROGA/TopTab";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("course/bihardaroga", { contentBlock: "Object" });
+  const initialData = await getInitialData("course/bihardaroga", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
@@ -59,8 +66,8 @@ const biharDaroga = ({ pageData }) => {
 
       try {
         const params = {
-          "populate": "stream",
-          "course": srcId
+          populate: "stream",
+          course: srcId,
         };
         const response = await getProductData(params);
         setAdditionalData(response);
@@ -82,9 +89,7 @@ const biharDaroga = ({ pageData }) => {
 
   // Function to filter data by category
   const filterDataByCategory = (categoryId) => {
-    return additionalData?.filter((item) =>
-      item.category === categoryId
-    );
+    return additionalData?.filter((item) => item.category === categoryId);
   };
 
   return (

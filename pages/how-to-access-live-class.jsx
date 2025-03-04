@@ -1,5 +1,5 @@
-import React from 'react'
-import MainContent from '../components/how-to-access-live-class/MainContent'
+import React from "react";
+import MainContent from "../components/how-to-access-live-class/MainContent";
 import { getPageData, getInitialData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
@@ -19,7 +19,7 @@ import { getPageData, getInitialData } from "../service/apiFetch";
 //   } catch (error) {
 //     console.error(error);
 //     return {
-      
+
 //       props: {
 //         pageData: [],
 //       },
@@ -28,25 +28,28 @@ import { getPageData, getInitialData } from "../service/apiFetch";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("how-to-access-live-class", { contentBlock: "Object" });
+  const initialData = await getInitialData("how-to-access-live-class", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
 
-const howtoaccessliveclass = ({pageData}) => {
+const howtoaccessliveclass = ({ pageData }) => {
   return (
     <div>
       <div>
-        <MainContent pageData={pageData?.contentBlock?.MAIN_CONTENT}/>
+        <MainContent pageData={pageData?.contentBlock?.MAIN_CONTENT} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default howtoaccessliveclass
+export default howtoaccessliveclass;

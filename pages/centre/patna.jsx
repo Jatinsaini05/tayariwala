@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import PageTitle from '../../components/centre/patna/PageTitle'
-import About from '../../components/centre/patna/About'
-import CoursesOffered from '../../components/centre/patna/CoursesOffered'
-import WhatsNew from '../../components/centre/patna/WhatsNew'
-import Testimonial from '../../components/centre/patna/Testimonial'
-import ContactUs from '../../components/centre/patna/ContactUs'
-import { getInitialData, getPageData, getProductData } from '../../service/apiFetch'
+import React, { useState, useEffect } from "react";
+import PageTitle from "../../components/centre/patna/PageTitle";
+import About from "../../components/centre/patna/About";
+import CoursesOffered from "../../components/centre/patna/CoursesOffered";
+import WhatsNew from "../../components/centre/patna/WhatsNew";
+import Testimonial from "../../components/centre/patna/Testimonial";
+import ContactUs from "../../components/centre/patna/ContactUs";
+import {
+  getInitialData,
+  getPageData,
+  getProductData,
+} from "../../service/apiFetch";
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("centre/patna", { contentBlock: "Object" });
-  const additionalContactResponse = await getPageData("contact-patna", { contentBlock: "Object" });
+  const initialData = await getInitialData("centre/patna", {
+    contentBlock: "Object",
+  });
+  const additionalContactResponse = await getPageData("contact-patna", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
-      pageData1: additionalContactResponse
+      pageData1: additionalContactResponse,
+      url: initialData?.url || "",
     },
   };
 };
@@ -27,7 +36,9 @@ const Patna = ({ pageData, pageData1 }) => {
   useEffect(() => {
     const fetchAdditionalData = async () => {
       try {
-        const response = await getProductData("category=3030707264637463636c7370");
+        const response = await getProductData(
+          "category=3030707264637463636c7370"
+        );
         setAdditionalData(response);
       } catch (error) {
         console.error("Error fetching additional data:", error);
@@ -49,7 +60,8 @@ const Patna = ({ pageData, pageData1 }) => {
         <CoursesOffered data={additionalData} />
       </div>
       <div>
-        <WhatsNew blogData={pageData?.contentBlock?.WHATS_NEW_LATEST_BLOG}
+        <WhatsNew
+          blogData={pageData?.contentBlock?.WHATS_NEW_LATEST_BLOG}
           updateData={pageData?.contentBlock?.WHATS_NEW_NEW_UPDATES}
           linksData={pageData?.contentBlock?.WHATS_NEW_QUICK}
         />

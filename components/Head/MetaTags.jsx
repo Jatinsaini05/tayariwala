@@ -1,9 +1,21 @@
 import Head from "next/head";
 
-const MetaTags = ({ title, keywords, description, image, robots, maxSnippet }) => {
-  const robotsContent = [robots, maxSnippet ? `max-snippet:${maxSnippet}` : null]
+const MetaTags = ({
+  title,
+  keywords,
+  description,
+  image,
+  robots,
+  maxSnippet,
+  url,
+}) => {
+  const robotsContent = [
+    robots,
+    maxSnippet ? `max-snippet:${maxSnippet}` : null,
+  ]
     .filter(Boolean)
     .join(", ");
+  const websiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
   return (
     <Head>
@@ -19,6 +31,7 @@ const MetaTags = ({ title, keywords, description, image, robots, maxSnippet }) =
           <meta name="twitter:title" content={title} />
         </>
       )}
+      {url && <link rel="canonical" href={`${websiteUrl}${url}`} />}
       {description && (
         <>
           <meta name="description" content={description} />

@@ -1,13 +1,13 @@
-import React from 'react'
-import Form from '../components/logincomponents/Form'
-import { getCourses, getInitialData } from '../service/apiFetch';
+import React from "react";
+import Form from "../components/logincomponents/Form";
+import { getCourses, getInitialData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
 //   try {
 //     const response = await getCourses({
 //       contentBlock: "Object",
 //     });
-    
+
 //     if (!response) {
 //       console.log("courseData not found");
 //     }
@@ -29,7 +29,7 @@ import { getCourses, getInitialData } from '../service/apiFetch';
 
 export const getStaticProps = async () => {
   const initialData = await getInitialData("login", { contentBlock: "Object" });
-  const courseResponse = await getCourses({contentBlock: "Object",});
+  const courseResponse = await getCourses({ contentBlock: "Object" });
   return {
     props: {
       websiteData: initialData?.websiteData,
@@ -37,18 +37,19 @@ export const getStaticProps = async () => {
       title: initialData?.title,
       metaTags: initialData?.metaTags,
       CoursesData: courseResponse,
+      url: initialData?.url || "",
     },
   };
 };
 
-const login = ({CoursesData}) => {
+const login = ({ CoursesData }) => {
   return (
     <div>
       <div>
-        <Form CoursesData={CoursesData}/>
+        <Form CoursesData={CoursesData} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default login
+export default login;

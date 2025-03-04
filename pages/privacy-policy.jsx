@@ -1,5 +1,5 @@
-import React from 'react'
-import Policy from '../components/privacy-policy/privacy-policy'
+import React from "react";
+import Policy from "../components/privacy-policy/privacy-policy";
 import { getInitialData, getPageData } from "../service/apiFetch";
 // export const getStaticProps = async () => {
 //   try {
@@ -26,7 +26,9 @@ import { getInitialData, getPageData } from "../service/apiFetch";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("privacy-policy", { contentBlock: "Object" });
+  const initialData = await getInitialData("privacy-policy", {
+    contentBlock: "Object",
+  });
   // const courseResponse = await getCourses({contentBlock: "Object",});
   return {
     props: {
@@ -34,20 +36,21 @@ export const getStaticProps = async () => {
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
       // CoursesData: courseResponse,
     },
   };
 };
 
-const PrivacyPolicy = ({pageData}) => {
+const PrivacyPolicy = ({ pageData }) => {
   return (
     <div>
       {/* {JSON.stringify(pageData)} */}
       <div>
-        <Policy pageData = {pageData?.contentBlock?.MAIN_CONTENT}/>
+        <Policy pageData={pageData?.contentBlock?.MAIN_CONTENT} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrivacyPolicy
+export default PrivacyPolicy;

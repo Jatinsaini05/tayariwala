@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import HerosectionRRB from '../../components/RRB-JE/HeroSectionRRB'
-import Tab from '../../components/RRB-JE/Nav'
-import ExamInfo from '../../components/RRB-JE/ExamInfo'
-import Syllabus from '../../components/RRB-JE/Syllabus'
-import TestSeries from '../../components/RRB-JE/TestSeries'
-import { getPageData, getProductData, getInitialData } from "../../service/apiFetch";
-import CoursesHeader from '../../components/RRB-JE/TopTab'
+import React, { useState, useEffect } from "react";
+import HerosectionRRB from "../../components/RRB-JE/HeroSectionRRB";
+import Tab from "../../components/RRB-JE/Nav";
+import ExamInfo from "../../components/RRB-JE/ExamInfo";
+import Syllabus from "../../components/RRB-JE/Syllabus";
+import TestSeries from "../../components/RRB-JE/TestSeries";
+import {
+  getPageData,
+  getProductData,
+  getInitialData,
+} from "../../service/apiFetch";
+import CoursesHeader from "../../components/RRB-JE/TopTab";
 
 // export const getStaticProps = async () => {
 //     try {
@@ -32,17 +36,19 @@ import CoursesHeader from '../../components/RRB-JE/TopTab'
 //   };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("course/rrb-je", { contentBlock: "Object" });
+  const initialData = await getInitialData("course/rrb-je", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
-
 
 const Rrb = ({ pageData }) => {
   const [additionalData, setAdditionalData] = useState(null);
@@ -57,8 +63,8 @@ const Rrb = ({ pageData }) => {
 
       try {
         const params = {
-          "populate": "stream",
-          "course": srcId
+          populate: "stream",
+          course: srcId,
         };
         const response = await getProductData(params);
         setAdditionalData(response);
@@ -80,9 +86,7 @@ const Rrb = ({ pageData }) => {
 
   // Function to filter data by category
   const filterDataByCategory = (categoryId) => {
-    return additionalData?.filter((item) =>
-      item.category === categoryId
-    );
+    return additionalData?.filter((item) => item.category === categoryId);
   };
   return (
     <div>
@@ -108,7 +112,7 @@ const Rrb = ({ pageData }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Rrb
+export default Rrb;

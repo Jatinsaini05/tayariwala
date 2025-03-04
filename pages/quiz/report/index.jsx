@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { getInitialData, getParticipants, getQuizReoprt } from '../../../service/apiFetch';
+import React, { useState, useEffect } from "react";
+import {
+  getInitialData,
+  getParticipants,
+  getQuizReoprt,
+} from "../../../service/apiFetch";
 import { useRouter } from "next/router";
-import Link from 'next/link';
+import Link from "next/link";
 import { FaFacebook, FaTelegram, FaTwitter } from "react-icons/fa";
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("quiz/report", { contentBlock: "Object" });
+  const initialData = await getInitialData("quiz/report", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
@@ -22,7 +29,7 @@ const index = () => {
   const { u } = router.query;
   const [participants, setParticipants] = useState();
   const [quizReport, setQuizReport] = useState();
-  const [openSection, setOpenSection] = useState("Q&S")
+  const [openSection, setOpenSection] = useState("Q&S");
 
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
@@ -142,9 +149,7 @@ const index = () => {
           </div>
           <div className="flex flex-col items-center border-2 text-[22px] py-2">
             <span>Attempted</span>
-            <span>
-              {quizReport?.correctQs + quizReport?.inCorrectQs}
-            </span>
+            <span>{quizReport?.correctQs + quizReport?.inCorrectQs}</span>
           </div>
           <div className="flex flex-col items-center border-2 text-[22px] py-2">
             <span>Unattempted</span>
@@ -164,7 +169,7 @@ const index = () => {
           </div>
         </div>
 
-        <div className='bg-customFC6200 p-4 rounded-md xl:hidden'>
+        <div className="bg-customFC6200 p-4 rounded-md xl:hidden">
           <div className="flex gap-4 justify-evenly flex-wrap">
             <div className="flex flex-col md:w-1/4 w-1/3 bg-white items-center border-2 py-2">
               <span>Correct</span>
@@ -176,9 +181,7 @@ const index = () => {
             </div>
             <div className="flex flex-col md:w-1/4 w-1/3 bg-white items-center border-2 py-2">
               <span>Attempted</span>
-              <span>
-                {quizReport?.correctQs + quizReport?.inCorrectQs}
-              </span>
+              <span>{quizReport?.correctQs + quizReport?.inCorrectQs}</span>
             </div>
             <div className="flex flex-col md:w-1/4 w-1/3 bg-white items-center border-2 py-2">
               <span>Unattempted</span>
@@ -199,239 +202,294 @@ const index = () => {
           </div>
         </div>
 
-        <div className='flex w-full'>
-          <button onClick={() => setOpenSection("Q&S")} className={`w-1/2 rounded-md font-semibold text-xs py-3 sm:text-lg sm:p-3 hover:brightness-90 ${openSection === "Q&S" ? ("bg-[#BAD1eb]") : ("bg-white")}`}>QUESTIONS & SOLUTIONS</button>
-          <button onClick={() => setOpenSection("LB")} className={`w-1/2 rounded-md font-semibold text-xs py-3 sm:text-lg sm:p-3 hover:brightness-90 ${openSection === "LB" ? ("bg-[#BAD1eb]") : ("bg-white")}`}>LEADERBOARD</button>
+        <div className="flex w-full">
+          <button
+            onClick={() => setOpenSection("Q&S")}
+            className={`w-1/2 rounded-md font-semibold text-xs py-3 sm:text-lg sm:p-3 hover:brightness-90 ${openSection === "Q&S" ? "bg-[#BAD1eb]" : "bg-white"}`}
+          >
+            QUESTIONS & SOLUTIONS
+          </button>
+          <button
+            onClick={() => setOpenSection("LB")}
+            className={`w-1/2 rounded-md font-semibold text-xs py-3 sm:text-lg sm:p-3 hover:brightness-90 ${openSection === "LB" ? "bg-[#BAD1eb]" : "bg-white"}`}
+          >
+            LEADERBOARD
+          </button>
         </div>
-        {
-          openSection === "Q&S" && (
-            <>
-              <div className='mt-5 p-4'>
-                <h3 className='font-semibold sm:text-2xl pb-4 text-xl border-b'>QUESTION & SOLUTIONS</h3>
-                <div className='border-2 mt-2 rounded'>
-                  <div className='bg-[#eeeeee] font-semibold text-xl hidden sm:flex justify-between py-[10px]'>
-                    <div className='w-3/4 text-center'><span>Question</span></div>
-                    <div className='w-1/3 text-center'><span>Remark</span></div>
+        {openSection === "Q&S" && (
+          <>
+            <div className="mt-5 p-4">
+              <h3 className="font-semibold sm:text-2xl pb-4 text-xl border-b">
+                QUESTION & SOLUTIONS
+              </h3>
+              <div className="border-2 mt-2 rounded">
+                <div className="bg-[#eeeeee] font-semibold text-xl hidden sm:flex justify-between py-[10px]">
+                  <div className="w-3/4 text-center">
+                    <span>Question</span>
                   </div>
-                  <div className='p-3'>
-                    {quizReport?.questions?.EN?.map((item, index) => (
-                      <div key={index} className="flex sm:flex-row flex-col text-sm gap-2">
-                        <div className="p-3 sm:w-3/4 mb-4">
-                          <div className="font-semibold mb-2">
-                            <span>Q- {index + 1}. </span>
-                            <span
-                              dangerouslySetInnerHTML={{ __html: item?.question?.qContent }}
-                            ></span>
-                          </div>
-                          {/* Options */}
-                          <div className="quez-ans">
-                            <div>
-                              <b>(A)</b>{" "}
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: item?.variantQuestion
-                                    ? item?.variantQuestion?.qOption?.optionA
-                                    : item?.question?.qOption?.optionA,
-                                }}
-                              ></span>
-                            </div>
-                            <div>
-                              <b>(B)</b>{" "}
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: item?.variantQuestion
-                                    ? item?.variantQuestion?.qOption?.optionB
-                                    : item?.question?.qOption?.optionB,
-                                }}
-                              ></span>
-                            </div>
-                            <div>
-                              <b>(C)</b>{" "}
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: item?.variantQuestion
-                                    ? item?.variantQuestion?.qOption?.optionC
-                                    : item?.question?.qOption?.optionC,
-                                }}
-                              ></span>
-                            </div>
-                            <div>
-                              <b>(D)</b>{" "}
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: item?.variantQuestion
-                                    ? item?.variantQuestion?.qOption?.optionD
-                                    : item?.question?.qOption?.optionD,
-                                }}
-                              ></span>
-                            </div>
-                            {item?.question?.qOption?.optionE && (
-                              <div>
-                                <b>(E)</b>{" "}
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: item?.variantQuestion
-                                      ? item?.variantQuestion?.qOption?.optionE
-                                      : item?.question?.qOption?.optionE,
-                                  }}
-                                ></span>
-                              </div>
-                            )}
-                          </div>
-                          <span className="bg-blue-600 text-white font-semibold inline-block text-xs rounded">
-                            Solution :
-                          </span>
-                          <div className="mt-2">
-                            <span
-                              dangerouslySetInnerHTML={{ __html: item?.question?.qSolution }}
-                            ></span>
-                          </div>
+                  <div className="w-1/3 text-center">
+                    <span>Remark</span>
+                  </div>
+                </div>
+                <div className="p-3">
+                  {quizReport?.questions?.EN?.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex sm:flex-row flex-col text-sm gap-2"
+                    >
+                      <div className="p-3 sm:w-3/4 mb-4">
+                        <div className="font-semibold mb-2">
+                          <span>Q- {index + 1}. </span>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: item?.question?.qContent,
+                            }}
+                          ></span>
                         </div>
-                        <div className={`p-3 sm:w-1/3 mb-4 ${item?.isCorrect ? ("bg-green-200") : ("bg-[#eeeeee]")}`}>
-                          {item?.isSubmitted && item?.isCorrect && (
-                            <p>
-                              <span className="font-semibold">Status: </span>
-
-                              <span className='bg-green-600 p-[2px] rounded text-[10.5px] font-semibold'>Correct</span>
-                            </p>
+                        {/* Options */}
+                        <div className="quez-ans">
+                          <div>
+                            <b>(A)</b>{" "}
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item?.variantQuestion
+                                  ? item?.variantQuestion?.qOption?.optionA
+                                  : item?.question?.qOption?.optionA,
+                              }}
+                            ></span>
+                          </div>
+                          <div>
+                            <b>(B)</b>{" "}
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item?.variantQuestion
+                                  ? item?.variantQuestion?.qOption?.optionB
+                                  : item?.question?.qOption?.optionB,
+                              }}
+                            ></span>
+                          </div>
+                          <div>
+                            <b>(C)</b>{" "}
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item?.variantQuestion
+                                  ? item?.variantQuestion?.qOption?.optionC
+                                  : item?.question?.qOption?.optionC,
+                              }}
+                            ></span>
+                          </div>
+                          <div>
+                            <b>(D)</b>{" "}
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item?.variantQuestion
+                                  ? item?.variantQuestion?.qOption?.optionD
+                                  : item?.question?.qOption?.optionD,
+                              }}
+                            ></span>
+                          </div>
+                          {item?.question?.qOption?.optionE && (
+                            <div>
+                              <b>(E)</b>{" "}
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: item?.variantQuestion
+                                    ? item?.variantQuestion?.qOption?.optionE
+                                    : item?.question?.qOption?.optionE,
+                                }}
+                              ></span>
+                            </div>
                           )}
-                          {item?.isSubmitted && !item?.isCorrect && (
-                            <p>
-                              <span className="font-semibold">Status: </span>
-
-                              <span className='bg-red-600 rounded p-[2px] text-[10.5px] font-semibold'>In Correct</span>
-                            </p>
-                          )}
-                          {!item?.isSubmitted && !item?.isCorrect && (
-                            <p>
-                              <span className="font-semibold">Status: </span>
-
-                              <span className='bg-gray-500 rounded p-[2px] text-[10.5px] font-semibold'>Un Attempted</span>
-                            </p>
-                          )}
-                          <p>
-                            <span className="font-semibold">Positive Marks: </span>
-                            <span className='bg-green-600 rounded p-[2px] text-[10.5px] font-semibold'>{item?.mp}</span>
-                          </p>
-                          <p>
-                            <span className="font-semibold">Negative Marks: </span>
-                            <span className='bg-red-600 rounded p-[2px] text-[10.5px] font-semibold'>{item?.mn}</span>
-                          </p>
-                          <p>
-                            <span className="font-semibold">Correct Answer: </span>
-                            <span>{item?.question?.ans}</span>
-                          </p>
-                          <p>
-                            {item?.answer && (<>
-                              <span className="font-semibold">Your Answer: </span>
-                              <span>{item?.answer}</span></>
-                            )}
-                          </p>
-                          <p>
-                            {item?.timeTaken >= 0 && (
-                              <>
-                                <span className="font-semibold">Time Taken: </span>
-                                <span>{item?.timeTaken} sec</span>
-                              </>
-                            )}
-                          </p>
+                        </div>
+                        <span className="bg-blue-600 text-white font-semibold inline-block text-xs rounded">
+                          Solution :
+                        </span>
+                        <div className="mt-2">
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: item?.question?.qSolution,
+                            }}
+                          ></span>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                      <div
+                        className={`p-3 sm:w-1/3 mb-4 ${item?.isCorrect ? "bg-green-200" : "bg-[#eeeeee]"}`}
+                      >
+                        {item?.isSubmitted && item?.isCorrect && (
+                          <p>
+                            <span className="font-semibold">Status: </span>
+
+                            <span className="bg-green-600 p-[2px] rounded text-[10.5px] font-semibold">
+                              Correct
+                            </span>
+                          </p>
+                        )}
+                        {item?.isSubmitted && !item?.isCorrect && (
+                          <p>
+                            <span className="font-semibold">Status: </span>
+
+                            <span className="bg-red-600 rounded p-[2px] text-[10.5px] font-semibold">
+                              In Correct
+                            </span>
+                          </p>
+                        )}
+                        {!item?.isSubmitted && !item?.isCorrect && (
+                          <p>
+                            <span className="font-semibold">Status: </span>
+
+                            <span className="bg-gray-500 rounded p-[2px] text-[10.5px] font-semibold">
+                              Un Attempted
+                            </span>
+                          </p>
+                        )}
+                        <p>
+                          <span className="font-semibold">
+                            Positive Marks:{" "}
+                          </span>
+                          <span className="bg-green-600 rounded p-[2px] text-[10.5px] font-semibold">
+                            {item?.mp}
+                          </span>
+                        </p>
+                        <p>
+                          <span className="font-semibold">
+                            Negative Marks:{" "}
+                          </span>
+                          <span className="bg-red-600 rounded p-[2px] text-[10.5px] font-semibold">
+                            {item?.mn}
+                          </span>
+                        </p>
+                        <p>
+                          <span className="font-semibold">
+                            Correct Answer:{" "}
+                          </span>
+                          <span>{item?.question?.ans}</span>
+                        </p>
+                        <p>
+                          {item?.answer && (
+                            <>
+                              <span className="font-semibold">
+                                Your Answer:{" "}
+                              </span>
+                              <span>{item?.answer}</span>
+                            </>
+                          )}
+                        </p>
+                        <p>
+                          {item?.timeTaken >= 0 && (
+                            <>
+                              <span className="font-semibold">
+                                Time Taken:{" "}
+                              </span>
+                              <span>{item?.timeTaken} sec</span>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </>
-          )
-        }
-        {
-          openSection === "LB" && (
-            <>
-              <div className='mt-5 p-4'>
-                <h3 className='font-semibold sm:text-2xl pb-4 text-xl border-b'>LEADERBOARD</h3>
-                {participants?.some((item) => quizReport?.user?.firstName === item?.user?.firstName) && (
-                  <div
-                    className={`text-center text-white py-2 rounded-xl font-semibold w-full ${participants?.find((item) => quizReport?.user?.firstName === item?.user?.firstName)
+            </div>
+          </>
+        )}
+        {openSection === "LB" && (
+          <>
+            <div className="mt-5 p-4">
+              <h3 className="font-semibold sm:text-2xl pb-4 text-xl border-b">
+                LEADERBOARD
+              </h3>
+              {participants?.some(
+                (item) => quizReport?.user?.firstName === item?.user?.firstName
+              ) && (
+                <div
+                  className={`text-center text-white py-2 rounded-xl font-semibold w-full ${
+                    participants?.find(
+                      (item) =>
+                        quizReport?.user?.firstName === item?.user?.firstName
+                    )
                       ? "bg-green-600"
                       : "bg-red-600"
-                      }`}
-                  >
-                    <span>
-                      {participants?.find((item) => quizReport?.user?.firstName === item?.user?.firstName)
-                        ? "Congratulations!! You made it to the leaderboard!"
-                        : "Sorry!! You didn't make it to the leaderboard!"}
-                    </span>
-                  </div>
-                )}
-                <div className='border-t-2 w-full mt-2'>
-                  <table className='w-full'>
-                    <tbody>
-                      <tr>
-                        <td className='p-2 text-lg font-semibold border-b'>
-                          Rank
-                        </td>
-                        <td className='p-2 text-lg font-semibold border-b'>
-                          Student
-                        </td>
-                        <td className='p-2 text-lg font-semibold border-b'>
-                          Score
-                        </td>
-                        <td className='p-2 text-lg font-semibold border-b'>
-                          Time
-                        </td>
-                      </tr>
-                      {participants?.map((item, index) => {
-                        // Assign colors based on rank
-                        const getRankColor = (rank) => {
-                          switch (rank) {
-                            case 1:
-                              return "bg-[#FFD700]"; // Gold for 1st place
-                            case 2:
-                              return "bg-[#C0C0C0]"; // Silver for 2nd place
-                            case 3:
-                              return "bg-[#CD7F32]"; // Bronze for 3rd place
-                            default:
-                              return "bg-blue-500"; // Default color for other ranks
-                          }
-                        };
-
-                        const rankColor = getRankColor(index + 1);
-
-                        return (
-                          <tr className="border-b" key={index}>
-                            <td className="p-4">
-                              {/* Apply rank-based color */}
-                              <span className={`font-semibold text-white rounded-[100%] p-2 ${rankColor}`}>
-                                {index + 1}
-                              </span>
-                            </td>
-                            <td className="flex p-4 sm:flex-row flex-col text-center items-center gap-2">
-                              <img
-                                className="w-[36px]"
-                                src="https://i.filecdn.in/832sgoiupsc/avatar-student-1711690124119.png"
-                                alt="pfp"
-                              />
-                              <span>
-                                {item?.user?.firstName}
-                                <span>{item?.user?.lastName}</span>
-                              </span>
-                            </td>
-                            <td className="p-4">{item?.stdScore}</td>
-                            <td className="p-4">
-                              {item?.totalTimeTaken}
-                              <small>s</small>
-                            </td>
-                          </tr>
-                        );
-                      })}
-
-                    </tbody>
-                  </table>
+                  }`}
+                >
+                  <span>
+                    {participants?.find(
+                      (item) =>
+                        quizReport?.user?.firstName === item?.user?.firstName
+                    )
+                      ? "Congratulations!! You made it to the leaderboard!"
+                      : "Sorry!! You didn't make it to the leaderboard!"}
+                  </span>
                 </div>
+              )}
+              <div className="border-t-2 w-full mt-2">
+                <table className="w-full">
+                  <tbody>
+                    <tr>
+                      <td className="p-2 text-lg font-semibold border-b">
+                        Rank
+                      </td>
+                      <td className="p-2 text-lg font-semibold border-b">
+                        Student
+                      </td>
+                      <td className="p-2 text-lg font-semibold border-b">
+                        Score
+                      </td>
+                      <td className="p-2 text-lg font-semibold border-b">
+                        Time
+                      </td>
+                    </tr>
+                    {participants?.map((item, index) => {
+                      // Assign colors based on rank
+                      const getRankColor = (rank) => {
+                        switch (rank) {
+                          case 1:
+                            return "bg-[#FFD700]"; // Gold for 1st place
+                          case 2:
+                            return "bg-[#C0C0C0]"; // Silver for 2nd place
+                          case 3:
+                            return "bg-[#CD7F32]"; // Bronze for 3rd place
+                          default:
+                            return "bg-blue-500"; // Default color for other ranks
+                        }
+                      };
+
+                      const rankColor = getRankColor(index + 1);
+
+                      return (
+                        <tr className="border-b" key={index}>
+                          <td className="p-4">
+                            {/* Apply rank-based color */}
+                            <span
+                              className={`font-semibold text-white rounded-[100%] p-2 ${rankColor}`}
+                            >
+                              {index + 1}
+                            </span>
+                          </td>
+                          <td className="flex p-4 sm:flex-row flex-col text-center items-center gap-2">
+                            <img
+                              className="w-[36px]"
+                              src="https://i.filecdn.in/832sgoiupsc/avatar-student-1711690124119.png"
+                              alt="pfp"
+                            />
+                            <span>
+                              {item?.user?.firstName}
+                              <span>{item?.user?.lastName}</span>
+                            </span>
+                          </td>
+                          <td className="p-4">{item?.stdScore}</td>
+                          <td className="p-4">
+                            {item?.totalTimeTaken}
+                            <small>s</small>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
-            </>
-          )
-        }
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

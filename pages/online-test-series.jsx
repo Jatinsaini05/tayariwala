@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import PageTitle from '../components/Online-Test-Series/PageTitle'
-import Content from '../components/Online-Test-Series/Content'
-import { getInitialData, getPageData } from '../service/apiFetch';
-import { getCourses } from '../service/apiFetch';
+import React, { useState, useEffect } from "react";
+import PageTitle from "../components/Online-Test-Series/PageTitle";
+import Content from "../components/Online-Test-Series/Content";
+import { getInitialData, getPageData } from "../service/apiFetch";
+import { getCourses } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
 //   try {
@@ -37,8 +37,10 @@ import { getCourses } from '../service/apiFetch';
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("online-test-series", { contentBlock: "Object" });
-  const courseResponse = await getCourses({contentBlock: "Object",});
+  const initialData = await getInitialData("online-test-series", {
+    contentBlock: "Object",
+  });
+  const courseResponse = await getCourses({ contentBlock: "Object" });
   return {
     props: {
       websiteData: initialData?.websiteData,
@@ -46,23 +48,22 @@ export const getStaticProps = async () => {
       title: initialData?.title,
       metaTags: initialData?.metaTags,
       CoursesData: courseResponse,
+      url: initialData?.url || "",
     },
   };
 };
 
 const onlineTestSeries = ({ pageData, CoursesData }) => {
-  
   return (
     <div>
       <div>
         <PageTitle pageData={pageData} />
       </div>
       <div>
-        <Content courseData={CoursesData}/>
+        <Content courseData={CoursesData} />
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default onlineTestSeries
+export default onlineTestSeries;

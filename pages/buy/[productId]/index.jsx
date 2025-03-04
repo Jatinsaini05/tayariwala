@@ -14,7 +14,7 @@ export const getServerSideProps = async (context) => {
   // console.log(" productId", productId);
   try {
     const response = await fetch(
-      `https://v3.edkt.net/api/s/product/${productId}`,
+      `https://r1.edkt.net/api/s/product/${productId}`,
       {
         headers: {
           apihost: "https://ihub.masterlearners.in",
@@ -279,7 +279,7 @@ export default function Index({ productResponse, ProductId }) {
         if (coupon?.apply && coupon?.amount) {
           data[0].dueAmount = coupon.amount; // Update dueAmount directly
         }
-      
+
         return { id, dueAmount: data[0].dueAmount, orderNo, store };
       } else {
         return null;

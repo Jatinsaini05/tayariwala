@@ -1,4 +1,3 @@
-import { NextUIProvider } from "@nextui-org/system";
 import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -13,10 +12,11 @@ const Snackbar = dynamic(() => import("@/components/utils/Snackbar"), {
 
 function App({ Component, pageProps }) {
   const router = useRouter();
-  const { title, data, websiteData, type, metaTags, ...restProps } = pageProps;
+  const { title, data, websiteData, type, metaTags, url, ...restProps } =
+    pageProps;
 
   return (
-    <NextUIProvider navigate={router.push}>
+    <>
       <Favicon
         favicon={websiteData?.website?.favicon}
         scripts={websiteData?.website?.script}
@@ -24,25 +24,31 @@ function App({ Component, pageProps }) {
       {(metaTags ||
         data?.pageData?.metaTags ||
         websiteData?.website?.metaTags) && (
-          <MetaTags
-            title={title || websiteData?.website?.title}
-            keywords={
-              metaTags?.keywords || websiteData?.website?.metaTags?.keywords
-            }
-            description={
-              metaTags?.ogDescription ||
-              websiteData?.website?.metaTags?.ogDescription
-            }
-            image={metaTags?.ogImage || websiteData?.website?.metaTags?.ogImage}
-          ></MetaTags>
-        )}
+        <MetaTags
+          title={title || websiteData?.website?.title}
+          keywords={
+            metaTags?.keywords || websiteData?.website?.metaTags?.keywords
+          }
+          description={
+            metaTags?.ogDescription ||
+            websiteData?.website?.metaTags?.ogDescription
+          }
+          image={metaTags?.ogImage || websiteData?.website?.metaTags?.ogImage}
+          url={url}
+        ></MetaTags>
+      )}
       <DefaultLayout websiteData={websiteData}>
         <Component
-          {...{ websiteData: websiteData, data: data, type: type, ...restProps }}
+          {...{
+            websiteData: websiteData,
+            data: data,
+            type: type,
+            ...restProps,
+          }}
         />
       </DefaultLayout>
       <Snackbar />
-    </NextUIProvider>
+    </>
   );
 }
 

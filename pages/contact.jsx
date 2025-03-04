@@ -1,7 +1,7 @@
-import React from 'react'
-import PageTitle from '../components/Contact/PageTitle'
-import ContactArea from '../components/Contact/ContactArea'
-import { getInitialData, getPageData } from '../service/apiFetch';
+import React from "react";
+import PageTitle from "../components/Contact/PageTitle";
+import ContactArea from "../components/Contact/ContactArea";
+import { getInitialData, getPageData } from "../service/apiFetch";
 // import { getWebsiteData } from '../service/apiFetch';
 // export const getStaticProps = async () => {
 //   try {
@@ -35,29 +35,33 @@ import { getInitialData, getPageData } from '../service/apiFetch';
 // };
 
 export const getStaticProps = async () => {
-    const initialData = await getInitialData("contact", { contentBlock: "Object" });
-    return {
-      props: {
-        websiteData: initialData?.websiteData,
-        pageData: initialData?.data,
-        title: initialData?.title,
-        metaTags: initialData?.metaTags,
-      },
-    };
+  const initialData = await getInitialData("contact", {
+    contentBlock: "Object",
+  });
+  return {
+    props: {
+      websiteData: initialData?.websiteData,
+      pageData: initialData?.data,
+      title: initialData?.title,
+      metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
+    },
   };
-const contact = ({pageData, websiteData}) => {
+};
+const contact = ({ pageData, websiteData }) => {
   return (
     <div>
-        <div>
-            <PageTitle pageData={pageData}/>
-        </div>
-        <div>
-            <ContactArea pageData={pageData?.contentBlock?.CONTACT_DETAILS}
-                         websiteData={websiteData?.website}/>
-        </div>
-      
+      <div>
+        <PageTitle pageData={pageData} />
+      </div>
+      <div>
+        <ContactArea
+          pageData={pageData?.contentBlock?.CONTACT_DETAILS}
+          websiteData={websiteData?.website}
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default contact
+export default contact;

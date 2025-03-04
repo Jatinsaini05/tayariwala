@@ -1,6 +1,6 @@
-import React from 'react'
-import PageTitle from '../components/About-Us/PageTitle'
-import About from '../components/About-Us/About'
+import React from "react";
+import PageTitle from "../components/About-Us/PageTitle";
+import About from "../components/About-Us/About";
 import { getInitialData, getPageData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
@@ -28,29 +28,32 @@ import { getInitialData, getPageData } from "../service/apiFetch";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("about-us", { contentBlock: "Object" });
+  const initialData = await getInitialData("about-us", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
 
-const AboutUs = ({pageData}) => {
+const AboutUs = ({ pageData }) => {
   return (
     <div>
       {/* {JSON.stringify(pageData)} */}
       <div>
-        <PageTitle pageData={pageData}/>
+        <PageTitle pageData={pageData} />
       </div>
       <div>
-        <About pageData={pageData?.contentBlock?.MAIN_CONTENT}/>
+        <About pageData={pageData?.contentBlock?.MAIN_CONTENT} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AboutUs
+export default AboutUs;

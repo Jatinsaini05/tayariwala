@@ -1,6 +1,6 @@
-import React from 'react'
-import PageTitle from '../components/Contact-Patna/PageTitle'
-import ContactArea from '../components/Contact-Patna/ContactArea'
+import React from "react";
+import PageTitle from "../components/Contact-Patna/PageTitle";
+import ContactArea from "../components/Contact-Patna/ContactArea";
 import { getInitialData, getPageData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
@@ -28,25 +28,31 @@ import { getInitialData, getPageData } from "../service/apiFetch";
 // };
 
 export const getStaticProps = async () => {
-    const initialData = await getInitialData("contact-patna", { contentBlock: "Object" });
-    return {
-      props: {
-        websiteData: initialData?.websiteData,
-        pageData: initialData?.data,
-        title: initialData?.title,
-        metaTags: initialData?.metaTags,
-      },
-    };
+  const initialData = await getInitialData("contact-patna", {
+    contentBlock: "Object",
+  });
+  return {
+    props: {
+      websiteData: initialData?.websiteData,
+      pageData: initialData?.data,
+      title: initialData?.title,
+      metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
+    },
   };
+};
 
-
-const ContactPatna = ({pageData}) => {
+const ContactPatna = ({ pageData }) => {
   return (
     <div>
-      <div><PageTitle pageData={pageData}/></div>
-      <div><ContactArea pageData={pageData?.contentBlock?.CONTACT_DETAILS}/></div>
+      <div>
+        <PageTitle pageData={pageData} />
+      </div>
+      <div>
+        <ContactArea pageData={pageData?.contentBlock?.CONTACT_DETAILS} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ContactPatna
+export default ContactPatna;

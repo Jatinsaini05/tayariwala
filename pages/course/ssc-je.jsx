@@ -5,7 +5,11 @@ import SSC from "../../components/SSC/SSC-JE";
 import Syllabus from "../../components/SSC/Syllabus";
 import LiveOnlineClasses from "../../components/SSC/LiveOnlineClasses";
 import OfflineClasses from "../../components/SSC/OfflineClasses";
-import { getInitialData, getPageData, getProductData } from "../../service/apiFetch";
+import {
+  getInitialData,
+  getPageData,
+  getProductData,
+} from "../../service/apiFetch";
 import TestSeries from "../../components/SSC/TestSeries";
 import StudyPackage from "../../components/SSC/StudyPackage";
 import Toptab from "../../components/SSC/TopTab";
@@ -35,13 +39,16 @@ import Toptab from "../../components/SSC/TopTab";
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("/course/ssc-je", { contentBlock: "Object" });
+  const initialData = await getInitialData("/course/ssc-je", {
+    contentBlock: "Object",
+  });
   return {
     props: {
       websiteData: initialData?.websiteData,
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
@@ -59,8 +66,8 @@ const Ssc = ({ pageData }) => {
 
       try {
         const params = {
-          "populate": "stream",
-          "course": srcId
+          populate: "stream",
+          course: srcId,
         };
         const response = await getProductData(params);
         setAdditionalData(response);
@@ -72,7 +79,6 @@ const Ssc = ({ pageData }) => {
     fetchAdditionalData(); // Trigger the fetch function
   }, [pageData]); // Re-run only when pageData changes
 
-
   // Category IDs for filtering
   const categoryIds = {
     LIVE_CLASS: "5cf0cfc4e6636f4d815ccb0a",
@@ -83,9 +89,7 @@ const Ssc = ({ pageData }) => {
 
   // Function to filter data by category
   const filterDataByCategory = (categoryId) => {
-    return additionalData?.filter((item) =>
-      item.category === categoryId
-    );
+    return additionalData?.filter((item) => item.category === categoryId);
   };
 
   return (
@@ -118,9 +122,7 @@ const Ssc = ({ pageData }) => {
         />
       </div>
       <div>
-        <TestSeries
-          testSeriesData={filterDataByCategory(categoryIds.TEST)}
-        />
+        <TestSeries testSeriesData={filterDataByCategory(categoryIds.TEST)} />
       </div>
       <div>
         <StudyPackage

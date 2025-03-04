@@ -14,7 +14,7 @@ import LatestNews from "../components/Home/LatestNews";
 //     const params = "populate=course%2Cstream&select_course=value%2CvalueAlias&select_stream=value%2CvalueAlias"
 //     const productresponse = await getProductData(params)
 
-//     if (!productresponse) { 
+//     if (!productresponse) {
 //       console.log("product data is not found")
 //     }
 //     return {
@@ -35,9 +35,13 @@ import LatestNews from "../components/Home/LatestNews";
 import { getInitialData } from "../service/apiFetch";
 
 export const getStaticProps = async () => {
-  const params = "populate=course%2Cstream&select_course=value%2CvalueAlias&select_stream=value%2CvalueAlias"
-  const productresponse = await getProductData(params)
-  const initialData = await getInitialData("__home", { contentBlock: "Object" });
+  const params =
+    "populate=course%2Cstream&select_course=value%2CvalueAlias&select_stream=value%2CvalueAlias";
+  const productresponse = await getProductData(params);
+  const initialData = await getInitialData("__home", {
+    contentBlock: "Object",
+  });
+  console.log(initialData);
   return {
     props: {
       websiteData: initialData?.websiteData,
@@ -45,20 +49,20 @@ export const getStaticProps = async () => {
       title: initialData?.title,
       metaTags: initialData?.metaTags,
       productData: productresponse,
+      url: initialData?.url || "",
     },
   };
 };
 
 export default function home({ pageData, productData }) {
-
   return (
     <div>
-
       <div>
         <HeroSection pageData={pageData?.contentBlock?.HERO_SECTION} />
       </div>
       <div>
-        <Approach pageData={pageData?.contentBlock?.APPROACH}
+        <Approach
+          pageData={pageData?.contentBlock?.APPROACH}
           productData={productData}
         />
       </div>

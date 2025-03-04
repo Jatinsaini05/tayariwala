@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import Download from '../components/DownloadApp/Download'
-import { getInitialData, getPageData } from '../service/apiFetch'
+import React, { useState } from "react";
+import Download from "../components/DownloadApp/Download";
+import { getInitialData, getPageData } from "../service/apiFetch";
 
 // export const getStaticProps = async () => {
 //   try {
@@ -27,7 +27,10 @@ import { getInitialData, getPageData } from '../service/apiFetch'
 // };
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("master-learners-mobile-app-and-desktop-app", { contentBlock: "Object" });
+  const initialData = await getInitialData(
+    "master-learners-mobile-app-and-desktop-app",
+    { contentBlock: "Object" }
+  );
 
   return {
     props: {
@@ -35,16 +38,19 @@ export const getStaticProps = async () => {
       pageData: initialData?.data,
       title: initialData?.title,
       metaTags: initialData?.metaTags,
+      url: initialData?.url || "",
     },
   };
 };
 
-const AppDownload = ({pageData}) => {
+const AppDownload = ({ pageData }) => {
   return (
     <div>
-      <div><Download pageData={pageData?.contentBlock?.MAIN_CONTENT}/></div>
+      <div>
+        <Download pageData={pageData?.contentBlock?.MAIN_CONTENT} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AppDownload
+export default AppDownload;

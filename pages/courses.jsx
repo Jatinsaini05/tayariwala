@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import PageTitle from '../components/Courses/PageTitle'
-import Content from '../components/Courses/Content'
-import { getInitialData, getPageData } from '../service/apiFetch';
-import { getCourses } from '../service/apiFetch';
+import React, { useEffect, useState } from "react";
+import PageTitle from "../components/Courses/PageTitle";
+import Content from "../components/Courses/Content";
+import { getInitialData, getPageData } from "../service/apiFetch";
+import { getCourses } from "../service/apiFetch";
 
 export const getStaticProps = async () => {
-  const initialData = await getInitialData("courses", { contentBlock: "Object" });
+  const initialData = await getInitialData("courses", {
+    contentBlock: "Object",
+  });
   const courseResponse = await getCourses({
     contentBlock: "Object",
   });
@@ -16,13 +18,13 @@ export const getStaticProps = async () => {
       title: initialData?.title,
       metaTags: initialData?.metaTags,
       CoursesData: courseResponse,
+      url: initialData?.url || "",
       // CoursesData: courseResponse,
     },
   };
 };
 
 const courses = ({ pageData, CoursesData }) => {
-
   return (
     <div>
       <div>
@@ -32,7 +34,7 @@ const courses = ({ pageData, CoursesData }) => {
         <Content courseData={CoursesData} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default courses
+export default courses;
