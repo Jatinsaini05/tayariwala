@@ -14,12 +14,10 @@ export default function Favicon({ favicon, scripts }) {
       {scripts?.length > 0 &&
         scripts.map(({ innerHTML, ...attributes }, index) => (
           <Script
-            strategy="beforeInteractive"
+            strategy="afterInteractive"
             key={index}
             {...attributes}
-            dangerouslySetInnerHTML={
-              innerHTML ? { __html: innerHTML } : undefined
-            }
+            dangerouslySetInnerHTML={innerHTML ? { __html: innerHTML } : undefined}
           />
         ))}
     </>
