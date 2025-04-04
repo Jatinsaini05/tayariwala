@@ -1,8 +1,9 @@
-import Head from 'next/head';
+import Head from "next/head";
+import Script from "next/script";
 
-export default function Favicon({favicon }) {
+export default function Favicon({ favicon, scripts }) {
   return (
-    <div>
+    <>
       {favicon && (
         <Head>
           <meta name="msapplication-square" content={favicon} />
@@ -10,6 +11,17 @@ export default function Favicon({favicon }) {
           <link rel="apple-touch-icon" href={favicon} />
         </Head>
       )}
-    </div>
+      {scripts?.length > 0 &&
+        scripts.map(({ innerHTML, ...attributes }, index) => (
+          <Script
+            strategy="beforeInteractive"
+            key={index}
+            {...attributes}
+            dangerouslySetInnerHTML={
+              innerHTML ? { __html: innerHTML } : undefined
+            }
+          />
+        ))}
+    </>
   );
 }
