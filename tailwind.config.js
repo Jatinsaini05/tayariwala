@@ -11,9 +11,9 @@ module.exports = {
         "gradient-45deg": "linear-gradient(45deg, var(--tw-gradient-stops))",
       },
       colors: {
-        custom241737: "#241737",
+        custom241737: "#1d6091",
         customFFEB3B: "#FFEB3B",
-        customFC6200: "#FC6200",
+        customFC6200: "#1d6091",
         customEAE1D6: "#EAE1D6",
       },
     },

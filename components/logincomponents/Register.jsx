@@ -18,7 +18,7 @@ const Register = ({ CoursesData }) => {
     course: "",
     stream: "",
   });
-const { login, userdata, authToken } = useStoreLogin();
+  const { login, userdata, authToken } = useStoreLogin();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -43,15 +43,27 @@ const { login, userdata, authToken } = useStoreLogin();
   const handleBlur = (e) => {
     const { name, value } = e.target;
     if (!value) {
-      setErrors((prev) => ({ ...prev, [name]: `${fieldLabels[name]} is required` }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: `${fieldLabels[name]} is required`,
+      }));
     } else if (name === "mobile" && !/^\d{10}$/.test(value)) {
-      setErrors((prev) => ({ ...prev, mobile: "Mobile number must be 10 digits" }));
+      setErrors((prev) => ({
+        ...prev,
+        mobile: "Mobile number must be 10 digits",
+      }));
     } else if (name === "password" && value.length < 6) {
-      setErrors((prev) => ({ ...prev, password: "Password must be 6+ characters" }));
+      setErrors((prev) => ({
+        ...prev,
+        password: "Password must be 6+ characters",
+      }));
     } else if (name === "conpassword" && value !== formData.password) {
       setErrors((prev) => ({ ...prev, conpassword: "Passwords do not match" }));
     } else if ((name === "course" || name === "stream") && !value) {
-      setErrors((prev) => ({ ...prev, [name]: `${fieldLabels[name]} is required` }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: `${fieldLabels[name]} is required`,
+      }));
     }
   };
 
@@ -79,12 +91,16 @@ const { login, userdata, authToken } = useStoreLogin();
       newErrors.conpassword = "Passwords do not match";
     }
 
-    const selectedCourse = CoursesData.find((course) => course._id === formData.course);
+    const selectedCourse = CoursesData.find(
+      (course) => course._id === formData.course
+    );
     if (!selectedCourse) {
       newErrors.course = "Course is required or invalid";
     }
 
-    const selectedStream = streamData?.find((stream) => stream._id === formData.stream);
+    const selectedStream = streamData?.find(
+      (stream) => stream._id === formData.stream
+    );
     if (!selectedStream) {
       newErrors.stream = "Stream is required or invalid";
     }
@@ -109,7 +125,10 @@ const { login, userdata, authToken } = useStoreLogin();
         // Call user API
         const response = await user(validatedData);
         setLoading(false);
-        if (response?.error === "HTTP error! status: 500" && response?.details?.message) {
+        if (
+          response?.error === "HTTP error! status: 500" &&
+          response?.details?.message
+        ) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -177,7 +196,9 @@ const { login, userdata, authToken } = useStoreLogin();
 
   useEffect(() => {
     if (formData?.course.length > 0) {
-      fetch(`https://masterlearners.in/api/public/data/streams?course=${formData?.course}`)
+      fetch(
+        `https://maheshpratap.institute.org.in/api/public/data/streams?course=${formData?.course}`
+      )
         .then((response) => response.json())
         .then((data) => {
           setStreamData(data);
@@ -210,7 +231,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="First Name"
             />
             {errors.firstName && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.firstName}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.firstName}
+              </span>
             )}
           </div>
           <div className="mb-3 flex relative w-full flex-col">
@@ -228,7 +251,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="Last Name"
             />
             {errors.lastname && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.lastname}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.lastname}
+              </span>
             )}
           </div>
         </li>
@@ -250,7 +275,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="Email"
             />
             {errors.email && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.email}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.email}
+              </span>
             )}
           </div>
           <div className="mb-3 relative flex w-full flex-col">
@@ -268,7 +295,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="Mobile"
             />
             {errors.mobile && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.mobile}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.mobile}
+              </span>
             )}
           </div>
         </li>
@@ -289,7 +318,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="Password"
             />
             {errors.password && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.password}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.password}
+              </span>
             )}
           </div>
           <div className="mb-3 relative flex w-full flex-col">
@@ -307,7 +338,9 @@ const { login, userdata, authToken } = useStoreLogin();
               placeholder="Repeat Password"
             />
             {errors.conpassword && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.conpassword}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.conpassword}
+              </span>
             )}
           </div>
         </li>
@@ -320,13 +353,15 @@ const { login, userdata, authToken } = useStoreLogin();
             </label>
             <select
               id="course"
-              name="course"  // Make sure name is course to match the state key
+              name="course" // Make sure name is course to match the state key
               value={formData.course}
               onChange={handleChange}
               onBlur={handleBlur}
               className="md:p-[8px] w-full p-[6px]  text-base border border-[#bbb] rounded-md focus:outline-none focus:ring-2 focus:ring-[#666666]"
             >
-              <option value="" disabled>Select Course</option>
+              <option value="" disabled>
+                Select Course
+              </option>
               {CoursesData.map((course) => (
                 <option key={course._id} value={course._id}>
                   {course.valueAlias}
@@ -334,7 +369,9 @@ const { login, userdata, authToken } = useStoreLogin();
               ))}
             </select>
             {errors.course && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.course}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.course}
+              </span>
             )}
           </div>
           <div className="mb-3 relative flex w-full flex-col">
@@ -349,15 +386,23 @@ const { login, userdata, authToken } = useStoreLogin();
               onBlur={handleBlur}
               className="md:p-[8px] w-full p-[6px]  text-base border border-[#bbb] rounded-md focus:outline-none focus:ring-2 focus:ring-[#666666]"
             >
-              <option value="" disabled>Select Stream</option>
-              {streamData?.length > 0 ? (streamData?.map((itm) => (
-                <option key={itm._id} value={itm._id}>
-                  {itm.valueAlias}
-                </option>
-              ))) : <option disabled>please select course first</option>}
+              <option value="" disabled>
+                Select Stream
+              </option>
+              {streamData?.length > 0 ? (
+                streamData?.map((itm) => (
+                  <option key={itm._id} value={itm._id}>
+                    {itm.valueAlias}
+                  </option>
+                ))
+              ) : (
+                <option disabled>please select course first</option>
+              )}
             </select>
             {errors.stream && (
-              <span className="text-red-500 absolute bottom-[-20px] text-sm">{errors.stream}</span>
+              <span className="text-red-500 absolute bottom-[-20px] text-sm">
+                {errors.stream}
+              </span>
             )}
           </div>
         </li>
@@ -369,8 +414,8 @@ const { login, userdata, authToken } = useStoreLogin();
       >
         {loading ? (
           <div className="flex justify-center items-center">
-          <div className="border-transparent border-t-white w-[20px] h-[20px] animate-spin rounded-[50%] border-2 border-solid "></div>
-        </div>
+            <div className="border-transparent border-t-white w-[20px] h-[20px] animate-spin rounded-[50%] border-2 border-solid "></div>
+          </div>
         ) : (
           "Register"
         )}

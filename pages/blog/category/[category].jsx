@@ -44,7 +44,7 @@ const BlogUri = ({ pageData }) => {
       fetch(url, {
         headers: {
           "Content-Type": "application/json",
-          apiHost: "https://masterlearners.in",
+          apiHost: "https://maheshpratap.institute.org.in",
         },
       })
         .then((res) => res.json())

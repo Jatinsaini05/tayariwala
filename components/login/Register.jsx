@@ -69,7 +69,7 @@ export default function Register({ changeScreen }) {
       personalImg: file,
     });
   };
-  
+
   const isFile = (value) => {
     return value && typeof value === "object" && value instanceof File;
   };
@@ -84,7 +84,7 @@ export default function Register({ changeScreen }) {
           console.log(1, fd);
           try {
             const myData = await fetch(
-              "https://ihub.masterlearners.in/api/public/file/upload",
+              "https://maheshpratap.institute.org.in/api/public/file/upload",
               {
                 method: "POST",
                 body: fd,
@@ -122,7 +122,7 @@ export default function Register({ changeScreen }) {
     const fetchCourses = async () => {
       try {
         let response = await fetch(
-          `https://ihub.masterlearners.in/api/public/data/all-courses`
+          `https://maheshpratap.institute.org.in/api/public/data/all-courses`
         );
         let data = await response.json();
         setAllCourse(data);
@@ -137,7 +137,7 @@ export default function Register({ changeScreen }) {
     try {
       setStreamLoading(true);
       let response = await fetch(
-        `https://ihub.masterlearners.in/api/public/data/all-stream?status=true`
+        `https://maheshpratap.institute.org.in/api/public/data/all-stream?status=true`
       );
       let data = await response.json();
       setAllStreams(data);
@@ -173,7 +173,7 @@ export default function Register({ changeScreen }) {
         setLoading(true);
         let data = { mobile: regisData.mobile };
         const response = await fetch(
-          "https://ihub.masterlearners.in/api/public/user/signup-with-otp",
+          "https://maheshpratap.institute.org.in/api/public/user/signup-with-otp",
           {
             method: "POST",
             headers: {
@@ -223,7 +223,7 @@ export default function Register({ changeScreen }) {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://ihub.masterlearners.in/api/public/user/register-student-with-otp",
+          "https://maheshpratap.institute.org.in/api/public/user/register-student-with-otp",
           {
             method: "POST",
             headers: {
@@ -453,7 +453,8 @@ export default function Register({ changeScreen }) {
                                 htmlFor="email"
                                 className="text-[15px] font-bold flex gap-[2px]"
                               >
-                                Email <p className="p-0 m-0 text-red-500">*</p>{" "}
+                                Email{" "}
+                                <p className="p-0 m-0 text-red-500">*</p>{" "}
                               </label>
                               <input
                                 name="email"
@@ -547,7 +548,8 @@ export default function Register({ changeScreen }) {
                                 htmlFor="email"
                                 className="text-[15px] font-bold flex gap-[2px]"
                               >
-                                Gender <p className="p-0 m-0 text-red-500">*</p>{" "}
+                                Gender{" "}
+                                <p className="p-0 m-0 text-red-500">*</p>{" "}
                               </label>
                               <select
                                 name="gender"
@@ -600,8 +602,8 @@ export default function Register({ changeScreen }) {
                                       value={
                                         regisData.dob
                                           ? regisData.dob.toLocaleDateString(
-                                            "en-GB"
-                                          )
+                                              "en-GB"
+                                            )
                                           : ""
                                       }
                                     />

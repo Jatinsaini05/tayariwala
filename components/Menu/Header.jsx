@@ -63,13 +63,13 @@ const Header = ({ websiteData }) => {
   return (
     <div>
       <div>
-        <div className="md:px-2 relative z-50 px-[15px] py-4 flex justify-normal gap-5 lg:gap-0 lg:justify-between bg-white">
-          <div className="flex flex-grow lg:flex-grow-0 justify-between  gap-3 xl:gap-14">
+        <div className="md:px-2 relative z-50 px-[15px] flex justify-normal gap-5 lg:gap-0 lg:justify-between bg-gradient-to-b from-[#c3c6d1] to-[#b5b8ca]">
+          <div className="flex flex-grow lg:flex-grow-0 justify-between gap-3 xl:gap-14">
             <div>
               <Link href="/">
                 <img
                   src={websiteData?.website?.logo}
-                  className="hover:cursor-pointer max-w-[140px]"
+                  className="hover:cursor-pointer max-w-[250px] mix-blend-darken"
                 />
               </Link>
             </div>

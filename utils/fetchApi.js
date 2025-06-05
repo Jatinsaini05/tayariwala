@@ -1,5 +1,5 @@
 import { useStoreLogin } from "@/store/login";
-const clientBaseUrl = "https://ihub.masterlearners.in";
+const clientBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const apiBaseUrl = "https://r1.edkt.net";
 const fetchWithToken = async (url, data = {}, options = {}) => {
@@ -13,7 +13,7 @@ const fetchWithToken = async (url, data = {}, options = {}) => {
     const headers = {
       ...options.headers,
       token: authToken,
-      apihost: clientBaseUrl ,
+      apihost: clientBaseUrl,
     };
     const fetchOptions = {
       ...options,
@@ -83,7 +83,6 @@ const fetchWithToken = async (url, data = {}, options = {}) => {
 };
 
 export const fetchWithOutToken = async (url, data = {}, options = {}) => {
-
   try {
     const headers = {
       ...options.headers,
@@ -169,11 +168,10 @@ export const fetchWithOutToken_old = async (url, data = {}, options = {}) => {
       }
       url = url.startsWith("http") ? url : `${clientBaseUrl}${url}`;
     } else {
-      
       // For GET or other methods, construct the URL with query parameters
-      url = url.startsWith("http") ? url : `${clientBaseUrl }${url}`;
+      url = url.startsWith("http") ? url : `${clientBaseUrl}${url}`;
       const queryString = new URLSearchParams(data).toString();
-      
+
       url = `${url}?${queryString}`;
     }
 
@@ -186,13 +184,12 @@ export const fetchWithOutToken_old = async (url, data = {}, options = {}) => {
         details: errorData,
       };
     }
-    if(response.ok) {
+    if (response.ok) {
       return await response.json(); // Return the response in JSON format
     }
-  
   } catch (error) {
     console.error("Fetch failed:", error.message);
-    return {error}
+    return { error };
     // return { error: "Fetch failed.", details: error.message };
   }
 };
@@ -260,8 +257,8 @@ export const fetchWithToken_old = async (url, data = {}, options = {}) => {
 
     return await response.json(); // Return the response in JSON format
   } catch (error) {
-    console.error("Fetch failed:",error.message );
-    return {error}
+    console.error("Fetch failed:", error.message);
+    return { error };
     // return { error: "Fetch failed.", details: error.message };
   }
 };

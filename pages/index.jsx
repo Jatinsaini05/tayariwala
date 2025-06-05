@@ -44,11 +44,11 @@ export const getStaticProps = async () => {
   console.log(initialData);
   return {
     props: {
-      websiteData: initialData?.websiteData,
-      pageData: initialData?.data,
-      title: initialData?.title,
-      metaTags: initialData?.metaTags,
-      productData: productresponse,
+      websiteData: initialData?.websiteData || "",
+      pageData: initialData?.data || "",
+      title: initialData?.title || "",
+      metaTags: initialData?.metaTags || "",
+      productData: productresponse || "",
       url: initialData?.url || "",
     },
   };

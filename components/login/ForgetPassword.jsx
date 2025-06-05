@@ -21,7 +21,7 @@ export default function ForgetPassword({ changeScreen }) {
         setLoading(true);
         let data = { username };
         const response = await fetch(
-          "https://ihub.masterlearners.in/api/public/user/sent-reset-password-otp",
+          "https://maheshpratap.institute.org.in/api/public/user/sent-reset-password-otp",
           {
             method: "POST",
             headers: {
@@ -76,7 +76,7 @@ export default function ForgetPassword({ changeScreen }) {
         let data = { newPassword, id: userId, confirmPassword, otp };
 
         const response = await fetch(
-          "https://ihub.masterlearners.in/api/public/user/reset-password",
+          "https://maheshpratap.institute.org.in/api/public/user/reset-password",
           {
             method: "POST",
             headers: {
@@ -243,7 +243,8 @@ export default function ForgetPassword({ changeScreen }) {
                   <div>
                     <div>
                       <label className="text-[15px] font-bold flex gap-[2px]">
-                        Enter Otp: <p className="p-0 m-0 text-red-500">*</p>{" "}
+                        Enter Otp:{" "}
+                        <p className="p-0 m-0 text-red-500">*</p>{" "}
                       </label>
                     </div>
 

@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import Swal from "sweetalert2"; // Import Swal
 import { useStoreLoader } from "./loader";
 import { useStoreDialog } from "./dialog";
- 
+
 export const useStoreLogin = create(
   persist(
     (set) => ({
@@ -26,13 +26,16 @@ export const useStoreLogin = create(
         useStoreLoader.getState().setLoading(true);
 
         try {
-          let response = await fetch(`https://ihub.masterlearners.in/api/auth/signin`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          });
+          let response = await fetch(
+            `https://maheshpratap.institute.org.in/api/auth/signin`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            }
+          );
 
           if (!response.ok) {
             const errorData = await response.json();
@@ -55,7 +58,6 @@ export const useStoreLogin = create(
             text: "You have successfully logged in",
             scrollbarPadding: false,
           });
-
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -95,13 +97,16 @@ export const useStoreLogin = create(
         useStoreLoader.getState().setLoading(true);
 
         try {
-          let response = await fetch(`https://ihub.masterlearners.in/api/public/send-otp`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          });
+          let response = await fetch(
+            `https://maheshpratap.institute.org.in/api/public/send-otp`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            }
+          );
 
           if (!response.ok) {
             const errorData = await response.json();
@@ -110,7 +115,6 @@ export const useStoreLogin = create(
 
           const data = await response.json();
           return data;
-
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -140,13 +144,16 @@ export const useStoreLogin = create(
         useStoreLoader.getState().setLoading(true);
 
         try {
-          let response = await fetch(`https://ihub.masterlearners.in/api/public/varify`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          });
+          let response = await fetch(
+            `https://maheshpratap.institute.org.in/api/public/varify`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+            }
+          );
 
           if (!response.ok) {
             const errorData = await response.json();
@@ -162,7 +169,6 @@ export const useStoreLogin = create(
             text: "You have successfully logged in",
             scrollbarPadding: false,
           });
-
         } catch (error) {
           Swal.fire({
             icon: "error",

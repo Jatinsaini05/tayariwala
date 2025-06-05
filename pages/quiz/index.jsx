@@ -136,11 +136,6 @@ const Index = ({ pageData }) => {
       [currentQue]: key,
     }));
   };
-
-  // When "SAVE & NEXT" is clicked:
-  // Calculate time taken for current question using:
-  //   timeTaken = (remTimeOnActiveQ - current timeLeft)
-  // Then update response for that question and update remTimeOnActiveQ for next question.
   const saveandnext = () => {
     const currentQuestion = quiz?.qset?.questions?.EN[currentQue];
     if (!currentQuestion) return;
@@ -153,11 +148,7 @@ const Index = ({ pageData }) => {
       });
       return;
     }
-
-    // Calculate time taken for this question.
-    // (remTimeOnActiveQ was set when the question loaded)
     const timeTakenForQuestion = remTimeOnActiveQ - timeLeft;
-    // Map the selected answer. (Adjust the mapping if your answer format is different.)
     const mappedAnswer = selectedOptions[currentQue]
       ? selectedOptions[currentQue].replace(/^option/, "")
       : [];

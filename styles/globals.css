@@ -168,7 +168,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 #MainSlider .swiper-pagination-bullet-active {
-  background: #fc6200;
+  background: #1d6091;
   width: 15px;
   height: 15px;
   border: 1px solid #a8a8a8;
@@ -178,7 +178,7 @@ input[type="search"]::-webkit-search-cancel-button {
   position: absolute;
   width: 25px; /* Width of the outer cursor */
   height: 25px; /* Height of the outer cursor */
-  border: 1px solid #fc6200; /* Border color */
+  border: 1px solid #1d6091; /* Border color */
   border-radius: 50%; /* Make it circular */
   pointer-events: none; /* Ignore pointer events */
   transform: translate(-50%, -50%);
@@ -196,7 +196,7 @@ input[type="search"]::-webkit-search-cancel-button {
   position: absolute;
   width: 6px; /* Width of the inner dot */
   height: 6px; /* Height of the inner dot */
-  background-color: #fc6200; /* Dot color */
+  background-color: #1d6091; /* Dot color */
   border-radius: 50%;
   pointer-events: none; /* Make it circular */
   transform: translate(-50%, -50%);
@@ -271,7 +271,7 @@ input[type="search"]::-webkit-search-cancel-button {
   animation: ripple 2s linear infinite;
   left: 0;
   border-radius: 50%;
-  border: 1px solid #fc6200;
+  border: 1px solid #1d6091;
 }
 
 .custom-video-btn::after {
@@ -295,7 +295,7 @@ input[type="search"]::-webkit-search-cancel-button {
   position: relative;
   display: inline-block;
   color: white;
-  background: rgba(252, 98, 0, 1);
+  background: #1d6091;
   overflow: hidden;
   border: none;
   cursor: pointer;
@@ -378,7 +378,6 @@ input[type="search"]::-webkit-search-cancel-button {
   font-weight: 500;
 }
 
-
 #sumbitbtn .HOVER {
   background: #241737;
 }
@@ -388,11 +387,11 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 #sumbitbtn .HOVER:hover p {
-  color: #fc6200;
+  color: #1d6091;
 }
 
 .desci a {
-  color: #fc6200;
+  color: #1d6091;
 }
 
 #inner-content-block .innerDataContent h1 {
@@ -475,7 +474,7 @@ body .table-wrapper::-webkit-scrollbar {
   width: 1px !important;
 }
 
-.faqs  .shadow-medium {
+.faqs .shadow-medium {
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
