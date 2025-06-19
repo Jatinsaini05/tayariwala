@@ -1,42 +1,17 @@
 import React from "react";
 import PageTitle from "../components/About-Us/PageTitle";
 import About from "../components/About-Us/About";
-import { getInitialData, getPageData } from "../service/apiFetch";
-
-// export const getStaticProps = async () => {
-//   try {
-//     const response = await getPageData("about-us", {
-//       contentBlock: "Object",
-//     });
-//     if (!response) {
-//       console.log("pageData not found");
-//     }
-
-//     return {
-//       props: {
-//         pageData: response,
-//       },
-//     };
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       props: {
-//         pageData: [],
-//       },
-//     };
-//   }
-// };
-
+import { getInitialData } from "../service/apiFetch";
 export const getStaticProps = async () => {
   const initialData = await getInitialData("about-us", {
     contentBlock: "Object",
   });
   return {
     props: {
-      websiteData: initialData?.websiteData,
-      pageData: initialData?.data,
-      title: initialData?.title,
-      metaTags: initialData?.metaTags,
+      websiteData: initialData?.websiteData || null,
+      pageData: initialData?.data || null,
+      title: initialData?.title || null,
+      metaTags: initialData?.metaTags || null,
       url: initialData?.url || "",
     },
   };

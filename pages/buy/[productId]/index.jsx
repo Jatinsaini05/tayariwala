@@ -17,7 +17,7 @@ export const getServerSideProps = async (context) => {
       `https://r1.edkt.net/api/s/product/${productId}`,
       {
         headers: {
-          apihost: "https://ihub.masterlearners.in",
+          apihost: "https://maheshpratap.institute.org.in",
         },
       }
     );
@@ -403,11 +403,11 @@ export default function Index({ productResponse, ProductId }) {
   function goToDashboard() {
     let url = null;
     if (!authToken) {
-      url = "https://ihub.masterlearners.in//student/auth/login";
+      url = "https://maheshpratap.institute.org.in//student/auth/login";
     } else {
       const tk = authToken;
       const client = user?.client;
-      url = `https://ihub.masterlearners.in/student/auth/redirect?token=${tk}&path=student/dashboard&client=${client}`;
+      url = `https://maheshpratap.institute.org.in/student/auth/redirect?token=${tk}&path=student/dashboard&client=${client}`;
     }
     window.open(url, "_blank");
   }

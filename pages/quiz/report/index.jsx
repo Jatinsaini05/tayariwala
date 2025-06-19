@@ -14,10 +14,10 @@ export const getStaticProps = async () => {
   });
   return {
     props: {
-      websiteData: initialData?.websiteData,
-      pageData: initialData?.data,
-      title: initialData?.title,
-      metaTags: initialData?.metaTags,
+      websiteData: initialData?.websiteData || null,
+      pageData: initialData?.data || null,
+      title: initialData?.title || null,
+      metaTags: initialData?.metaTags || null,
       url: initialData?.url || "",
     },
   };

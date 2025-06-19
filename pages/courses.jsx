@@ -13,13 +13,12 @@ export const getStaticProps = async () => {
   });
   return {
     props: {
-      websiteData: initialData?.websiteData,
-      pageData: initialData?.data,
-      title: initialData?.title,
-      metaTags: initialData?.metaTags,
-      CoursesData: courseResponse,
+      websiteData: initialData?.websiteData || null,
+      pageData: initialData?.data || null,
+      title: initialData?.title || null,
+      metaTags: initialData?.metaTags || null,
+      CoursesData: courseResponse || null,
       url: initialData?.url || "",
-      // CoursesData: courseResponse,
     },
   };
 };

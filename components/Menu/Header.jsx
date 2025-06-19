@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 import { RiArrowDownSLine } from "react-icons/ri";
-import { LuUser2 } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
@@ -163,12 +163,12 @@ const Header = ({ websiteData }) => {
             <div className="hidden sm:flex items-center">
               {isClient && user && authToken ? (
                 <div className="flex items-center" id="loginheader">
-                  <HoverButton icon={LuUser2} text="Profile" link="/profile" />
+                  <HoverButton icon={LuUser} text="Profile" link="/profile" />
                 </div>
               ) : (
                 <div className="flex items-center" id="loginheader">
                   <HoverButton
-                    icon={LuUser2}
+                    icon={LuUser}
                     text="Login/Register"
                     link="/login"
                   />
@@ -228,7 +228,7 @@ const Header = ({ websiteData }) => {
                     {isClient && user && authToken ? (
                       <div className="flex items-center" id="loginheader">
                         <HoverButton
-                          icon={LuUser2}
+                          icon={LuUser}
                           text="Profile"
                           link="/profile"
                         />
@@ -236,7 +236,7 @@ const Header = ({ websiteData }) => {
                     ) : (
                       <div className="flex items-center" id="loginheader">
                         <HoverButton
-                          icon={LuUser2}
+                          icon={LuUser}
                           text="Login/Register"
                           link="/login"
                         />

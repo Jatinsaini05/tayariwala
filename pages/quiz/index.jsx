@@ -11,38 +11,14 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { IoPauseCircleOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
 import { useStoreLogin } from "../../store/login";
-
-// export const getStaticProps = async () => {
-//   try {
-//     const response = await getPageData("quiz", {
-//       contentBlock: "Object",
-//     });
-//     if (!response) {
-//       console.log("pageData not found");
-//     }
-//     return {
-//       props: {
-//         pageData: response,
-//       },
-//     };
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       props: {
-//         pageData: [],
-//       },
-//     };
-//   }
-// };
-
 export const getStaticProps = async () => {
   const initialData = await getInitialData("quiz", { contentBlock: "Object" });
   return {
     props: {
-      websiteData: initialData?.websiteData,
-      pageData: initialData?.data,
-      title: initialData?.title,
-      metaTags: initialData?.metaTags,
+      websiteData: initialData?.websiteData || null,
+      pageData: initialData?.data || null,
+      title: initialData?.title || null,
+      metaTags: initialData?.metaTags || null,
       url: initialData?.url || "",
     },
   };
